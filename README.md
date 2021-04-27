@@ -6,4 +6,4 @@ Urban curb is a valuable, limited, and often under-managed part of the public ri
 
 ## Working Group
 
-For more information see our current [Curb Management Working Group](https://github.com/openmobilityfoundation/mobility-data-specification/wiki/MDS-Curb-Management-Working-Group) page. 
+For more information see our current [Curb Management Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki) page. 
