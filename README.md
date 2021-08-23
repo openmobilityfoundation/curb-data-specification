@@ -24,13 +24,13 @@ The CDS will be consumed by both cities and transportation providers operating i
 
 # Work in Progress
 
-The CDS is a work in progress and is under ongoing development by the community. The goal is to release a beta version of the spec by the end of 2021 and incorporate feedback from pilot programs into future versions.
+The CDS is a work in progress and is under ongoing development by the community under the guidance of the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki) on specific [discussion topics](https://github.com/openmobilityfoundation/curb-data-specification/discussions) and bi-weekly [public meetings](https://github.com/openmobilityfoundation/curb-data-specification/wiki#meeting-agendas). Work and dicussion is also happening in the [Curb Data Specification - Draft and Ideas Doc](https://docs.google.com/document/d/1UgD2fHtVyIMwNG-qXJRv-gcY7nCdYxokbMsLTs32Em4/edit?usp=sharing) before being committed to GitHub. The goal is to release a beta version of the spec by the end of 2021 and incorporate feedback from pilot programs into future versions.
 
 [Top][toc]
 
 # Working Group
 
-The OMF’s [Curb Management Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki), led by a steering committee of individuals representing public agencies and private sector companies, is developing this data specification for curb usage.  The CDS will encompass digitized curb regulations, real time and historic event information, and utilization metrics. The specification will allow sharing of this data between cities, commercial companies, and the public. 
+The OMF’s [Curb Management Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki), led by a steering committee of individuals representing public agencies and private sector companies, is developing this data specification for curb usage.  The CDS will encompass digitized curb regulations, real time and historic event information, and utilization metrics. The specification will allow sharing of this data between cities, commercial companies, and the public. Get involoved by siging up to the [Curb Mailing List](https://groups.google.com/a/openmobilityfoundation.org/g/wg-curb).
 
 [Top][toc]
 
