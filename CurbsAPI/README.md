@@ -63,10 +63,8 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 ###  Query Curb Zones
 
-Endpoint: `/curbs/zone`
-
-Method: `GET`
-
+Endpoint: `/curbs/zone`<br/>
+Method: `GET`<br/>
 `data` Payload: a JSON object with the following fields:
   - `zones`: an array of [Curb Zone](#curb-zone) objects
   - `policies`: an array of [Policy](#policy) objects
@@ -90,10 +88,8 @@ All query parameters are optional.
 
 ###  Query Curb Areas
 
-Endpoint: `/curbs/area`
-
-Method: `GET`
-
+Endpoint: `/curbs/area`<br/>
+Method: `GET`<br/>
 `data` Payload: a JSON object with an `areas` field containing an array of [Curb Area](#curb-area) objects.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
@@ -111,10 +107,8 @@ All query parameters are optional.
 
 ### Query Curb Spaces
 
-Endpoint: `/curbs/space`
-
-Method: `GET`
-
+Endpoint: `/curbs/space`<br/>
+Method: `GET`<br/>
 `data` Payload: a JSON object with a `spaces` field containing an array of [Curb Space](#curb-space) objects.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
@@ -134,10 +128,8 @@ All query parameters are optional.
 
 ### Query Curb Policies
 
-Endpoint: `/curb/policy`
-
-Method: `get`
-
+Endpoint: `/curb/policy`<br/>
+Method: `GET`<br/>
 `data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#curb-policy) objects.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
@@ -154,10 +146,8 @@ All query parameters are optional.
 
 ###  Fetch a Curb Zone
 
-Endpoint: `/curbs/zone/<id>`
-
-Method: `GET`
-
+Endpoint: `/curbs/zone/<id>`<br/>
+Method: `GET`<br/>
 `data` Payload: the [Curb Zone](#curb-zone) object with the ID provided in the path.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
@@ -174,10 +164,8 @@ All query parameters are optional.
 
 ###  Fetch a Curb Area
 
-Endpoint: `/curbs/area/<id>`
-
-Method: `GET`
-
+Endpoint: `/curbs/area/<id>`<br/>
+Method: `GET`<br/>
 `data` Payload: the [Curb Area](#curb-area) object with the ID provided in the path.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
@@ -190,10 +178,8 @@ This endpoint takes no query parameters.
 
 ### Fetch a Curb Space
 
-Endpoint: `/curbs/space/<id>`
-
-Method: `GET`
-
+Endpoint: `/curbs/space/<id>`<br/>
+Method: `GET`<br/>
 `data` Payload: the [Curb Space](#curb-space) object with the ID provided in the path.
 
 #### Query Parameters
@@ -208,10 +194,8 @@ All query parameters are optional.
 
 ### Fetch a Curb Policy
 
-Endpoint: `/curb/policy/<id>`
-
-Method: `GET`
-
+Endpoint: `/curb/policy/<id>`<br/>
+Method: `GET`<br/>
 `data` Payload: the [Curb Policy](#curb-policy) object with the ID provided in the path. 
 
 #### Query Parameters
