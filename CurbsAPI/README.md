@@ -15,6 +15,19 @@ There are three different levels of geography that can be specified in the Curbs
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
 
+## Table of Contents
+
+- [Objects](#objects)
+  * [Curb Zone](#curb-zone)
+    + [Curb Zone ID Stability](#curb-zone-id-stability)
+  * [Curb Area](#curb-area)
+  * [Curb Space](#curb-space)
+  * [Policy](#policy)
+  * [Location Reference](#location-reference)
+  * [Time Span](#time-span)
+  * [Metadata](#metadata)
+- [Endpoints](#endpoints)
+
 ## Objects 
 
 ### Curb Zone
@@ -75,7 +88,7 @@ The `curb_zone_id` field uniquely identifies a particular zone with one particul
     regulations are modeled digitally -- e.g., additional metadata, or regulations being modeled
     more accurately -- SHOULD NOT be implemented by ending a Curb Zone's validity and creating a
     new one with a new ID. The existing Curb Zone can be updated silently with the new data;
-    callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time. |
+    callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time.
 
 [Top][toc]
 
@@ -142,3 +155,4 @@ The Curbs API has the following endpoints:
   - `GET /curbs/space/<id>`: Fetch A Curb Space
 
  
+[toc]: #table-of-contents
