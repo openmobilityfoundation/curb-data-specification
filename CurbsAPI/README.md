@@ -55,10 +55,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `availability_time` | String | Optional | If availability information is present, the RFC 3339 timestamp corresponding to the most recent time that availability was computed for this zone. |
 | `width` | Integer | Optional | The width, in centimeters, that the Curb Zone occupies from the curb to the roadway lane. |
 | `parking_angle` | String | Optional | The angle in which passenger vehicles in this Curb Zone
-    are meant to park. May take one of the following values:
-    - `parallel`
-    - `perpendicular`
-    - `angled` |
+    are meant to park. May take one of the following values: <ul><li>`parallel`</li><li>`perpendicular`</li><li>`angled`</li></ul> |
 | `num_spaces` | Integer | Optional | The number of demarcated spaces within this Curb Zone.
     Demarcated spaces may also be specified using [Curb Spaces](#curb-spaces).
 | `street_side` | String | Optional | The cardinal or subcardinal direction representing the side of the roadway that this curb is on. May be `N`, `NE`, `E`, `SE`, `S`, `SW`, `W`, or `NW`. For cities with "grid directions", the side MAY be based on the grid direction rather than the closest true-north compass direction, but MUST NOT be more than 90 degrees away from the true compass direction. |
