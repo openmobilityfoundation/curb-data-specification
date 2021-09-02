@@ -21,7 +21,6 @@ There are three different levels of geography that can be specified in the Curbs
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [REST Endpoints](#rest-endpoints)
   * [Query Curb Zones](#query-curb-zones)
   * [Query Curb Areas](#query-curb-areas)
