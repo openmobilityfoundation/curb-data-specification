@@ -21,16 +21,25 @@ There are three different levels of geography that can be specified in the Curbs
 
 ## Table of Contents
 
-- [Objects](#objects)
+- [Table of Contents](#table-of-contents)
+- [REST Endpoints](#rest-endpoints)
+  * [Query Curb Zones](#query-curb-zones)
+  * [Query Curb Areas](#query-curb-areas)
+  * [Query Curb Spaces](#query-curb-spaces)
+  * [Query Curb Policies](#query-curb-policies)
+  * [Fetch a Curb Zone](#fetch-a-curb-zone)
+  * [Fetch a Curb Area](#fetch-a-curb-area)
+  * [Fetch a Curb Space](#fetch-a-curb-space)
+  * [Fetch a Curb Policy](#fetch-a-curb-policy)
+- [Common Types](#common-types)
+  * [UUID](#uuid)
+  * [Timestamp](#timestamp)
+  * [Polygon](#polygon)
+- [Data Objects](#data-objects)
   * [Curb Zone](#curb-zone)
-    + [Curb Zone ID Stability](#curb-zone-id-stability)
   * [Curb Area](#curb-area)
   * [Curb Space](#curb-space)
   * [Policy](#policy)
-  * [Location Reference](#location-reference)
-  * [Time Span](#time-span)
-  * [Metadata](#metadata)
-- [Endpoints](#endpoints)
 
 ## REST Endpoints
 
@@ -425,7 +434,7 @@ A Time Span is represented as a JSON object whose fields are as follows:
 | `designated_period` | String | Optional | A string representing an arbitrarily-named, externally-defined period of time. Any values MAY be specified but the following known values SHOULD be used when possible: <ul><li>`snow emergency`</li><li>`holidays`</li><li>`school days`</li><li>`game days`</li></ul> |
 | `designated_period_except` | `Boolean` | `Optional` | If specified and `true`, this Time Span applies at all times not matching the named designated period. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, this Time Span does not apply on snow days). |
 
-##### Rate
+#### Rate
 
 A Rate defines the amount a user of the curb needs to pay when a given rule applies. It is a JSON object with the following fields:
 
