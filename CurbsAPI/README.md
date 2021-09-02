@@ -74,7 +74,6 @@ All query parameters are optional.
 | `lat`<br/>`lng`<br/>`radius` | Numeric | If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `include_geometry` | `true`/`false` |  If the value is `false`, do not include the `geometry` field within the [Curb Zone](#curb-zone) feature object. |
 | `include_policies` | `true`/`false` | If the value is `false`, do not include the `policies` field within the response. |
- specifies a particular moment in time. If not present, defaults to the current time. The provider MAY choose not to return Curb Zone objects whose validity period does not include this time. This is also used for the timing of availability data (if supplied).
 | `time` | [Timestamp][ts] | Only Curb Zone objects whose validity period includes this time will be returned; availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
