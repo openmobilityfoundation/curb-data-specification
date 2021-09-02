@@ -362,6 +362,8 @@ A Policy is represented as a JSON object whose fields are as follows:
 
 #### Rule
 
+A rule defines who is allowed to do what, and for how long, on a curb, per the policy.
+
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `activity` | String | | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities below](#activities)
