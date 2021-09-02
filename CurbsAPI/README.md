@@ -15,7 +15,9 @@ There are three different levels of geography that can be specified in the Curbs
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
 
-## Curb Zone
+## Objects 
+
+### Curb Zone
 
 A Curb Zone is a geographical entity representing a single region along the curb, along with
 metadata about that region and the policies that apply to its use by vehicles.. What constitutes
@@ -75,16 +77,58 @@ The `curb_zone_id` field uniquely identifies a particular zone with one particul
     new one with a new ID. The existing Curb Zone can be updated silently with the new data;
     callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time. |
 
+[Top][toc]
 
-## Curb Area
+### Curb Area
 
-## Curb Space
+Defines curb areas in a city and their properties. A Curb Area is a particular neighborhood or area
+of interest that includes one or more [Curb Zones](#curb-zone). Important notes about Curb Areas:
 
-## Policy
+  * Curb Areas MAY overlap with other Curb Areas
+  * Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
+    or more Curb Zones that is no bigger than a neighborhood.
 
-## Location Reference
+A Curb Area is represented as a JSON object, whose fields are as follows:
 
-## Metadata
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_area_id` | UUID | Required | The ID for the curb area. |
+| `geometry` | GeoJSON Polygon geometry | Required | The spatial extent of this curb location. |
+| `name` | String | Required | The name of this curb area. |
+| `curb_zone_ids` | Array of UUIDs | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
+
+[Top][toc]
+
+### Curb Space
+
+Defines individual demarcated spaces within a Curb Zone. Important notes about Curb Spaces:
+  - Curb Spaces may NOT overlap with other Curb Spaces
+  - Curb Spaces must be wholly contained within a single Curb Zone
+
+A Curb Space is represented as a JSON object whose fields are as follows:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_space_id` | UUID | Required | The ID of the curb space. |
+| `geometry` | GeoJSON Polygon geometry | Required |The spatial extent of this curb location. |
+| `curb_zone_id` | UUID | Required | The ID of the Curb Zone this space is within. The geometry of the specified Curb Zone MUST contain the geometry of this space. |
+| `space_number` | Integer | Optional | The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1. |
+| `length` | Integer | Required | Length in centimeters of this Space. If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
+| `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
+| `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
+| `availability_time` | RFC 3339 Timestamp | Optional | If availability information is present, the most recent time that availability was computed for this space. |
+
+[Top][toc]
+
+### Policy
+
+### Location Reference
+
+### Time Span 
+
+### Metadata
+
+## Endpoints
 
 The Curbs API has the following endpoints: 
 
