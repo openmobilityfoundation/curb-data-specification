@@ -270,7 +270,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
 | `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid. This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
 | `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid. If not present, the data will be presumed to be valid indefinitely. |
-| `location_references` | Array of [Location Reference objects](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
+| `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
 | `street_name` | String | Optional | The name of the street that this Curb Zone is on. |
