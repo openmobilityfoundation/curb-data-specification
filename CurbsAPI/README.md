@@ -265,7 +265,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `curb_zone_id` | [UUID][uuid] | Required | TheID of this Curb Zone. |
+| `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
 | `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
 | `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid. This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
@@ -366,10 +366,10 @@ It is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `activity` | String | | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities below](#activities)
+| `activity` | String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities below](#activities). |
 | `max_stay` | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. |
 | `no_return` | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before allowed to return for another stay. |
-| `user_classes` | Array of Strings | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. 
+| `user_classes` | Array of Strings | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
 | `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. |
 
 ##### Activities
