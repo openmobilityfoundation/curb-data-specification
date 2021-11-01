@@ -35,10 +35,6 @@ There are four different endpoints that are part of the Curbs API:
   * [Fetch a Curb Area](#fetch-a-curb-area)
   * [Fetch a Curb Space](#fetch-a-curb-space)
   * [Fetch a Curb Policy](#fetch-a-curb-policy)
-- [Common Types](#common-types)
-  * [UUID](#uuid)
-  * [Timestamp](#timestamp)
-  * [Polygon](#polygon)
 - [Data Objects](#data-objects)
   * [Curb Zone](#curb-zone)
   * [Curb Area](#curb-area)
@@ -54,7 +50,7 @@ All endpoints return a JSON object containing the following fields:
 | `data` | _Endpoint-dependent_ | Required | The requested data objects. |
 | `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
 | `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | Timestamp | Required | The last time the data in this API was updated. |
+| `last_updated` | [Timestamp][ts] | Required | The last time the data in this API was updated. |
 | `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. |
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
@@ -208,41 +204,6 @@ Method: `GET`<br/>
 This endpoint takes no query parameters.
 
 [Top][toc]
-
- 
-## Common Types
-
-The following types are used throughout the Curbs API.
-
-### UUID
-
-A UUID is a 128-bit, globally unique identifier represented as a string using the format defined in
-[RFC 4122](https://www.ietf.org/rfc/rfc4122.txt). An example UUID is
-`"98bd30e9-14cc-4e71-bee2-7bab0f28b2bd"`. UUIDs used in the Curbs API may be of any format described
-in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
-
-### Timestamp
-
-A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC
-(the UNIX epoch).
-
-### Polygon
-
-A polygon is a GeoJSON geometry of type `"Polygon"`  as defined in
-[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example polygon is:
-
-```
-{
-  "type": "Polygon",
-  "coordinates": [[
-    [-73.982105, 40.767932],
-    [-73.973694, 40.764551],
-    [-73.949318, 40.796918],
-    [-73.958416, 40.800686],
-    [-73.982105, 40.767932]
-  ]]
-}
-```
 
 ## Data Objects 
 
@@ -472,6 +433,6 @@ A Location Reference is a JSON object with the following fields:
 [Top][toc]
 
 [toc]: #table-of-contents
-[uuid]: #uuid
-[ts]: #timestamp
-[polygon]: #polygon
+[uuid]: /general-information.md#uuid
+[ts]: /general-information.md#timestamp
+[polygon]: /general-information.md#polygon
