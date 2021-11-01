@@ -1,6 +1,4 @@
-# Curbs API
-
-_Version 0.0 (DRAFT)_
+# Curb Data Specification: Curbs API
 
 The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with
 the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc. at the curb,
@@ -9,7 +7,12 @@ Curbs API can be connected to event and metric data and shared with companies an
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
 curb utilization over time.
 
-There are three different levels of geography that can be specified in the Curbs API:
+## ⚠ Beta
+> **This feature is current a draft of the initial CDS beta. It will be change as development and real-world feedback happens.**
+
+## Endpoints
+
+There are four different endpoints that are part of the Curbs API:
 
   - A [Curb Zone](#curb-zone) is a contiguous region of curb space on a single block face that is
     regulated in a particular way. Defining curb zones is *required* as part of the Curbs API.
@@ -18,6 +21,8 @@ There are three different levels of geography that can be specified in the Curbs
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
+  - A [Curb Policy](#curb-area) A Policy object is a rule that allows or prohibits a particular set of 
+    users from using a particular curb at a particular time or times.  Curb policies are *optional*.
 
 ## Table of Contents
 
