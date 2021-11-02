@@ -81,9 +81,9 @@ All query parameters are optional.
 
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
-| `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occuring within this area. |
-| `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occuring within this zone. |
-| `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occuring within this space. |
+| `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return sensor statuses within this area. |
+| `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return sensor statuses within this zone. |
+| `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return sensor statuses within this space. |
 
 [Top][toc]
 
@@ -189,7 +189,18 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 ### Status
 
-TBD
+The Curb Status is the current status of a curb monitoring source. 
+
+A Curb Status is represented as a JSON object array of all deployed sources and/or sensors, whose fields are as follows:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `sensor_id` | [UUID][uuid] | Required |  If a sensor was used, the globally unique identifier of the sensor that records events. |
+| `sensor_status` | Object | Required | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
+| `event_source_category` | Enum [Sensor Category](#sensor-category) | Optional | General category of the source creating the event. |
+| `source_operator_id` | [UUID][uuid] | Optional | Unique identifier of the entity responsible for operating the event source. |
+| `source_id` | [UUID][uuid] | Optional | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded. |
+
 
 [Top][toc]
 
