@@ -24,6 +24,8 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Policy](#curb-area) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional*.
 
+![Curb Places](https://i.imgur.com/YQ7P243.jpg)
+
 ## Table of Contents
 
 - [REST Endpoints](#rest-endpoints)
