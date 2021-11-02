@@ -5,14 +5,14 @@ The Events API is a REST API allowing real-time and historic events at the curb 
 ## ⚠ Beta
 > **This feature is current a draft of the initial CDS beta release. It will change as development and real-world feedback happens.**
 
-## Endpoints
+# Endpoints
 
 There are two different endpoints that are part of the Events API:
 
   - A [Curb Event](#curb-event) is an activity that occurs near, at, or within a pre-defined curb area. Defining events is *required* as part of the Events API.
   - A [Status](#status) is the current status of a curb monitoring source. Event status is *optional*.
 
-## Table of Contents
+# Table of Contents
 
 - [REST Endpoints](#rest-endpoints)
   * [Query Event](#query-event)
@@ -26,7 +26,7 @@ There are two different endpoints that are part of the Events API:
     * [Curb Occupant](#curb-occupant)
   * [Status](#status)
 
-## REST Endpoints
+# REST Endpoints
 
 All endpoints return a JSON object containing the following fields:
 
@@ -46,7 +46,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 [Top][toc]
 
-###  Query Event
+##  Query Event
 
 Endpoint: `/events/event`  
 Method: `GET`  
@@ -55,7 +55,7 @@ Method: `GET`
 
 _This endpoint must be implemented by every Events API server._
 
-#### Query Parameters
+### Query Parameters
 
 All query parameters are optional.
 
@@ -67,7 +67,7 @@ All query parameters are optional.
 
 [Top][toc]
 
-###  Query Status
+##  Query Status
 
 Endpoint: `/events/status`  
 Method: `GET`  
@@ -75,7 +75,7 @@ Method: `GET`
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
 
-#### Query Parameters
+### Query Parameters
 
 All query parameters are optional.
 
@@ -87,9 +87,9 @@ All query parameters are optional.
 
 [Top][toc]
 
-## Data Objects 
+# Data Objects 
 
-### Curb Event
+## Curb Event
 
 A Curb Event is a record of activity that happens within the geographic bounds of a Curbs object. 
 
@@ -121,7 +121,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 [Top][toc]
 
-#### Event Type
+### Event Type
 
 `event_type`. Curb Event Type enumerates the set of possible types of Curb Event. The values that it can assume are listed below:
 
@@ -136,7 +136,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 [Top][toc]
 
-#### Vehicle Type
+### Vehicle Type
 
 Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS vehicle types can occur.
 
@@ -154,7 +154,7 @@ Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list w
 
 [Top][toc]
 
-#### Propulsion Type
+### Propulsion Type
 
 Propulsion type of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
@@ -169,7 +169,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-#### Lane Type
+### Lane Type
 
 `lane_type`. Type(s) of lane blocked by the vehicle performing the event. 
 
@@ -177,7 +177,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-#### Curb Occupants
+### Curb Occupants
 
 `curb_occupants`. A Curb Occupant object represents a specific vehicle’s occupancy in a curb region at a specific point in time. Curb Occupant objects contain the following fields:
 
@@ -187,7 +187,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-### Status
+## Status
 
 The Curb Status is the current status of a curb monitoring source. 
 
@@ -200,7 +200,6 @@ A Curb Status is represented as a JSON object array of all deployed sources and/
 | `event_source_category` | Enum [Sensor Category](#sensor-category) | Optional | General category of the source creating the event. |
 | `source_operator_id` | [UUID][uuid] | Optional | Unique identifier of the entity responsible for operating the event source. |
 | `source_id` | [UUID][uuid] | Optional | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded. |
-
 
 [Top][toc]
 

@@ -87,7 +87,7 @@ The CDS specification is versioned using Git tags and [semantic versioning](http
 
 [Top][toc]
 
-## Membership
+# Membership
 
 OMF Members (public agencies and commercial companies) have additional participation opportunities with leadership roles within our OMF [governance](https://github.com/openmobilityfoundation/governance#omf-scope-of-work):
 
