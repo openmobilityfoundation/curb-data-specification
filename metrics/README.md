@@ -21,6 +21,8 @@ There are two different endpoints that are part of the Metrics API:
 - [Data Objects](#data-objects)
   * [Activities](#activities)
   * [Aggregates](#aggregates)
+    * [Methodology](#methodology)
+    * [Examples](#examples)
 
 ## REST Endpoints
 
@@ -222,6 +224,8 @@ Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,21,14.2
 Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,22,12.1
 Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,23,9.6
 ```
+
+[Top][toc]
 
 [toc]: #table-of-contents
 [uuid]: /general-information.md#uuid
