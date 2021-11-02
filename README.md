@@ -1,10 +1,12 @@
 # Curb Data Specification
 
+## Beta
+> ⚠ **This repository is current a draft of the initial CDS beta, and not an official release. It will be changed and updated as development and real-world feedback happens and we head for a 1.0 beta release. See our current [timeline](https://github.com/openmobilityfoundation/curb-data-specification/wiki#timeline) and watch the [CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/releases) page for updates.**
+
 ## Table of Contents
 
 - [Overview](#overview)
 - [Work in Progress](#work-in-progress)
-  - [Beta](#beta)
 - [Get Involved](#get-involved)
 - [Curb Data Specification APIs](#curb-data-specification-apis)
   - [Modularity](#modularity)
@@ -28,9 +30,6 @@ The CDS will be consumed by both cities and transportation providers operating i
 # Work in Progress
 
 The CDS is a work in progress and is under ongoing development by the community under the guidance of the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki) on specific [discussion topics](https://github.com/openmobilityfoundation/curb-data-specification/discussions) and bi-weekly [public meetings](https://github.com/openmobilityfoundation/curb-data-specification/wiki#meeting-agendas) around a specific [Scope of Work](https://docs.google.com/document/d/1yY5pRiiei8seVxXOmcYiqCA7wx7DueeatJnjbZoV3hU/). Work and dicussion is also happening in the [Curb Data Specification - Draft and Ideas Doc](https://docs.google.com/document/d/1UgD2fHtVyIMwNG-qXJRv-gcY7nCdYxokbMsLTs32Em4/edit?usp=sharing) before being committed to GitHub. The Steering Committee has created supplemntary resources the [Architectural Decisions](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Curb-Architectural-Decisions), [Curbs Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Curbs-Use-Cases), and [Pilot Project Guide](https://docs.google.com/document/d/1Mb1wpy4AFJ1MLvDpSIJsii4_1j2JC16NxNUVPI5BMNM/edit?usp=sharing) pages. The goal is to release a beta version of the spec by the end of 2021 and incorporate feedback from pilot programs into future versions.
-
-## Beta
-> ⚠ **This repository is current a draft of the initial CDS beta. It will be change as development and real-world feedback happens. See our current [timeline](https://github.com/openmobilityfoundation/curb-data-specification/wiki#timeline) and watch the [CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/releases) page for updates.**
 
 [Top][toc]
 
