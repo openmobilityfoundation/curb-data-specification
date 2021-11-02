@@ -3,7 +3,7 @@
 
 This document contains specifications that are shared between the various CDS APIs.
 
-## Table of Contents
+# Table of Contents
 
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
@@ -11,7 +11,7 @@ This document contains specifications that are shared between the various CDS AP
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
 
-## Beta Features
+# Beta Features
 
 In some cases, features within CDS may be marked as "beta." These are typically recently added endpoints or fields. Because beta features are new, they may not yet be fully mature and proven in real-world operation. The design of beta features may have undiscovered gaps, ambiguities, or inconsistencies. Implementations of those features are typically also quite new and are more likely to contain bugs or other flaws. Beta features are likely to evolve more rapidly than other parts of the specification.
 
@@ -25,7 +25,7 @@ Working Groups and their Steering Committees are expected to review beta designa
 
 [Top][toc]
 
-## Costs and currencies
+# Costs and currencies
 
 Fields specifying a monetary cost use a currency as specified in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes). All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (100 cents).
 
@@ -33,7 +33,18 @@ If the currency field is null, USD cents is implied.
 
 [Top][toc]
 
-## Polygon
+# Definitions
+
+Defining terminology and abbreviations used throughout CDS.
+
+- API - Application Programming Interface - A function or set of functions/endpoints that allow one software application to access or communicate with features of a different software application or service.
+- API Endpoint - A point at which an API connects with a software application or service.
+- Curb Places - One of the defined Curb API areas: Areas, Zones, or Spaces.
+- Curb Area - A geographically defined area around one or more Curb Zones to track releated activity before and after Curb Zone use.
+- Curb Zone - A geographically and policy defined area where transactions may happen at curb space.
+- Curb Space - A geographically defined area within a Curb Zone for a single vehicle.
+
+# Polygon
 
 A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
 [RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example polygon is:
@@ -53,7 +64,7 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
 
 [Top][toc]
 
-## UUID
+# UUID
 
 A UUID is a 128-bit, globally unique identifier represented as a string using the format defined in
 [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt). An example UUID is
@@ -62,7 +73,7 @@ in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 
 [Top][toc]
 
-## Timestamp
+# Timestamp
 
 A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC
 (the UNIX epoch).
