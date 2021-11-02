@@ -73,7 +73,7 @@ No query parameters for this endpoint.
 
 ### Activities
 
-Activities are a subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for some curb event types. 
+Activities are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for some curb event types. 
 Activities are meant to provide a granular view of activity happening around the curb places, so consumers can do their own analysis and aggregation.
 
 An Activity is represented as a CSV object, whose fields are as follows, pulled from the Curb Events endpoint in the Events API:
@@ -100,3 +100,81 @@ The following Event Types are included in the Activities data, and the others ev
 - **enter_area**: vehicle enters the relevant geographic area
 - **exit_area**: vehicle exits the relevant geographic area
 
+[Top][toc]
+
+### Aggregates
+
+Aggregates are historic pre-computed counts and metrics of Events occuring in curb places.  
+
+An Aggregate is represented as a CSV object, whose fields are as follows, as calculated from the Metrics [Methodology](#methodology):
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
+| `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
+| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" formate. E.g. "2021-10-31" |
+| `metric` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). E.g. "6", "2.9", or "0.05" |
+
+#### Methodology
+
+Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics can be useful in understanding how curb usage aligns with priorities.
+
+An event/transaction at the curb is defined as... TBD
+
+Unit of measure, time, length, etc... TBD
+
+**Total Events**
+
+`count[events]` for a specific time period
+Name: `total_events`
+
+_Use Case_
+
+Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. Seems pretty basic but a lot of cities don’t have this insight or if they do it’s not current or comprehensive.
+
+**Turnover**
+ 
+`count[events]/hour` for a specific time period
+Name: `turnover`
+
+_Use Case_
+
+Used together with Average Dwell Time by cities to understand how long vehicles are parked at the curb. When evaluated alongside a vehicle type breakdown, cities can see if the curb space is being used as intended and design better rules for compliance.
+
+**Average Dwell Time**
+
+`sum[dwell time] / count[events]` for a specific time period
+Name: `average_dwell_time`
+
+_Use Case_
+
+Turnover and Average Dwell Time are used together by cities to understand how long vehicles are parked at the curb. When evaluated alongside a vehicle type breakdown, cities can see if the curb space is being used as intended and design better rules for compliance.
+ 
+For example, a city may want to impose a 5 minute time limit for a restaurant pick-up and drop-off zone if they see that a lot of vehicles are in that space for 30 minutes to help prioritize the quick pick-up and drop-offs. 
+
+Another example would be if a city sees that a space has large vehicles with an average dwell time of 90 minutes or more they may want to make sure their time limits and operating hours can accommodate these deliveries so that companies aren’t having to leave mid-delivery to move their vehicle.
+
+**Occupancy Percent**
+
+`sum[dwell time] / total duration` for a specific time period
+Name: `occupancy_percent`
+
+_Use Case_
+
+Occupancy is a metric from parking that cities would like to apply to curbs. With parking there’s an optimal occupancy where most of the parking spaces are in-use but there are enough open spaces for any vehicle to be able to drive up and find a space. Cities are interested to learn what the optimal occupancy would be for curbs. With so much competition at the curb, cities want to make sure that any loading zones they create are being used a lot, but not so much that they’re full and drivers have to double-park instead.
+
+[Top][toc]
+
+#### Examples
+
+Example of available for 2 aggregate metrics over a 1 day period.
+
+```
+
+```
+
+[toc]: #table-of-contents
+[uuid]: /general-information.md#uuid
+[ts]: /general-information.md#timestamp
+[polygon]: /general-information.md#polygon
