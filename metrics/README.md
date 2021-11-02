@@ -104,7 +104,7 @@ The following Event Types are included in the Activities data, and the others ev
 
 ### Aggregates
 
-Aggregates are historic pre-computed counts and metrics of Events occuring in curb places.  
+Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. 
 
 An Aggregate is represented as a CSV object, whose fields are as follows, as calculated from the Metrics [Methodology](#methodology):
 
@@ -113,8 +113,9 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 | `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
 | `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
-| `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" formate. E.g. "2021-10-31" |
-| `metric` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). E.g. "6", "2.9", or "0.05" |
+| `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
+| `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
+| `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means the the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
 
 #### Methodology
 
@@ -126,7 +127,7 @@ Unit of measure, time, length, etc... TBD
 
 **Total Events**
 
-`count[events]` for a specific time period
+`count[events]` for a specific time period  
 Name: `total_events`
 
 _Use Case_
@@ -135,7 +136,7 @@ Cities use this to determine ‘demand’ for curb space and understand how much
 
 **Turnover**
  
-`count[events]/hour` for a specific time period
+`count[events]/hour` for a specific time period  
 Name: `turnover`
 
 _Use Case_
@@ -144,7 +145,7 @@ Used together with Average Dwell Time by cities to understand how long vehicles 
 
 **Average Dwell Time**
 
-`sum[dwell time] / count[events]` for a specific time period
+`sum[dwell time] / count[events]` for a specific time period  
 Name: `average_dwell_time`
 
 _Use Case_
@@ -157,7 +158,7 @@ Another example would be if a city sees that a space has large vehicles with an 
 
 **Occupancy Percent**
 
-`sum[dwell time] / total duration` for a specific time period
+`sum[dwell time] / total duration` for a specific time period  
 Name: `occupancy_percent`
 
 _Use Case_
@@ -168,10 +169,58 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 
 #### Examples
 
-Example of available for 2 aggregate metrics over a 1 day period.
+Example of available for 2 aggregate metrics in 2 places over a 1 day period.
 
 ```
-
+curb_place_type,curb_place_id,metric_type,date,hour,value
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,0,3
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,1,7
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,2,2
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,3,7
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,4,9
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,5,10
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,6,13
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,7,16
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,8,17
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,9,13
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,10,15
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,11,19
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,12,29
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,13,27
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,14,26
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,15,38
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,16,34
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,17,35
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,18,33
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,19,20
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,20,16
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,21,12
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,22,-1
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,23,8
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,0,10.5
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,1,5.0
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,2,3.0
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,3,2.9
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,4,8.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,5,14.5
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,6,15.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,7,16.2
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,8,18.1
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,9,21.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,10,15.2
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,11,12.1
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,12,11.8
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,13,9.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,14,5.7
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,15,6.7
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,16,9.2
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,17,6.4
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,18,8.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,19,10.3
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,20,13.5
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,21,14.2
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,22,12.1
+Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,23,9.6
 ```
 
 [toc]: #table-of-contents
