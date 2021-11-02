@@ -8,6 +8,7 @@
 - [Get Involved](#get-involved)
 - [Curb Data Specification APIs](#curb-data-specification-apis)
   - [Modularity](#modularity)
+  - [Structure](#structure)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Membership](#membership) 
@@ -60,6 +61,10 @@ Many parts of the CDS definitions and APIs align across each other. In these cas
 ## Modularity
 
 CDS is designed to be a modular and flexible specification. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only Curbs, while others may use Curbs, Events, and Metrics. Even within each API many endpoints and fields are optional. This design allows agencies, software and hardware companies, and curb users to use what's appropriate for their use cases, work within their operational capabilities, and text CDS in their pilot projects.
+
+## Structure
+
+CDS contains a series of connected endpoint and fields beneath each interconnected API.
 
 ![CDS Structure](https://i.imgur.com/L44996v.gif)
 
