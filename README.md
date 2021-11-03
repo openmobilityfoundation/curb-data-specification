@@ -63,7 +63,7 @@ CDS is designed to be a modular and flexible specification. Regulatory agencies 
 
 ## Structure
 
-CDS contains a series of connected endpoint and fields beneath each interconnected API.
+CDS contains a series of connected endpoints and fields beneath each interconnected API.
 
 ![CDS Structure](https://i.imgur.com/L44996v.gif)
 
@@ -71,7 +71,7 @@ CDS contains a series of connected endpoint and fields beneath each interconnect
 
 # Versions
 
-CDS has a **current release**, and **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
+CDS has a **current release**, and an **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
 
 ## Technical Information
 
