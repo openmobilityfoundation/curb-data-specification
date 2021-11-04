@@ -314,7 +314,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 ## Policy
 
-A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). Much of this is similar to curbLR.
+A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). The design of the Policy object borrows heavily from the work of the [CurbLR](https://github.com/curblr/curblr-spec) project.
 
 The `policy` field within the FeatureCollection returned by [Query Curb Zones](#query-curb-zones) contains a list of the Policy objects referenced by the returned zones. In addition, the [Query Curb Policies](#query-curb-policies) endpoint return the complete list of policies.
 
