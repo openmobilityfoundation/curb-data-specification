@@ -1,9 +1,9 @@
 # Curb Data Specification: Curbs API
 
 The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with
-the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc. at the curb,
-for how long, for what price (if any), at what times, and on what days. Locations defined in the
-Curbs API can be connected to event and metric data and shared with companies and the public, for
+the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc.,
+for how long, for what price (if any), at what times, and on which days. Locations defined in the
+Curbs API can be connected to event and metrics data, and can be shared with companies and the public, for
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
 curb utilization over time.
 
