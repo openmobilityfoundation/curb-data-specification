@@ -14,6 +14,7 @@ There are two different endpoints that are part of the Metrics API:
 
 # Table of Contents
 
+- [Representative Sample Data](#representative-sample-data)
 - [REST Endpoints](#rest-endpoints)
   * [Update Frequency](#update-frequency)
   * [Query Activities](#query-activities)
@@ -24,6 +25,10 @@ There are two different endpoints that are part of the Metrics API:
     * [Methodology](#methodology)
     * [Examples](#examples)
 
+# Representative Sample Data
+
+All data returned by the Metrics API should be viewed as using representative sample data, and not neccessarily a 100% accurate picture of what happens at every defined curb space. This is because CDS Events can come from multiple sources (company data feeds, sensors, video analysis, payments, check-ins, enforcement, and/or other city data sources), cities may implement only one or more of these sources, each source returns different types and accuracy of data, and sources may not be easily cross-comparible. It is up to the city consuming Events and producing Metrics to determine accuracy and methodology details within their circumstances, and we welcome feedback, refinement, clarification, and more defined methodology per source type for future CDS releases.
+
 # REST Endpoints
 
 All endpoints return a CSV file that can either be pre-computed or created on demand.
@@ -33,11 +38,11 @@ versioning in the future.  Clients SHOULD specify an `Accept` header containing
 `application/vnd.cds+csv;version=0.0`. If the server receives a request that contains an `Accept`
 header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
 
-You may choose to serve a CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
+You may choose to serve a static CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
 
 ## Update Frequency
 
-The agency serving the data may choose how frequently they want to update the data. At least monthly is recommended but it may be longer or weekly, daily, hourly, or even more frequently.
+The agency serving the data may choose how frequently they want to update the data. At least monthly is recommended but it may be longer, or weekly, daily, hourly, or even more frequently.
 
 [Top][toc]
 
@@ -52,7 +57,7 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 ### Query Parameters
 
-An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of query parameters to filter the data).  If dynamic, all query parameters are optional.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data). If dynamic, all query parameters are optional.
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
@@ -77,7 +82,7 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 ### Query Parameters
 
-An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data).  If dynamic, all query parameters are optional.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data). If dynamic, all query parameters are optional.
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
