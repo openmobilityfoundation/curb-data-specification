@@ -9,8 +9,8 @@ The Metrics API is a REST API allowing historic metrics calculations based on Ev
 
 There are two different endpoints that are part of the Metrics API:
 
-  - A [Activities](#curb-event) is infomration about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional*.
-  - A [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional*.
+  - A [Activities](#curb-event) is information about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional* within Metrics.
+  - A [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
 
 # Table of Contents
 
@@ -52,7 +52,17 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 ### Query Parameters
 
-No query parameters for this endpoint.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of query parameters to filter the data).  If dynamic, all query parameters are optional.
+
+| Name         | Type      | Description                                    |
+| ------------ | --------- | ---------------------------------------------- |
+| `curb_area`       | [UUID][uuid]      | The ID of a [Curb Area](/curbs/#curb-area). If specified, only return data contained within this area. |
+| `curb_zone`       | [UUID][uuid]      | The ID of a [Curb Zone](/curbs/#curb-zone). If specified, only return data contained within this area. |
+| `curb_space`       | [UUID][uuid]      | The ID of a [Curb Space](/curbs/#curb-space). If specified, only return data contained within this area. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | The start of the time period to return data |
+| `end_time` | [Timestamp][ts] | The end of the time period to return data |
 
 [Top][toc]
 
@@ -67,7 +77,17 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 ### Query Parameters
 
-No query parameters for this endpoint.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of query parameters to filter the data).  If dynamic, all query parameters are optional.
+
+| Name         | Type      | Description                                    |
+| ------------ | --------- | ---------------------------------------------- |
+| `curb_area`       | [UUID][uuid]      | The ID of a [Curb Area](/curbs/#curb-area). If specified, only return data contained within this area. |
+| `curb_zone`       | [UUID][uuid]      | The ID of a [Curb Zone](/curbs/#curb-zone). If specified, only return data contained within this area. |
+| `curb_space`       | [UUID][uuid]      | The ID of a [Curb Space](/curbs/#curb-space). If specified, only return data contained within this area. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | The start of the time period to return data |
+| `end_time` | [Timestamp][ts] | The end of the time period to return data |
 
 [Top][toc]
 
@@ -85,7 +105,7 @@ An Activity is represented as a CSV object, whose fields are as follows, pulled 
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
-| `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
+| `event_time` | [Timestamp][ts] | Required | Timestamp (date/time) at which the event occurred. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
