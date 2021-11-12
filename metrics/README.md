@@ -54,15 +54,15 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of query parameters to filter the data).  If dynamic, all query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `curb_area`       | [UUID][uuid]      | The ID of a [Curb Area](/curbs/#curb-area). If specified, only return data contained within this area. |
-| `curb_zone`       | [UUID][uuid]      | The ID of a [Curb Zone](/curbs/#curb-zone). If specified, only return data contained within this area. |
-| `curb_space`       | [UUID][uuid]      | The ID of a [Curb Space](/curbs/#curb-space). If specified, only return data contained within this area. |
-| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
-| `lat`<br/>`lng`<br/>`radius` | Numeric | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
-| `start_time` | [Timestamp][ts] | The start of the time period to return data |
-| `end_time` | [Timestamp][ts] | The end of the time period to return data |
+| Name         | Type      | Required/Optional | Description                                    |
+| ------------ | --------- | ----------------- | ---------------------------------------------- |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data |
 
 [Top][toc]
 
@@ -77,17 +77,17 @@ _Optional endpoint; if not implemented, a server should reply with 501 Not Imple
 
 ### Query Parameters
 
-An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of query parameters to filter the data).  If dynamic, all query parameters are optional.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data).  If dynamic, all query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `curb_area`       | [UUID][uuid]      | The ID of a [Curb Area](/curbs/#curb-area). If specified, only return data contained within this area. |
-| `curb_zone`       | [UUID][uuid]      | The ID of a [Curb Zone](/curbs/#curb-zone). If specified, only return data contained within this area. |
-| `curb_space`       | [UUID][uuid]      | The ID of a [Curb Space](/curbs/#curb-space). If specified, only return data contained within this area. |
-| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
-| `lat`<br/>`lng`<br/>`radius` | Numeric | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
-| `start_time` | [Timestamp][ts] | The start of the time period to return data |
-| `end_time` | [Timestamp][ts] | The end of the time period to return data |
+| Name         | Type      | Required/Optional | Description                                    |
+| ------------ | --------- | ----------------- | ---------------------------------------------- |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data |
 
 [Top][toc]
 
