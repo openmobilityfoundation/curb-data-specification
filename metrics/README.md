@@ -120,7 +120,7 @@ An Activity is represented as a CSV object, whose fields are as follows, pulled 
 
 ### Event Types
 
-The following Event Types are included in the Activities data, and the others event types are not returned.
+The following Event Types are included in the Activities data, and the other event types are not returned.
 
 - **park_start**: a vehicle stopped, parked, or double parked
 - **park_end**: a parked vehicle leaving a parked or stopped state and resuming movement
@@ -146,11 +146,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 
 ### Methodology
 
-Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics can be useful in understanding how curb usage aligns with priorities.
-
-An event/transaction at the curb is defined as... TBD
-
-Unit of measure, time, length, etc... TBD
+Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics will be used in understanding how curb usage aligns with priorities.
 
 #### Total Events
 
