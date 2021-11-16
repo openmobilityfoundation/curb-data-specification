@@ -192,9 +192,15 @@ Type of activity that the vehicle performed.
 
 ### Lane Type
 
-`lane_type`. Type(s) of lane blocked by the vehicle performing the event. 
+`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event. 
 
-- **type1**: TBD
+| `lane_type`    | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `traffic_lane` | A standard vehicle traffic lane |
+| `turn_lane`    | A dedicated turn lane |
+| `bike_lane`    | A lane dedicated for usage by cyclists |
+| `bus_lane`     | A lane dedicated for usage by busses |
+| `unspecified`  | Unspecified |
 
 [Top][toc]
 
