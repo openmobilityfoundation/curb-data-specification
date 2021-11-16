@@ -9,8 +9,8 @@ The Metrics API is a REST API allowing historic metrics calculations based on Ev
 
 There are two different endpoints that are part of the Metrics API:
 
-  - A [Activities](#curb-event) is information about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional* within Metrics.
-  - A [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
+  - [Activities](#curb-event) is information about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional* within Metrics.
+  - [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
 
 # Table of Contents
 
