@@ -146,17 +146,18 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS vehicle types can occur.
 
-| `vehicle_type` | Description |
-|----------------| ----------- |
-| bicycle        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
-| cargo_bicycle  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
-| car            | A passenger car or similar light-duty vehicle |
-| scooter        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| moped          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
-| truck          | A light or heavy duty 4 wheeled truck |
-| van            | A van with significant interior cargo space |
-| freight        | A large delivery truck with attached cab |
-| other          | A device that does not fit in the other categories |
+| `vehicle_type`   | Description |
+|------------------| ----------- |
+| `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
+| `car`            | A passenger car or similar light-duty vehicle |
+| `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| `truck`          | A light or heavy duty 4 wheeled truck |
+| `van`            | A van with significant interior cargo space |
+| `freight`        | A large delivery truck with attached cab |
+| `other`          | A device that does not fit in the other categories |
+| `unspecified`    | Unspecified |
 
 [Top][toc]
 
@@ -208,9 +209,11 @@ Type of activity that the vehicle performed.
 
 `curb_occupants`. A Curb Occupant object represents a specific vehicle’s occupancy in a curb region at a specific point in time. Curb Occupant objects contain the following fields:
 
-- **type**: _Vehicle Type, required_. The type of the occupant. When the event source is not capable of distinguishing vehicle type, this property must take the value “unspecified.”
-- **length**: _Float, conditionally required._ The approximate length in centimeters of the vehicle. Required when the event source is capable of determining vehicle length.
-- **linear_location**: _Array of Float, conditionally required._ A two-element array that specifies the start and end of the occupant’s linear location relative to the start of the Curb Zone in that order. Required when the event source is capable of determining the linear location of occupants.
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `type` | [Vehicle Type](#vehicle-type) | Required | The vehicle type of the occupant. When the event source is not capable of distinguishing vehicle type, this property must take the value "unspecified".
+| `length` | Float | Conditionally required | The approximate length in centimeters of the vehicle. Required when the event source is capable of determining vehicle length.
+| `linear_location` | Array of Float | Conditionally required | A two-element array that specifies the start and end of the occupant’s linear location relative to the start of the Curb Zone in that order. Required when the event source is capable of determining the linear location of occupants.
 
 [Top][toc]
 
