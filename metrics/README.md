@@ -17,11 +17,11 @@ There are two different endpoints that are part of the Metrics API:
 - [Representative Sample Data](#representative-sample-data)
 - [REST Endpoints](#rest-endpoints)
   * [Update Frequency](#update-frequency)
-  * [Query Activities](#query-activities)
-  * [Query Aggregates](#query-aggregates)
+  * [Query Activity](#query-activity)
+  * [Query Aggregate](#query-aggregate)
 - [Data Objects](#data-objects)
-  * [Activities](#activities)
-  * [Aggregates](#aggregates)
+  * [Activity](#activity)
+  * [Aggregate](#aggregate)
     * [Methodology](#methodology)
     * [Examples](#examples)
 
@@ -46,12 +46,12 @@ The agency serving the data may choose how frequently they want to update the da
 
 [Top][toc]
 
-##  Query Activities
+##  Query Activity
 
-Endpoint: `/metrics/activities`  
+Endpoint: `/metrics/activity`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
-  - `activities`: an array of [Activities](#activity) objects
+  - `activity`: an array of [Activity](#activity) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
 
@@ -71,12 +71,12 @@ An agency may choose to make this endpoint static (and return all the available 
 
 [Top][toc]
 
-##  Query Aggregates
+##  Query Aggregate
 
-Endpoint: `/metrics/aggregates`  
+Endpoint: `/metrics/aggregate`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
-  - `activities`: an array of [Aggregates](#aggregates) objects
+  - `aggregate`: an array of [Aggregate](#aggregate) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
 
@@ -98,7 +98,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 # Data Objects 
 
-## Activities
+## Activity
 
 Activities are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for some curb event types. 
 Activities are meant to provide a granular view of activity happening around the curb places, so consumers can do their own analysis and aggregation.
@@ -129,7 +129,7 @@ The following Event Types are included in the Activities data, and the other eve
 
 [Top][toc]
 
-## Aggregates
+## Aggregate
 
 Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. 
 
