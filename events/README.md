@@ -153,6 +153,7 @@ Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list w
 | `car`            | A passenger car or similar light-duty vehicle |
 | `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
+| `motorcycle`     | A seated mobility device capable of travel at high speeds and suited for operation in general urban traffic or expressways |
 | `truck`          | A light or heavy duty 4 wheeled truck |
 | `van`            | A van with significant interior cargo space |
 | `freight`        | A large delivery truck with attached cab |
