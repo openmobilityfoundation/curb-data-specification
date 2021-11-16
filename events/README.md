@@ -22,6 +22,7 @@ There are two different endpoints that are part of the Events API:
     * [Event Type](#event-type)
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
+    * [Activity Type](#activity-type)
     * [Lane Type](#lane-type)
     * [Curb Occupant](#curb-occupant)
   * [Status](#status)
@@ -116,9 +117,9 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
+| `activity_type` | [Activity Type](#activity-type) | Conditionally Required | Type of activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
 | `blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for the following event_types: _park_start, park_end, scheduled_report_ |
-| `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `currency` | String | Optional | Fields specifying a monetary cost use a currency as specified in ISO 4217. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). If the currency field is null, USD cents is implied. |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. |
 
@@ -128,14 +129,16 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 `event_type`. Curb Event Type enumerates the set of possible types of Curb Event. The values that it can assume are listed below:
 
-- **comms_lost**: communications with the event source were lost
-- **comms_restored**: communications with the event source were restored
-- **decommissioned**: event source was decommissioned
-- **park_start**: a vehicle stopped, parked, or double parked
-- **park_end**: a parked vehicle leaving a parked or stopped state and resuming movement
-- **scheduled_report**: event source reported status status at a scheduled interval
-- **enter_area**: vehicle enters the relevant geographic area
-- **exit_area**: vehicle exits the relevant geographic area
+| `event_type`   | Description |
+|----------------| ----------- |
+| `comms_lost`   | communications with the event source were lost |
+| `comms_restored` | communications with the event source were restored |
+| `decommissioned` | event source was decommissioned |
+| `park_start`   | a vehicle stopped, parked, or double parked |
+| `park_end`     | a parked vehicle leaving a parked or stopped state and resuming movement |
+| `scheduled_report` | event source reported status status at a scheduled interval |
+| `enter_area`   | vehicle enters the relevant geographic area |
+| `exit_area`    | vehicle exits the relevant geographic area |
 
 [Top][toc]
 
@@ -169,6 +172,21 @@ Propulsion type of the vehicle, similar to propulsion_type in MDS. For this CDS 
 | `combustion`      | Contains throttle mode with a gas engine-powered motor |
 
 A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+
+[Top][toc]
+
+### Activity Type
+
+Type of activity that the vehicle performed.
+
+| `activity_type`   | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `passenger_transport` | Picking up and/or dropping off of human passengers |
+| `food_delivery`   | Delivery of food items ready for consumption to an end consumer |
+| `parcel_delivery` | Delivery of parcels, including bulk food goods to a restaurant or other business |
+| `construction`    | Construction of hard assets including buildings and roadside infrastructure |
+| `waste_management` | Retrieval/disposal of waste |
+| `unspecified`     | Unknown or unspecified activity type |
 
 [Top][toc]
 
