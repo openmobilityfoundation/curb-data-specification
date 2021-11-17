@@ -194,11 +194,11 @@ Type of activity that the vehicle performed.
 
 ### Lane Type
 
-`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event. 
+`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event, ouside of curb zones. E.g., double parking.
 
 | `lane_type`    | Description                                            |
 | -------------- | ------------------------------------------------------ |
-| `traffic_lane` | A standard vehicle traffic lane |
+| `travel_lane`  | A standard vehicle travel lane |
 | `turn_lane`    | A dedicated turn lane |
 | `bike_lane`    | A lane dedicated for usage by cyclists |
 | `bus_lane`     | A lane dedicated for usage by busses |
