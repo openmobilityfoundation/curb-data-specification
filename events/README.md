@@ -215,10 +215,14 @@ Type of activity that the vehicle performed.
 
 | `lane_type`    | Description                                            |
 | -------------- | ------------------------------------------------------ |
-| `travel_lane`  | A standard vehicle travel lane |
-| `turn_lane`    | A dedicated turn lane |
-| `bike_lane`    | A lane dedicated for usage by cyclists |
-| `bus_lane`     | A lane dedicated for usage by busses |
+| `travel_lane`  | A standard vehicle travel lane. |
+| `turn_lane`    | A dedicated turn lane. |
+| `bike_lane`    | A lane dedicated for usage by cyclists. |
+| `bus_lane`     | A lane dedicated for usage by busses. |
+| `parking`      | A lane used for parking, not allowed for travel. |
+| `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
+| `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
+| `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
 | `unspecified`  | Unspecified |
 
 [Top][toc]
