@@ -20,6 +20,7 @@ There are two different endpoints that are part of the Events API:
 - [Data Objects](#data-objects)
   * [Curb Event](#curb-event)
     * [Event Type](#event-type)
+    * [Source Type](#source-type)
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
     * [Activity Type](#activity-type)
@@ -100,19 +101,19 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
-| `event_source_category` | Enum [Sensor Category](#sensor-category) | Required | General category of the source creating the event. |
-| `source_operator_id` | [UUID][uuid] | Required | Unique identifier of the entity responsible for operating the event source. |
-| `source_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded. |
+| `source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
+| `source_operator_id` | [UUID][uuid] | Required | Unique identifier of the entity responsible for operating the event source. This can be generated outside of CDS beforhand for each source operator. Different than `provider_id`. |
+| `source_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded by the same source. If coming from a provider, this is an ID they use and may be the same as `vehicle_id`. |
+| `provider_id` | [UUID][uuid] | Optional | Unique ID of the provider responsible for operating the vehicle at the time of the event, if any. IDs are global and come from the [providers.csv](/providers.csv) file here in the CDS repo. |
+| `provider_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. |
+| `sensor_id` | [UUID][uuid] | Optional | If a sensor was used, the globally unique identifier of the sensor that recorded the event. Not needed if data is coming from a provider directly. |
+| `sensor_status` | Object | Optional | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
 | `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
-| `provider_id` | [UUID][uuid] | Optional | Unique ID of the provider responsible for operating the vehicle at the time of the event, if any. IDs are global and come from the [providers.csv](/providers.csv) file here in the CDS repo. |
-| `provider_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event, if any. |
-| `sensor_id` | [UUID][uuid] | Optional |  If a sensor was used, the globally unique identifier of the sensor that recorded the event. |
-| `sensor_status` | Object | Optional | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
 | `vehicle_id` | String | Optional | A vehicle identifier visible on the vehicle itself. |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
@@ -139,6 +140,22 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `scheduled_report` | event source reported status status at a scheduled interval |
 | `enter_area`   | vehicle enters the relevant geographic area |
 | `exit_area`    | vehicle exits the relevant geographic area |
+
+[Top][toc]
+
+### Source Type
+
+`source_type`. Curb Source Type enumerates the set of possible categories of sources that are sending this event. The values that it can assume are listed below:
+
+| `source_type`  | Description |
+|----------------| ----------- |
+| `data_feed`    | directly from a provider data feed send to the agency |
+| `camera`       | video or static image processing source |
+| `above_ground` | sensor deployed above ground  |
+| `in_ground`    | sensor deployed in the ground |
+| `meter`        | a smart parking meter |
+| `in_person`    | an individual on site recording the event digitally or otherwise |
+| `other`        | sources not ennumerated above |
 
 [Top][toc]
 
