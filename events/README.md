@@ -149,7 +149,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 | `source_type`  | Description |
 |----------------| ----------- |
-| `data_feed`    | directly from a provider data feed send to the agency |
+| `data_feed`    | directly from a provider data feed sent to the agency |
 | `camera`       | video or static image processing source |
 | `above_ground` | sensor deployed above ground  |
 | `in_ground`    | sensor deployed in the ground |
