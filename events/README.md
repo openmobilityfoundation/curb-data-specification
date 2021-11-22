@@ -23,6 +23,7 @@ There are two different endpoints that are part of the Events API:
     * [Source Type](#source-type)
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
+    * [Activity Category](#activity-category)
     * [Activity Type](#activity-type)
     * [Lane Type](#lane-type)
     * [Curb Occupant](#curb-occupant)
@@ -118,7 +119,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
-| `activity_type` | [Activity Type](#activity-type) | Conditionally Required | Type of activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
+| `activity_category` | [Activity Category](#activity-category) | Conditionally Required | General activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
+| `activity_type` | [Activity Type](#activity-type) | Conditionally Required | Detailed type of activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
 | `blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for the following event_types: _park_start, park_end, scheduled_report_ |
 | `currency` | String | Optional | Fields specifying a monetary cost use a currency as specified in ISO 4217. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). If the currency field is null, USD cents is implied. |
@@ -194,18 +196,43 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
+### Activity Category
+
+General, high-level category of activity that the vehicle performed, discernible by many sensors.
+
+| `activity_category`   | Description                                            |
+| --------------------- | ------------------------------------------------------ |
+| `construction`        | Construction of hard assets including buildings and roadside infrastructure |
+| `delivery`            | General delivery of parcels, goods, freight |
+| `emergency_use`       | Includes ambulance, fire truck, police |
+| `parking`             | Vehicle parking, charging, or stopping |
+| `passenger_transport` | Picking up and/or dropping off of human passengers |
+| `special_events`      | Includes unloading equipment for concerts, theatre, street events |
+| `waste_management`    | Retrieval/disposal of waste |
+
+[Top][toc]
+
 ### Activity Type
 
-Type of activity that the vehicle performed.
+Detailed type of activity that the vehicle performed, if discernible based on the source, likely from advanced sensors or self-reported in company data feeds. Usually a subset of one of an [Activity Category](#activity_category).
 
-| `activity_type`   | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `passenger_transport` | Picking up and/or dropping off of human passengers |
-| `food_delivery`   | Delivery of food items ready for consumption to an end consumer |
-| `parcel_delivery` | Delivery of parcels, including bulk food goods to a restaurant or other business |
-| `construction`    | Construction of hard assets including buildings and roadside infrastructure |
-| `waste_management` | Retrieval/disposal of waste |
-| `unspecified`     | Unknown or unspecified activity type |
+| `activity_type`       | Description                                            |
+| --------------------- | ------------------------------------------------------ |
+| `device_maintenance`  | Includes scooter pickup, drop off, battery swapping |
+| `ems`                 | Emergency medical vehicle use |
+| `fire`                | Emergency fire vehicle |
+| `food_delivery`       | Delivery of food items ready for consumption to an end consumer |
+| `parcel_delivery`     | Delivery of parcels, including bulk food goods to a restaurant or other business |
+| `police`              | Use by a police vehicle |
+| `public_transit`      | Includes large or small buses or paratransit. |
+| `ride_hail`           | Includes privately run ride hailing services |
+| `road_maintenance`    | Includes pothole patching, striping, snow plowing, street sweeping |
+| `service_vehicles`    | Includes private sector activity like some utilities |
+| `taxi`                | Traditionaly licensed taxi services |
+| `utility_work`        | Includes public sector activity like sewer, water, telecoms |
+| `vehicle_charging`    | Parking for electric vehicles to charge |
+| `vehicle_parking`     | Includes private or commercial vehicle free or paid/metered parking |
+| `unspecified`         | Unknown or unspecified activity type |
 
 [Top][toc]
 
