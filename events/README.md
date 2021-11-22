@@ -109,6 +109,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `provider_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. |
 | `sensor_id` | [UUID][uuid] | Optional | If a sensor was used, the globally unique identifier of the sensor that recorded the event. Not needed if data is coming from a provider directly. |
 | `sensor_status` | Object | Optional | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
+| `session_id` | [UUID][uuid] | Optional | If a source can determine if certain events can be connected, then they may provide a `session_id` to help connect via 'event_type' later. E.g., a park_start event and park_end event may be connected by the same `session_id`. |
 | `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
