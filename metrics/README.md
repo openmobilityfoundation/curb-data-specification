@@ -20,7 +20,7 @@ There are two different endpoints that are part of the Metrics API:
   * [Query Session](#query-session)
   * [Query Aggregate](#query-aggregate)
 - [Data Objects](#data-objects)
-  * [Activity](#session)
+  * [Session](#session)
   * [Aggregate](#aggregate)
     * [Methodology](#methodology)
     * [Examples](#examples)
