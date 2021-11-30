@@ -42,7 +42,7 @@ There are four different endpoints that are part of the Curbs API:
   * [Curb Area](#curb-area)
   * [Curb Space](#curb-space)
   * [Policy](#policy)
-    * [Rule](#rate)
+    * [Rule](#rule)
       * [Activities](#activities)
       * [User Classes](#user-classes)
     * [Time Span](#time-span)
