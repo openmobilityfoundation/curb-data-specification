@@ -23,7 +23,7 @@ There are two different endpoints that are part of the Events API:
     * [Source Type](#source-type)
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
-    * [Event Purpose](#event_purpose)
+    * [Event Purpose](#event-purpose)
     * [Lane Type](#lane-type)
     * [Curb Occupant](#curb-occupant)
   * [Status](#status)
