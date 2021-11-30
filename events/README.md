@@ -23,8 +23,7 @@ There are two different endpoints that are part of the Events API:
     * [Source Type](#source-type)
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
-    * [Activity Category](#activity-category)
-    * [Activity Type](#activity-type)
+    * [Event Purpose](#event_purpose)
     * [Lane Type](#lane-type)
     * [Curb Occupant](#curb-occupant)
   * [Status](#status)
@@ -120,8 +119,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
-| `activity_category` | [Activity Category](#activity-category) | Conditionally Required | General activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
-| `activity_type` | [Activity Type](#activity-type) | Conditionally Required | Detailed type of activity that the vehicle performed. Required for sources capable of determining activity type for relevant event_types. |
+| `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
 | `blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for the following event_types: _park_start, park_end, scheduled_report_ |
 | `currency` | String | Optional | Fields specifying a monetary cost use a currency as specified in ISO 4217. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). If the currency field is null, USD cents is implied. |
@@ -197,11 +195,11 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 [Top][toc]
 
-### Activity Category
+### Event Purpose
 
-General, high-level category of activity that the vehicle performed, discernible by many sensors.
+General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed.
 
-| `activity_category`   | Description                                            |
+| `event_purpose`       | Description                                            |
 | --------------------- | ------------------------------------------------------ |
 | `construction`        | Construction of hard assets including buildings and roadside infrastructure |
 | `delivery`            | General delivery of parcels, goods, freight |
@@ -210,15 +208,6 @@ General, high-level category of activity that the vehicle performed, discernible
 | `passenger_transport` | Picking up and/or dropping off of human passengers |
 | `special_events`      | Includes unloading equipment for concerts, theatre, street events |
 | `waste_management`    | Retrieval/disposal of waste |
-
-[Top][toc]
-
-### Activity Type
-
-Detailed type of activity that the vehicle performed, if discernible based on the source, likely from advanced sensors or self-reported in company data feeds. Usually a subset of one of an [Activity Category](#activity_category).
-
-| `activity_type`       | Description                                            |
-| --------------------- | ------------------------------------------------------ |
 | `device_maintenance`  | Includes scooter pickup, drop off, battery swapping |
 | `ems`                 | Emergency medical vehicle use |
 | `fire`                | Emergency fire vehicle |
