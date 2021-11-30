@@ -261,6 +261,8 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_id`| [UUID][uuid] | Optional | The ID of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 
+[Top][toc]
+
 ### Curb Zone ID Stability
 
 The `curb_zone_id` field uniquely identifies a particular zone with one particular set of policies.
@@ -333,6 +335,8 @@ A Policy is represented as a JSON object whose fields are as follows:
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 
+[Top][toc]
+
 ### Rule
 
 A rule defines who is allowed to do what, and for how long, on a curb, per the policy.
@@ -345,6 +349,8 @@ It is a JSON object with the following fields:
 | `no_return` | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before allowed to return for another stay. |
 | `user_classes` | Array of Strings | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
 | `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. |
+
+[Top][toc]
 
 #### Activities
 
@@ -362,6 +368,8 @@ for instance, implies that the Curb Zone does allow loading at the time in quest
 - `no stopping` (stopping, loading, and parking are all prohibited)
 - `travel`: represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
   and rush-hour-only travel lanes; implies that parking, loading, and stopping are prohibited).
+
+[Top][toc]
 
 #### User Classes
 
@@ -416,6 +424,8 @@ Purpose
 - `utilities`
 - `waste_management`
 
+[Top][toc]
+
 ### Time Span 
 
 A Time Span defines a period of time (that may occur once or repeatedly) during which a given regulation applies. When multiple fields are combined, all criteria must be met in order for a given Time Span to apply. For instance, the following Time Span represents 10AM to 1PM on Mondays and Tuesdays:
@@ -441,6 +451,8 @@ A Time Span is represented as a JSON object whose fields are as follows:
 | `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying. This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
 | `designated_period` | String | Optional | A string representing an arbitrarily-named, externally-defined period of time. Any values MAY be specified but the following known values SHOULD be used when possible: <ul><li>`snow emergency`</li><li>`holidays`</li><li>`school days`</li><li>`game days`</li></ul> |
 | `designated_period_except` | `Boolean` | `Optional` | If specified and `true`, this Time Span applies at all times not matching the named designated period. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, this Time Span does not apply on snow days). |
+
+[Top][toc]
 
 ### Rate
 
