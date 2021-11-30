@@ -63,7 +63,7 @@ An agency may choose to make this endpoint static (and return all the available 
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
 | `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
-| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
@@ -88,7 +88,7 @@ An agency may choose to make this endpoint static (and return all the available 
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
 | `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
-| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
@@ -139,7 +139,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 | ------ | ------ | ------------------- | ------------- |
 | `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
-| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
 | `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
 | `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means the the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
@@ -148,18 +148,18 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 
 Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics will be used in understanding how curb usage aligns with priorities.
 
-#### Total Events
+#### Total Sessions
 
-`count[events]` for a specific time period  
-Name: `total_events`
+`count[sessions]` for a specific time period  
+Name: `total_sessions`
 
 _Use Case_
 
-Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. Seems pretty basic but a lot of cities don’t have this insight or if they do it’s not current or comprehensive.
+Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. A session is a parking event, defined by the `park_start` and `park_end` event types.
 
 #### Turnover
  
-`count[events]/hour` for a specific time period  
+`count[sessions]/hour` for a specific time period  
 Name: `turnover`
 
 _Use Case_
@@ -168,7 +168,7 @@ Used together with Average Dwell Time by cities to understand how long vehicles 
 
 #### Average Dwell Time
 
-`sum[dwell time] / count[events]` for a specific time period  
+`sum[dwell time] / count[sessions]` for a specific time period  
 Name: `average_dwell_time`
 
 _Use Case_
@@ -196,30 +196,30 @@ Example of available for 2 aggregate metrics in 2 places over a 1 day period.
 
 ```
 curb_place_type,curb_place_id,metric_type,date,hour,value
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,0,3
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,1,7
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,2,2
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,3,7
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,4,9
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,5,10
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,6,13
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,7,16
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,8,17
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,9,13
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,10,15
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,11,19
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,12,29
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,13,27
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,14,26
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,15,38
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,16,34
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,17,35
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,18,33
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,19,20
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,20,16
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,21,12
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,22,-1
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,23,8
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,0,3
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,1,7
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,2,2
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,3,7
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,4,9
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,5,10
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,6,13
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,7,16
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,8,17
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,9,13
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,10,15
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,11,19
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,12,29
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,13,27
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,14,26
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,15,38
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,16,34
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,17,35
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,18,33
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,19,20
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,20,16
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,21,12
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,22,-1
+Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_sessions,2021-10-31,23,8
 Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,0,10.5
 Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,1,5.0
 Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,2,3.0
