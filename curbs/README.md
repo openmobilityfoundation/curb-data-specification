@@ -386,7 +386,8 @@ in the array to use the curb. To create an 'OR' function at the same curb, you m
 with the new array of values.
 
 New user classes MAY be generated to reflect local regulations, but when possible,
-the following well-known recommended values should be used.
+the following well-known recommended values should be used. If multile similar values apply, then use the more 
+descriptive/specific value when possible.
 
 **Well-known values:**
 
@@ -395,7 +396,6 @@ Vehicle types
 - `bus`
 - `cargo_bicycle`
 - `car`
-- `freight`
 - `moped`
 - `motorcycle`
 - `scooter`
