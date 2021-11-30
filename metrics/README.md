@@ -9,18 +9,18 @@ The Metrics API is a REST API allowing historic metrics calculations based on Ev
 
 There are two different endpoints that are part of the Metrics API:
 
-  - [Activities](#curb-event) is information about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional* within Metrics.
-  - [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
+  - [Session](#session) is information about an activity that occurs near, at, or within a pre-defined curb area. Sessions is a subset of items from the Events API.  Sessions is *optional* within Metrics.
+  - [Aggregate](#aggregate) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
 
 # Table of Contents
 
 - [Representative Sample Data](#representative-sample-data)
 - [REST Endpoints](#rest-endpoints)
   * [Update Frequency](#update-frequency)
-  * [Query Activity](#query-activity)
+  * [Query Session](#query-session)
   * [Query Aggregate](#query-aggregate)
 - [Data Objects](#data-objects)
-  * [Activity](#activity)
+  * [Activity](#session)
   * [Aggregate](#aggregate)
     * [Methodology](#methodology)
     * [Examples](#examples)
@@ -46,12 +46,12 @@ The agency serving the data may choose how frequently they want to update the da
 
 [Top][toc]
 
-##  Query Activity
+##  Query Session
 
-Endpoint: `/metrics/activity`  
+Endpoint: `/metrics/session`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
-  - `activity`: an array of [Activity](#activity) objects
+  - `session`: an array of [Session](#session) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
 
@@ -98,19 +98,24 @@ An agency may choose to make this endpoint static (and return all the available 
 
 # Data Objects 
 
-## Activity
+## Session
 
-Activities are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for some curb event types. 
-Activities are meant to provide a granular view of activity happening around the curb places, so consumers can do their own analysis and aggregation.
+Sessions are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for only some curb event types. 
+Sessions are meant to provide a granular view of parking and area sessions happening around the curb places, so consumers can do their own analysis.
 
-An Activity is represented as a CSV object, whose fields are as follows, pulled from the Curb Events endpoint in the Events API:
+A Session is represented as a CSV object, whose fields are as follows, pulled from the Curb Events endpoint in the Events API:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
-| `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
-| `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
-| `event_time` | [Timestamp][ts] | Required | Timestamp (date/time) at which the event occurred. |
+| `session_type` | Enum | Required | The type of session that happened for this event: `parking` or `area` |
+| `event_id_start` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **start/enter** event that occurred. |
+| `event_id_end` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **end/exit** event that occurred. |
+| `event_location_start_latitude` | Number | Conditionally Required | The geographic latitude point location where the **start/enter** of the event occurred. |
+| `event_location_start_longitude` | Number | Conditionally Required | The geographic longitude point location where the **start/enter** of the event occurred. |
+| `event_location_end_latitude` | Number | Conditionally Required | The geographic latitude point location where the **end/exit** of the event occurred. |
+| `event_location_end_longitude` | Number | Conditionally Required | The geographic longitude point location where the **end/exit** of the event occurred. |
+| `event_time_start` | [Timestamp][ts] | Conditionally Required | Timestamp (date/time) at which the event started with the `park_start` or `enter_area` event types. |
+| `event_time_end` | [Timestamp][ts] | Conditionally Required | Timestamp (date/time) at which the event occurred. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
@@ -120,12 +125,19 @@ An Activity is represented as a CSV object, whose fields are as follows, pulled 
 
 ### Event Types
 
-The following Event Types are included in the Activities data, and the other event types are not returned.
+The following Event Types are relevant to the Session data, and the other event types are not utilized.
 
+For `session_type` of `parking`:
 - **park_start**: a vehicle stopped, parked, or double parked
 - **park_end**: a parked vehicle leaving a parked or stopped state and resuming movement
+
+For `session_type` of `area`:
 - **enter_area**: vehicle enters the relevant geographic area
 - **exit_area**: vehicle exits the relevant geographic area
+
+**Note:** It is prefereable to return both start/end or enter/exit pairs of events. However, even if only one of these is present, the available data should be returned with the corresponding missing values of `event_id_X`, `event_location_X`, `event_time_X` returned as _null_.
+
+A "session duration" can be calculated by looking at the difference between the `event_time_start` and `event_time_end`.
 
 [Top][toc]
 
