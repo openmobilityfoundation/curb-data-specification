@@ -136,13 +136,13 @@ For `session_type` of `area`:
 
 **Note:** It is prefereable to return both start/end or enter/exit pairs of events. However, even if only one of these is present, the available data should be returned with the corresponding missing values of `event_id_X`, `event_location_X`, `event_time_X` returned as _null_.
 
-A "session duration" can be calculated by looking at the difference between the `event_time_start` and `event_time_end`.
+A "session duration" or "dwell time" can be calculated by calculating the difference between the `event_time_start` and `event_time_end`.
 
 [Top][toc]
 
 ## Aggregate
 
-Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. 
+Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. All Aggregates can be calculated from the data included in [Session](#session).
 
 An Aggregate is represented as a CSV object, whose fields are as follows, as calculated from the Metrics [Methodology](#methodology):
 
@@ -157,7 +157,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 
 ### Methodology
 
-Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics will be used in understanding how curb usage aligns with priorities.
+Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics will be used in understanding how curb usage aligns with priorities. The metrics may be calculated using the [Session](#session) data and returned here, 
 
 #### Total Sessions
 
