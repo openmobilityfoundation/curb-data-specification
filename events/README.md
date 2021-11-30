@@ -196,7 +196,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 ### Event Purpose
 
-General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed.
+General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed. If multile purposes apply, then use the more descriptive/specific value.
 
 | `event_purpose`       | Description                                            |
 | --------------------- | ------------------------------------------------------ |
