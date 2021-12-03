@@ -21,7 +21,7 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
-  - A [Curb Policy](#curb-area) A Policy object is a rule that allows or prohibits a particular set of 
+  - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional*.
 
 ![Curb Places](https://i.imgur.com/YQ7P243.jpg)
