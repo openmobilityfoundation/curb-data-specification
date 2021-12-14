@@ -169,6 +169,7 @@ All query parameters are optional.
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
 | `time` | [Timestamp][ts] | The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with `404 Not Found`. Availability data (if supplied) will be returned as of this time. |
+| `show_historic` | Boolean | Whether to return historic, retired curb zone data. Default is "false" to reduce payload size and complexity. |
 
 [Top][toc]
 
@@ -231,7 +232,8 @@ criteria:
   1. Never overlap other Curb Zones in the same dataset with overlapping validity times. This
      applies to both the zone's polygon geometries and linear references (if used).
   1. Be assigned a unique ID, in the form of a [UUID][uuid]. This ID SHOULD remain consistent as long as
-     the Curb Zone's extent and policies remain substantially the same.
+     the Curb Zone's geography remains substantially the same. Policies may be updated without changing
+     the ID.
   1. It SHOULD NOT be possible to legally park a single vehicle in two different Curb Zone at the 
      same time (i.e., a given non-demarcated parking area or loading zone should be represented as
      a single curb location), unless this conflicts with the requirements above.
@@ -241,8 +243,12 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
-| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. |
+| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
+| `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. The are listed in order with the most recent ones first. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some curb objects fields may have changed. |
+| `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. The are listed in order with the most recent ones first. |
 | `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid. This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
 | `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid. If not present, the data will be presumed to be valid indefinitely. |
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
@@ -266,17 +272,10 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 
 ### Curb Zone ID Stability
 
-The `curb_zone_id` field uniquely identifies a particular zone with one particular set of policies.
+The `curb_zone_id` field uniquely identifies a particular zone with one particular set of policies in a specific geographic area.
 
-  - *New ID*: When a Curb Zone ceases to be valid, or it needs substantive changes, its ID
-    MUST NOT not be reused by a Curb Zone with different data, even if it occupies the same
-    location. If data updates reflect changes in the physical world or agency regulations,
-    a new ID MUST be assigned. 
-  - *No new ID*: data updates that reflect changes in how the same physical locations or
-    regulations are modeled digitally -- e.g., additional metadata, or regulations being modeled
-    more accurately -- SHOULD NOT be implemented by ending a Curb Zone's validity and creating a
-    new one with a new ID. The existing Curb Zone can be updated silently with the new data;
-    callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time.
+- *New ID*: When a Curb Zone ceases to be valid, or it needs substantive geometric changes, it will be retired and returned only when the `show_historic` flag is "true" in the [Query Curb Zones](#query-curb-zones) endpoint parameters. Its ID _MUST NOT_ not be reused by a Curb Zone with different data. If geometric data updates reflect changes in the physical world, a new ID MUST be assigned and the previous one stored for historic lookups. 
+- *No new ID*: data updates that reflect changes in how the same physical locations or regulations are modeled digitally -- e.g., additional metadata, or regulations being modeled more accurately -- SHOULD NOT be implemented by ending a Curb Zone's validity and creating a new one with a new ID. The existing Curb Zone can be updated silently with the new data and its `last_updated_date` changed. Callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time. If policies in a zone change, you may update the policy IDs, track previous policies, and reset the `last_updated_date`, but keep the zone ID the same.
 
 [Top][toc]
 
@@ -285,9 +284,10 @@ The `curb_zone_id` field uniquely identifies a particular zone with one particul
 Defines curb areas in a city and their properties. A Curb Area is a particular neighborhood or area
 of interest that includes one or more [Curb Zones](#curb-zone). Important notes about Curb Areas:
 
-  * Curb Areas MAY overlap with other Curb Areas
-  * Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
+  - Curb Areas MAY overlap with other Curb Areas
+  - Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
     or more Curb Zones that is no bigger than a neighborhood.
+  - Unline Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
 
 A Curb Area is represented as a JSON object, whose fields are as follows:
 
@@ -295,7 +295,9 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_area_id` | [UUID][uuid] | Required | The ID for the curb area. |
 | `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb location. |
-| `name` | String | Required | The name of this curb area. |
+| `name` | String | Optional | The name of this curb area for reference. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
 
 [Top][toc]
@@ -303,8 +305,10 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 ## Curb Space
 
 Defines individual demarcated spaces within a Curb Zone. Important notes about Curb Spaces:
+
   - Curb Spaces may NOT overlap with other Curb Spaces
   - Curb Spaces must be wholly contained within a single Curb Zone
+  - Unline Zones, Spaces may be updated as needed, with a new `curb_space_id` being optionally assigned by the city
 
 A Curb Space is represented as a JSON object whose fields are as follows:
 
@@ -312,6 +316,9 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_space_id` | [UUID][uuid] | Required | The ID of the curb space. |
 | `geometry` | [Polygon][polygon] | Required |The spatial extent of this curb location. |
+| `name` | String | Optional | The name of this curb space for reference. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of the Curb Zone this space is within. The geometry of the specified Curb Zone MUST contain the geometry of this space. |
 | `space_number` | Integer | Optional | The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1. |
 | `length` | Integer | Required | Length in centimeters of this Space. If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
@@ -323,7 +330,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 ## Policy
 
-A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). The design of the Policy object borrows heavily from the work of the [CurbLR](https://github.com/curblr/curblr-spec) project.
+A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). The design of the Policy object borrows heavily from the work of the [CurbLR](https://github.com/curblr/curblr-spec) project, with additions for the larger scope of CDS.
 
 The `policy` field within the FeatureCollection returned by [Query Curb Zones](#query-curb-zones) contains a list of the Policy objects referenced by the returned zones. In addition, the [Query Curb Policies](#query-curb-policies) endpoint return the complete list of policies.
 
@@ -332,6 +339,7 @@ A Policy is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_policy_id` | UUID | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this policy was first published in this data feed. |
 | `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. Two Policies that apply to the same Curb Zone with overlapping Time Spans and user classes MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
@@ -483,6 +491,20 @@ A Location Reference is a JSON object with the following fields:
 | `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone. |
 | `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. end MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
+
+[Top][toc]
+  
+## Previous Policy
+
+An array of information about what previous policies applied to a [curb zone](#curb-zone) and when. This allows cities to historically track what policies applied to a curb zone.
+
+A Previous Policy is a JSON object with the following fields:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the previous regulations of this Curb Zone. |
+| `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location. |
+| `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location. |
 
 [Top][toc]
 
