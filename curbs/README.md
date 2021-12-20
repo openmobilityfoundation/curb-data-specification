@@ -287,7 +287,7 @@ of interest that includes one or more [Curb Zones](#curb-zone). Important notes 
   - Curb Areas MAY overlap with other Curb Areas
   - Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
     or more Curb Zones that is no bigger than a neighborhood.
-  - Unline Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
+  - Unlike Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
 
 A Curb Area is represented as a JSON object, whose fields are as follows:
 
@@ -308,7 +308,7 @@ Defines individual demarcated spaces within a Curb Zone. Important notes about C
 
   - Curb Spaces may NOT overlap with other Curb Spaces
   - Curb Spaces must be wholly contained within a single Curb Zone
-  - Unline Zones, Spaces may be updated as needed, with a new `curb_space_id` being optionally assigned by the city
+  - Unlike Zones, Spaces may be updated as needed, with a new `curb_space_id` being optionally assigned by the city
 
 A Curb Space is represented as a JSON object whose fields are as follows:
 
