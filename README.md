@@ -6,11 +6,11 @@
 ## Table of Contents
 
 - [Overview](#overview)
-- [Work in Progress](#work-in-progress)
 - [Curb Data Specification APIs](#curb-data-specification-apis)
   - [Structure](#structure)
   - [Modularity](#modularity)
   - [MDS Overlap](#mds-overlap)
+- [Work in Progress](#work-in-progress)
 - [Get Involved](#get-involved)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
