@@ -27,7 +27,7 @@ There are two different endpoints that are part of the Metrics API:
 
 # Representative Sample Data
 
-All data returned by the Metrics API should be viewed as using representative sample data, and not neccessarily a 100% accurate picture of what happens at every defined curb space. This is because CDS Events can come from multiple sources (company data feeds, sensors, video analysis, payments, check-ins, enforcement, and/or other city data sources), cities may implement only one or more of these sources, each source returns different types and accuracy of data, and sources may not be easily cross-comparible. It is up to the city consuming Events and producing Metrics to determine accuracy and methodology details within their circumstances, and we welcome feedback, refinement, clarification, and more defined methodology per source type for future CDS releases.
+All data returned by the Metrics API should be viewed as using representative sample data, and not necessarily a 100% accurate picture of what happens at every defined curb space. This is because CDS Events can come from multiple sources (company data feeds, sensors, video analysis, payments, check-ins, enforcement, and/or other city data sources), cities may implement only one or more of these sources, each source returns different types and accuracy of data, and sources may not be easily cross-comparible. It is up to the city consuming Events and producing Metrics to determine accuracy and methodology details within their circumstances, and we welcome feedback, refinement, clarification, and more defined methodology per source type for future CDS releases.
 
 # REST Endpoints
 
@@ -134,7 +134,7 @@ For `session_type` of `area`:
 - **enter_area**: vehicle enters the relevant geographic area
 - **exit_area**: vehicle exits the relevant geographic area
 
-**Note:** It is prefereable to return both start/end or enter/exit pairs of events. However, even if only one of these is present, the available data should be returned with the corresponding missing values of `event_id_X`, `event_location_X`, `event_time_X` returned as _null_.
+**Note:** It is preferable to return both start/end or enter/exit pairs of events. However, even if only one of these is present, the available data should be returned with the corresponding missing values of `event_id_X`, `event_location_X`, `event_time_X` returned as _null_.
 
 A "session duration" or "dwell time" can be calculated by calculating the difference between the `event_time_start` and `event_time_end`.
 
@@ -142,7 +142,7 @@ A "session duration" or "dwell time" can be calculated by calculating the differ
 
 ## Aggregate
 
-Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. All Aggregates can be calculated from the data included in [Session](#session).
+Aggregates are historic pre-computed counts and metrics of Events occurring in curb places, aggregated to the hour. All Aggregates can be calculated from the data included in [Session](#session).
 
 An Aggregate is represented as a CSV object, whose fields are as follows, as calculated from the Metrics [Methodology](#methodology):
 
@@ -153,7 +153,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 | `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
 | `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
-| `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means the the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
+| `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means that the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
 
 ### Methodology
 
