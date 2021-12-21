@@ -260,17 +260,17 @@ General purpose that the vehicle performed during its event, discernible by obse
 
 ## Status
 
-The Curb Status is the current status of a curb monitoring source. 
+The Curb Status is the current status of sensors that are monitoring curb places. 
 
-A Curb Status is represented as a JSON object array of all deployed sources and/or sensors, whose fields are as follows:
+A Curb Status is represented as a JSON object array of all deployed sensors, whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `sensor_id` | [UUID][uuid] | Required |  If a sensor was used, the globally unique identifier of the sensor that records events. |
-| `sensor_status` | Object | Required | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
-| `event_source_category` | Enum [Sensor Category](#sensor-category) | Optional | General category of the source creating the event. |
-| `source_operator_id` | [UUID][uuid] | Optional | Unique identifier of the entity responsible for operating the event source. |
-| `source_id` | [UUID][uuid] | Optional | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded. |
+| `data_source_device_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc.  |
+| `data_source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
+| `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. Can be global from [providers.csv](/providers.csv) or defined per city.  |
+| `sensor_status_is_commissioned` | Boolean | Optional | If a sensor was used to capture this event, the commissioned status at the time that the event was reported. Indicates whether the sensor is currently in a state where it should be reporting data. |
+| `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
 
 [Top][toc]
 
