@@ -1,6 +1,6 @@
 # Curb Data Specification: Events API
 
-The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, sensors, payments, check-ins, enforcement, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calcuations in the Metrics API. 
+The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, sensors, payments, check-ins, enforcement, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
 
 ## ⚠ Beta
 > **This feature is current a draft of the initial CDS beta release. It will change as development and real-world feedback happens.**
@@ -63,9 +63,9 @@ All query parameters are optional.
 
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
-| `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occuring within this area. |
-| `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occuring within this zone. |
-| `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occuring within this space. |
+| `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occurring within this area. |
+| `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occurring within this zone. |
+| `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occurring within this space. |
 
 [Top][toc]
 
@@ -102,9 +102,9 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
-| `source_operator_id` | [UUID][uuid] | Required | Unique identifier of the entity responsible for operating the event source. This can be generated outside of CDS beforhand for each source operator. Different than `provider_id`. |
+| `source_operator_id` | [UUID][uuid] | Required | Unique identifier of the entity responsible for operating the event source. This can be generated outside of CDS beforehand for each source operator. Different than `provider_id`. |
 | `source_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded by the same source. If coming from a provider, this is a generated UUID they use and not the same as the external `vehicle_id`. |
-| `provider_id` | [UUID][uuid] | Optional | Unique ID of the provider/operator/company responsible for operating the vehicle at the time of the event, if any. IDs are global and come from the [providers.csv](/providers.csv) file here in the CDS repo. Read our [How to Get a Provider ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Provider-ID) guide. An agency a their discretion may allow a small, local company to simply provide a consistent `provider_name` string instead of a `provider_id` from the global `providers.csv` file.  |
+| `provider_id` | [UUID][uuid] | Optional | Unique ID of the provider/operator/company responsible for operating the vehicle at the time of the event, if any. IDs are global and come from the [providers.csv](/providers.csv) file here in the CDS repo. Read our [How to Get a Provider ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Provider-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `provider_name` string instead of a `provider_id` from the global `providers.csv` file.  |
 | `provider_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. May be sent along with `provider_id` or on its own. |
 | `sensor_id` | [UUID][uuid] | Optional | If a sensor was used, the globally unique identifier of the sensor that recorded the event. Not needed if data is coming from a provider directly. |
 | `sensor_status` | Object | Optional | The status of the sensor that reported the event at the time that the event was reported. _is_commissioned_: Boolean, required. Indicates whether the sensor is currently in a state where it should be reporting data. _is_online_: Boolean, required. Indicates whether the sensor is currently online and reporting data. |
@@ -115,7 +115,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `vehicle_id` | String | Optional | A vehicle identifier visible on the vehicle itself. |
-| `license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obsfucation, and security. |
+| `license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
@@ -131,16 +131,16 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 `event_type`. Curb Event Type enumerates the set of possible types of Curb Event. The values that it can assume are listed below:
 
-| `event_type`   | Description |
-|----------------| ----------- |
-| `comms_lost`   | communications with the event source were lost |
-| `comms_restored` | communications with the event source were restored |
-| `decommissioned` | event source was decommissioned |
-| `park_start`   | a vehicle stopped, parked, or double parked |
-| `park_end`     | a parked vehicle leaving a parked or stopped state and resuming movement |
-| `scheduled_report` | event source reported status status at a scheduled interval |
-| `enter_area`   | vehicle enters the relevant geographic area |
-| `exit_area`    | vehicle exits the relevant geographic area |
+| `event_type`       | Description |
+|--------------------|-------------|
+| `comms_lost`       | communications with the event source were lost |
+| `comms_restored`   | communications with the event source were restored |
+| `decommissioned`   | event source was decommissioned |
+| `park_start`       | a vehicle stopped, parked, or double parked |
+| `park_end`         | a parked vehicle leaving a parked or stopped state and resuming movement |
+| `scheduled_report` | event source reported status at a scheduled interval |
+| `enter_area`       | vehicle enters the relevant geographic area |
+| `exit_area`        | vehicle exits the relevant geographic area |
 
 [Top][toc]
 
@@ -156,7 +156,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `in_ground`    | sensor deployed in the ground |
 | `meter`        | a smart parking meter |
 | `in_person`    | an individual on site recording the event digitally or otherwise |
-| `other`        | sources not ennumerated above |
+| `other`        | sources not enumerated above |
 
 [Top][toc]
 
@@ -197,7 +197,7 @@ A vehicle may have one or more values from the `propulsion`, depending on the nu
 
 ### Event Purpose
 
-General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed. If multile purposes apply, then use the more descriptive/specific value.
+General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed. If multiple purposes apply, then use the more descriptive/specific value.
 
 | `event_purpose`       | Description                                            |
 | --------------------- | ------------------------------------------------------ |
@@ -228,14 +228,14 @@ General purpose that the vehicle performed during its event, discernible by obse
 
 ### Lane Type
 
-`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event, ouside of curb zones. E.g., double parking.
+`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event, outside of curb zones. E.g., double parking.
 
 | `lane_type`    | Description                                            |
 | -------------- | ------------------------------------------------------ |
 | `travel_lane`  | A standard vehicle travel lane. |
 | `turn_lane`    | A dedicated turn lane. |
 | `bike_lane`    | A lane dedicated for usage by cyclists. |
-| `bus_lane`     | A lane dedicated for usage by busses. |
+| `bus_lane`     | A lane dedicated for usage by buses. |
 | `parking`      | A lane used for parking, not allowed for travel. |
 | `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
 | `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
