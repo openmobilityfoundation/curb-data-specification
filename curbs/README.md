@@ -245,10 +245,10 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
 | `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
-| `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. The are listed in order with the most recent ones first. |
+| `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. They are listed in order with the most recent ones first. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some curb objects fields may have changed. |
-| `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. The are listed in order with the most recent ones first. |
+| `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. They are listed in order with the most recent ones first. |
 | `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid. This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
 | `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid. If not present, the data will be presumed to be valid indefinitely. |
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
@@ -357,7 +357,7 @@ It is a JSON object with the following fields:
 | ------ | ------ | ------------------- | ------------- |
 | `activity` | String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
 | `max_stay` | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. |
-| `no_return` | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before allowed to return for another stay. |
+| `no_return` | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before being allowed to return for another stay. |
 | `user_classes` | Array of Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
 | `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. |
 
@@ -371,14 +371,14 @@ is due to priorities: a `loading` rule that is higher priority than a `no loadin
 for instance, implies that the Curb Zone does allow loading at the time in question, while a
 `no parking` rule would not.
 
-- `parking` (implies that loading and stopping are also permitted)
+- `parking` - implies that loading and stopping are also permitted
 - `no parking`
-- `loading` (of goods; implies that stopping is also permitted)
-- `no loading` (implies that parking is also prohibited)
-- `stopping`  (stopping briefly to pick up or drop off passengers)
-- `no stopping` (stopping, loading, and parking are all prohibited)
-- `travel`: represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
-  and rush-hour-only travel lanes; implies that parking, loading, and stopping are prohibited).
+- `loading` - of goods; implies that stopping is also permitted
+- `no loading` - implies that parking is also prohibited
+- `stopping` - stopping briefly to pick up or drop off passengers
+- `no stopping` - stopping, loading, and parking are all prohibited
+- `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
+  and rush-hour-only travel lanes; implies that parking, loading, and stopping are prohibited.
 
 [Top][toc]
 
@@ -392,13 +392,13 @@ intent or destination of the driver, for things like hotel or school unloading z
 These are not meant to be a mirror to similarly named items in the Events API, but instead serve a 
 unique purpose of describing locally defined regulations at a curb.
 
-This array of user classes serves as an 'AND' function. A vehcile must have all the properties listed
+This array of user classes serves as an 'AND' function. A vehicle must have all the properties listed
 in the array to use the curb. For example, an accessible EV bus will use `handicap-accessible` AND `electric` 
 AND `bus`. To create 'OR' values at the same curb, you must create a new rule 
 with the new array of values.
 
 New user classes MAY be generated to reflect local regulations, but when possible,
-the following well-known recommended values should be used. If multile similar values apply, then use the more 
+the following well-known recommended values should be used. If multiple similar values apply, then use the more 
 descriptive/specific value when possible.
 
 **Well-known values:**
@@ -491,7 +491,7 @@ A Location Reference is a JSON object with the following fields:
 | `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
 | `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone. |
-| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. end MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
+| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
 
 [Top][toc]
