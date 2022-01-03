@@ -25,27 +25,27 @@ There are four different endpoints that are part of the Curbs API:
 
 # Table of Contents
 
-
 - [REST Endpoints](#rest-endpoints)
-  * [Query Curb Zones](#query-curb-zones)
-  * [Query Curb Areas](#query-curb-areas)
-  * [Query Curb Spaces](#query-curb-spaces)
-  * [Query Curb Policies](#query-curb-policies)
-  * [Fetch a Curb Zone](#fetch-a-curb-zone)
-  * [Fetch a Curb Area](#fetch-a-curb-area)
-  * [Fetch a Curb Space](#fetch-a-curb-space)
-  * [Fetch a Curb Policy](#fetch-a-curb-policy)
+  - [Query Curb Zones](#query-curb-zones)
+  - [Query Curb Areas](#query-curb-areas)
+  - [Query Curb Spaces](#query-curb-spaces)
+  - [Query Curb Policies](#query-curb-policies)
+  - [Fetch a Curb Zone](#fetch-a-curb-zone)
+  - [Fetch a Curb Area](#fetch-a-curb-area)
+  - [Fetch a Curb Space](#fetch-a-curb-space)
+  - [Fetch a Curb Policy](#fetch-a-curb-policy)
 - [Data Objects](#data-objects)
-  * [Curb Zone](#curb-zone)
-  * [Curb Area](#curb-area)
-  * [Curb Space](#curb-space)
-  * [Policy](#policy)
-    * [Rule](#rule)
-      * [Activities](#activities)
-      * [User Classes](#user-classes)
-    * [Time Span](#time-span)
-    * [Rate](#rate) 
-  * [Location Reference](#location-reference)
+  - [Curb Zone](#curb-zone)
+  - [Curb Area](#curb-area)
+  - [Curb Space](#curb-space)
+  - [Policy](#policy)
+    - [Rule](#rule)
+      - [Activities](#activities)
+      - [User Classes](#user-classes)
+    - [Time Span](#time-span)
+    - [Rate](#rate) 
+  - [Location Reference](#location-reference)
+- [Examples](#examples)
 
 # REST Endpoints
 
@@ -507,6 +507,12 @@ A Previous Policy is a JSON object with the following fields:
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the previous regulations of this Curb Zone. |
 | `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location. |
 | `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location. |
+
+[Top][toc]
+ 
+# Examples
+
+See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
 
 [Top][toc]
 
