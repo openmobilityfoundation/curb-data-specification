@@ -2,6 +2,8 @@
 
 The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places.
 
+**See [other CDS APIs](/) on the homepage.**
+
 # Endpoints
 
 There are two different endpoints that are part of the Metrics API:
