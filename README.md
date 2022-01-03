@@ -1,7 +1,7 @@
 # Curb Data Specification
 
-## Beta
-> ⚠ **This repository is current a draft of the initial CDS beta, and not an official release. It will be changed and updated as development and real-world feedback happens and we head for a 1.0 beta release. See our current [timeline](https://github.com/openmobilityfoundation/curb-data-specification/wiki#timeline) and watch the [CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/releases) page for updates.**
+## Release Candidate
+> ⚠ **This repository is a release candidate for CDS 1.0. It has been approved by the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki). You may start to use it in your development and production environments for real world use cases. The release is going through the final [OMF approval process](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#approval-by-the-open-mobility-foundation), where it may be tweaked or enhanced with more guidance and resourse. See the [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0) page for updates.**
 
 ## Table of Contents
 
