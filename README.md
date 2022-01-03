@@ -1,7 +1,7 @@
 # Curb Data Specification
 
 ## Release Candidate
-> ⚠ **This repository is a release candidate for CDS 1.0. It has been approved by the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki). You may start to use it in your development and production environments for real world use cases. The release is going through the final [OMF approval process](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#approval-by-the-open-mobility-foundation), where it may be tweaked or enhanced with more guidance and resourse. See the [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0) page for updates.**
+> ⚠ **This repository is a release candidate for CDS 1.0. It has been approved by the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki). You may start to use it in your development and production environments for real world use cases. The release is going through the final [OMF approval process](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#approval-by-the-open-mobility-foundation), where it may be tweaked or enhanced with more guidance and resources. See the [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0) page for updates.**
 
 ## Table of Contents
 
@@ -30,9 +30,11 @@ Urban curb is a valuable, limited, and often under-managed part of the public ri
 
 CDS is at its core a set of Application Programming Interfaces (APIs) and endpoints within those APIs, which allow information to flow between organizations managing and using curb places. It includes the following APIs and their associated endpoints:
 
-1. **[Curbs API](/curbs)** - communicate curb locations and policies publicly
-1. **[Events API](/events)** - capture activity at Curbs from sensors and curb users
-1. **[Metrics API](/metrics)** - methodology and metrics to understand Events at Curbs
+| API | Description |
+|---|---|
+| **[Curbs](/curbs)** | communicate curb locations and policies publicly |
+| **[Events](/events)** | capture activity at Curbs from sensors and curb users |
+| **[Metrics](/metrics)** | methodology and metrics to understand Events at Curbs |
 
 CDS is a data exchange format and a translation layer between internal systems and external entities using data feeds. It is not expected that CDS will be the format used internally to store curb regulations in a city. The internal storage format is something different, and a subset of that data should be able to be converted to CDS for publishing out to the public and curb users. 
 
