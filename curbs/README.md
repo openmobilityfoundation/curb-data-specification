@@ -343,7 +343,7 @@ A Policy is represented as a JSON object whose fields are as follows:
 | `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and user classes MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
-| `provider_ids` | Array of [UUIDs][uuid] | Optional | An array of provider IDs that this policy only applies to. IDs come from [providers.csv](/providers.csv) file here in the CDS repo. Read our [How to Get a Provider ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Provider-ID) guide. |
+| `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
 
 [Top][toc]
 
