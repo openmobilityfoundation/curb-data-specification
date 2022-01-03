@@ -72,7 +72,9 @@ For questions about CDS please contact by email at [info@openmobilityfoundation.
 
 # Versions
 
-CDS has a **current release**, and an **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
+CDS has a **current release** (version 1.0.0), and an **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
+
+The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [CDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-CDS-Version-Guidance.md) for best practices on how and when to upgrade CDS as new versions become available. Our complimentary [CDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-CDS-Policy-Language-Guidance.md) document is for cities writing CDS into their operating policy and includes sample policy language.
 
 ## Technical Information
 
@@ -84,6 +86,7 @@ The CDS specification is versioned using Git tags and [semantic versioning](http
 * [Development Branch](https://github.com/openmobilityfoundation/curb-data-specification/tree/dev) (dev)
 * [All GitHub Releases](https://github.com/openmobilityfoundation/curb-data-specification/releases)
 * [CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) - current/recommended versions, timeline
+* [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
 
 [Top][toc]
 
