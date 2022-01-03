@@ -7,9 +7,6 @@ Curbs API can be connected to event and metrics data, and can be shared with com
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
 curb utilization over time.
 
-## ⚠ Beta
-> **This feature is current a draft of the initial CDS beta. It will be change as development and real-world feedback happens.**
-
 # Endpoints
 
 There are four different endpoints that are part of the Curbs API:
