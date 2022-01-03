@@ -21,8 +21,6 @@ Beta features may be suitable for enabling some new tools and analysis, but may 
 
 Working Groups and their Steering Committees are expected to review beta designated features and feedback with each release cycle and determine whether the feature has reached the level of stability and maturity needed to remove the beta designation. In a case where a beta feature fails to reach substantial adoption after an extended time, Working Group Steering Committees should discuss whether or not the feature should remain in the specification.
 
-> **This CDS repository is currently wholly in the beta state. It will be change as development and real-world feedback happens. See our current [timeline](https://github.com/openmobilityfoundation/curb-data-specification/wiki#timeline) and watch the [CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/releases) page for updates.**
-
 [Top][toc]
 
 # Costs and currencies
