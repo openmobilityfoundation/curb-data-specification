@@ -139,7 +139,7 @@ All query parameters are optional.
 
 Endpoint: `/curb/policy`  
 Method: `GET`  
-`data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#curb-policy) objects.
+`data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
 _Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
 
@@ -206,7 +206,7 @@ All query parameters are optional.
 
 Endpoint: `/curb/policy/<id>`  
 Method: `GET`  
-`data` Payload: the [Curb Policy](#curb-policy) object with the ID provided in the path. 
+`data` Payload: the [Curb Policy](#policy) object with the ID provided in the path. 
 
 ### Query Parameters
 
