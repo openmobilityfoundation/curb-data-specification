@@ -28,6 +28,7 @@ There are four different endpoints that are part of the Curbs API:
 # Table of Contents
 
 - [REST Endpoints](#rest-endpoints)
+  - [Authorization](#authorization)
   - [Query Curb Zones](#query-curb-zones)
   - [Query Curb Areas](#query-curb-areas)
   - [Query Curb Spaces](#query-curb-spaces)
@@ -51,22 +52,13 @@ There are four different endpoints that are part of the Curbs API:
 
 # REST Endpoints
 
-All endpoints return a JSON object containing the following fields:
+All endpoints return a JSON object containing the fields as specified in the [REST Endpoint](/general-information.md#rest-endpoints) details.
 
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `data` | _Endpoint-dependent_ | Required | The requested data objects. |
-| `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
-| `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | [Timestamp][ts] | Required | The last time the data in this API was updated. |
-| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. |
-| `author` | String | Optional | The name of the organization that produces and maintains this data. |
-| `license_url` | URL | Optional | The licensing terms under which this data is provided. |
+[Top][toc]
 
-Servers MUST set the `Content-Type` header to `application/vnd.cds+json;version=0.0` to support
-versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+json;version=0.0`. If the server receives a request that contains an `Accept`
-header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
+## Authorization
+
+[Authorization](/general-information.md#authorization) is not required for any of the Curbs endpoints, as this information should be made public and easily accessible.
 
 [Top][toc]
 
