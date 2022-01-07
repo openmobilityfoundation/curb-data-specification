@@ -9,7 +9,7 @@ This file presents a series of CDS [Curbs](/curbs) endpoint examples to use as t
 
 ## Curb Zones Minimum
 
-A [Query Curb Zones](https://github.com/openmobilityfoundation/curb-data-specification/tree/feature-release-work-1/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, plus a max parking stay of 60 minutes, and some parameters passed in.
+A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, plus a max parking stay of 60 minutes, and some parameters passed in.
 
 **Query**: 
 
