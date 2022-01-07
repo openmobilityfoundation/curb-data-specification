@@ -15,6 +15,7 @@ There are two different endpoints that are part of the Metrics API:
 
 - [Representative Sample Data](#representative-sample-data)
 - [REST Endpoints](#rest-endpoints)
+  - [Authorization](#authorization)
   * [Update Frequency](#update-frequency)
   * [Query Session](#query-session)
   * [Query Aggregate](#query-aggregate)
@@ -27,6 +28,25 @@ There are two different endpoints that are part of the Metrics API:
 # Representative Sample Data
 
 All data returned by the Metrics API should be viewed as using representative sample data, and not necessarily a 100% accurate picture of what happens at every defined curb space. This is because CDS Events can come from multiple sources (company data feeds, sensors, video analysis, payments, check-ins, enforcement, and/or other city data sources), cities may implement only one or more of these sources, each source returns different types and accuracy of data, and sources may not be easily cross-comparible. It is up to the city consuming Events and producing Metrics to determine accuracy and methodology details within their circumstances, and we welcome feedback, refinement, clarification, and more defined methodology per source type for future CDS releases.
+
+# REST Endpoints
+
+All endpoints return a CSV file that can either be pre-computed or created on demand dynamically.
+
+If returning data from a static CSV file directly (e.g, from a web-based file system, service, or data portal), then adding header information is not required.
+
+If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.0` to support
+versioning in the future.  Clients SHOULD specify an `Accept` header containing 
+`application/vnd.cds+csv;version=1.0`. If the server receives a request that contains an `Accept`
+header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
+
+[Top][toc]
+
+## Authorization
+
+[Authorization](/general-information.md#authorization) is **optionally required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. It is recommended to authenticate when in doubt, though the information in [Query Aggregate](#query-aggregate) is aggregated report level data suitable for data analysis and public release.
+
+[Top][toc]
 
 # REST Endpoints
 
