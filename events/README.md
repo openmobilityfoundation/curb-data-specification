@@ -27,6 +27,7 @@ There are two different endpoints that are part of the Events API:
     * [Lane Type](#lane-type)
     * [Curb Occupant](#curb-occupant)
   * [Status](#status)
+- [Examples](#examples)
 
 # REST Endpoints
 
@@ -263,6 +264,12 @@ A Curb Status is represented as a JSON object array of all deployed sensors, who
 | `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. Can be global from [data_source_operators.csv](/data_source_operators.csv) or defined per city.  |
 | `sensor_status_is_commissioned` | Boolean | Optional | If a sensor was used to capture this event, the commissioned status at the time that the event was reported. Indicates whether the sensor is currently in a state where it should be reporting data. |
 | `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
+
+[Top][toc]
+
+# Examples
+
+See a series of [CDS Events endpoint examples](examples.md) to use as templates. 
 
 [Top][toc]
 
