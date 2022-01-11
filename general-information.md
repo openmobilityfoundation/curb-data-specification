@@ -8,13 +8,16 @@ This document contains specifications that are shared between the various CDS AP
 - [Authorization](#authorization)
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
-- [Geographic Data][#geographic-data]
+- [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
   - [Intersection Operation](#intersection-operation)
+- [Responses](#responses)
 - [REST Endpoints](#rest-endpoints)
+- [Pagination](#pagination)
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
+- [Versioning](#versioning)
 
 # Authorization
 
@@ -152,6 +155,36 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
+# Responses
+
+* **200:** OK: operation successful.
+* **201:** Created: `POST` operations, new object created
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+* **406:** Not Acceptable. Invalid response.
+* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+* **501:** Not Implemented. 
+
+## Error Messages
+
+```json
+{
+    "error": "...",
+    "error_description": "...",
+    "error_details": [ "...", "..." ]
+}
+```
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
 # REST Endpoints
 
 All dynamic REST endpoints will return a JSON object containing the following fields:
@@ -173,6 +206,38 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 [Top][toc]
 
+# Pagination
+
+Endpoints may use pagination, which must comply with the [JSON API][json-api-pagination] specification.
+
+The following keys must be used for pagination links:
+
+* `first`: url to the first page of data
+* `last`: url to the last page of data
+* `prev`: url to the previous page of data
+* `next`: url to the next page of data
+
+At a minimum, payloads that use pagination must include a `next` key, which must be set to `null` to indicate the last page of data.
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "endpoint": [{
+            "field_name": "..."
+        }]
+    },
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+[Top][toc]
+
 # UUID
 
 A UUID is a 128-bit, globally unique identifier represented as a string using the format defined in
@@ -186,6 +251,24 @@ in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 
 A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC
 (the UNIX epoch).
+
+[Top][toc]
+
+# Versioning
+
+CDS APIs must handle requests for specific versions of the specification from clients.
+
+Versioning must be implemented through the use of a custom media-type, `application/vnd.cds+json`, combined with a required `version` parameter.
+
+The version parameter specifies the dot-separated combination of major and minor versions from a published version of the specification. For example, the media-type for version `1.0.1` would be specified as `application/vnd.cds+json;version=1.0`
+
+Clients must specify the version they are targeting through the `Accept` header. For example:
+
+```http
+Accept: application/vnd.cds+json;version=1.2.0
+```
+
+If an unsupported or invalid version is requested, the API must respond with a status of `406 Not Acceptable`.
 
 [Top][toc]
 
