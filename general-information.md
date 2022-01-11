@@ -8,7 +8,10 @@ This document contains specifications that are shared between the various CDS AP
 - [Authorization](#authorization)
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
-- [Polygon](#polygon)
+- [Geographic Data][#geographic-data]
+  - [Geographic Telemetry Data](geographic-telemetry-data)
+  - [Polygon](#polygon)
+  - [Intersection Operation](#intersection-operation)
 - [REST Endpoints](#rest-endpoints)
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
@@ -82,7 +85,46 @@ Defining terminology and abbreviations used throughout CDS.
 - Curb Zone - A geographically and policy defined area where transactions may happen at curb space.
 - Curb Space - A geographically defined area within a Curb Zone for a single vehicle.
 
-# Polygon
+# Geographic Data
+
+References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
+
+## Geographic Telemetry Data
+
+Whenever a vehicle or device location coordinate measurement is presented, it must be represented as a GeoJSON [`Feature`][geojson-feature] object with a corresponding `properties` object with the following properties:
+
+
+| Field          | Type            | Required/Optional     | Field Description                                            |
+| -------------- | --------------- | --------------------- | ------------------------------------------------------------ |
+| `timestamp`    | [timestamp][ts] | Required              | Date/time that event occurred. Based on GPS or GNSS clock |
+| `altitude`     | Double          | Required if Available | Altitude above mean sea level in meters |
+| `heading`      | Double          | Required if Available | Degrees - clockwise starting at 0 degrees at true North |
+| `speed`        | Float           | Required if Available | Estimated speed in meters / sec as reported by the GPS chipset |
+| `accuracy`     | Float           | Required if Available | Horizontal accuracy, in meters |
+| `hdop`         | Float           | Required if Available | Horizontal GPS or GNSS accuracy value (see [hdop][hdop]) |
+| `satellites`   | Integer         | Required if Available | Number of GPS or GNSS satellites |
+
+Example of a vehicle location GeoJSON [`Feature`][geojson-feature] object:
+
+```json
+{
+    "type": "Feature",
+    "properties": {
+        "timestamp": 1529968782421,
+        "accuracy": 10,
+        "speed": 1.21
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.46710503101347,
+            33.9909333514159
+        ]
+    }
+}
+```
+
+## Polygon
 
 A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
 [RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example polygon is:
@@ -99,6 +141,14 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
   ]]
 }
 ```
+
+## Intersection Operation
+
+For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
+
+> If a geometry or geography shares any portion of space then they intersect. For geography -- tolerance is 0.00001 meters (so any points that are close are considered to intersect).
+>
+> Overlaps, Touches, Within all imply spatial intersection. If any of the aforementioned returns true, then the geometries also spatially intersect. Disjoint implies false for spatial intersection.
 
 [Top][toc]
 
