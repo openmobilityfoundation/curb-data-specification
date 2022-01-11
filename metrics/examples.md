@@ -4,11 +4,28 @@ This file presents a series of CDS [Metrics](/metrics) endpoint examples to use 
 
 ## Table of Contents
 
+- [Dynamic Sessions](#dynamic-sessions)
 - [Static Aggregate Metrics](#static-aggregate-metrics)
+
+## Dynamic Sessions
+
+A [Query Session](/metrics#query-session) example of `/metrics/session` with . Dynamic endpoint with parameters passed in.
+
+**Query**: 
+
+`/metrics/session?curb_place_type=zone&metric_type=average_dwell_time&start_time=&end_time=`
+
+**Payload**:
+
+```csv
+
+```
+
+[Top](#table-of-contents)
 
 ## Static Aggregate Metrics
 
-A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregate` with 2 aggregate metrics in 2 places over a 1 day period. Static endpoint so no parameters passed in.
+A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregate` that collects 2 aggregate metrics in 2 places over a 1 day period. Static endpoint so no parameters passed in.
 
 **Query**: 
 
