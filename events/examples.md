@@ -98,7 +98,7 @@ A [Query Event](/events#query-event) example of `/events/event` from a fleet ope
           "vehicle_length": "670",
           "vehicle_type": "truck",
           "vehicle_propulsion_types": ["electric"],
-          "vehicle_blocked_lane_types": "parking"
+          "vehicle_blocked_lane_types": ["parking"]
         }
       ]
     }
