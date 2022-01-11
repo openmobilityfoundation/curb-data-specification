@@ -7,7 +7,7 @@ Curbs API can be connected to event and metrics data, and can be shared with com
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
 curb utilization over time.
 
-**See [other CDS APIs](/) on the homepage.**
+**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
 
 # Endpoints
 
@@ -22,6 +22,8 @@ There are four different endpoints that are part of the Curbs API:
     are *optional*.
   - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional*.
+
+**See [examples](examples.md) for these endpoints.**
 
 ![Curb Places](https://i.imgur.com/YQ7P243.jpg)
 
