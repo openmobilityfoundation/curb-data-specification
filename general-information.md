@@ -111,8 +111,8 @@ All dynamic REST endpoints will return a JSON object containing the following fi
 | `data` | _Endpoint-dependent_ | Required | The requested data objects. |
 | `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
 | `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | [Timestamp][ts] | Required | The last time the data in this API was updated. |
-| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. |
+| `last_updated` | [Timestamp][#timestamp] | Required | The last time the data in this API was updated. |
+| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
 
