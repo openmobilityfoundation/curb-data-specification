@@ -140,9 +140,9 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 ### Source Type
 
-`source_type`. Curb Source Type enumerates the set of possible categories of sources that are sending this event. The values that it can assume are listed below:
+`data_source_type`. Curb Data Source Type enumerates the set of possible categories of sources that are sending this event. The values that it can assume are listed below:
 
-| `source_type`  | Description |
+| `data_source_type`  | Description |
 |----------------| ----------- |
 | `data_feed`    | directly from a provider data feed sent to the agency |
 | `camera`       | video or static image processing source |
@@ -178,14 +178,14 @@ Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list w
 
 Propulsion type of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
-| `propulsion`      | Description                                            |
+| `vehicle_propulsion_types`      | Description                              |
 | ----------------- | ------------------------------------------------------ |
 | `human`           | Pedal or foot propulsion                               |
 | `electric_assist` | Provides power only alongside human propulsion         |
 | `electric`        | Contains throttle mode with a battery-powered motor    |
 | `combustion`      | Contains throttle mode with a gas engine-powered motor |
 
-A vehicle may have one or more values from the `propulsion`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `propulsion` represented by the array `['human', 'electric']`. A bicycle with pedal-assist would have the `propulsion` represented by the array `['human', 'electric_assist']` if it can also be operated as a traditional bicycle.
+A vehicle may have one or more values from the `vehicle_propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `vehicle_propulsion_types` represented by the array `["human", "electric"]`. A bicycle with pedal-assist would have the `vehicle_propulsion_types` represented by the array `["human", "electric_assist"]` if it can also be operated as a traditional bicycle. A hybrid vehicle may use `["combustion", "electric"]`.
 
 [Top][toc]
 
@@ -222,9 +222,9 @@ General purpose that the vehicle performed during its event, discernible by obse
 
 ### Lane Type
 
-`lane_type`. Type(s) of lane used or blocked by the vehicle performing the event, outside of curb zones. E.g., double parking.
+`vehicle_blocked_lane_types`. Type(s) of lane used or blocked by the vehicle performing the event, outside of curb zones. E.g., double parking.
 
-| `lane_type`    | Description                                            |
+| `vehicle_blocked_lane_types`    | Description                                            |
 | -------------- | ------------------------------------------------------ |
 | `travel_lane`  | A standard vehicle travel lane. |
 | `turn_lane`    | A dedicated turn lane. |
