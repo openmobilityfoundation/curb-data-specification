@@ -87,7 +87,7 @@ A [Query Event](/events#query-event) example of `/events/event` from a fleet ope
           "event_time": "1552678578632",
           "event_publication_time": "1552678594428",
           "curb_zone_id": "02885f6f-ef93-441b-9e74-487279380656",
-          "data_source_type": "above_ground",
+          "data_source_type": "data_feed",
           "data_source_operator_id": "16a85550-51d3-4f52-8ea9-e8a10306cab2",
           "data_source_operator_name": "USPS",
           "data_source_device_id": "618e92a4-e557-42a9-8f0a-0273545f7f49",
