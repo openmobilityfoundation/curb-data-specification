@@ -9,16 +9,20 @@ This file presents a series of CDS [Metrics](/metrics) endpoint examples to use 
 
 ## Dynamic Sessions
 
-A [Query Session](/metrics#query-session) example of `/metrics/session` with . Dynamic endpoint with parameters passed in.
+A [Query Session](/metrics#query-session) example of `/metrics/session` with all fields returned for parking events in a specific zone over a short time period. Dynamic endpoint with parameters passed in.
 
 **Query**: 
 
-`/metrics/session?curb_place_type=zone&metric_type=average_dwell_time&start_time=&end_time=`
+`/metrics/session?curb_place_type=zone&curb_place_id=d3c862b1-5404-4635-a90b-056537c50e81&start_time=1641738460&end_time=1642119064`
 
 **Payload**:
 
 ```csv
-
+session_type,event_id_start,event_id_end,event_location_start_latitude,event_location_start_longitude,event_location_end_latitude,event_location_end_longitude,event_time_start,event_time_end,curb_zone_id,vehicle_length,vehicle_type
+parking,f49333b2-d693-4f5b-b187-1a1acd720eae,4cfa75aa-d044-436f-951f-0f3037de0d29,38.257341,-85.7629702,38.256330,-85.7629111,1641738560,1641918255,d3c862b1-5404-4635-a90b-056537c50e81,120,cargo_bicycle
+parking,0843d2e7-ce60-44da-a609-fb4317ef15c6,d8599307-27b4-4161-be9a-c0d097cef54d,38.257352,-85.7629804,38.257331,-85.7629810,1641839464,1641919041,d3c862b1-5404-4635-a90b-056537c50e81,670,truck
+parking,74e9d1d4-9037-4347-9135-f72010311ef7,f31f1615-adad-4542-83c8-9c858f9ecd0f,38.257349,-85.7629763,38.257836,-85.7630018,1641940456,1642019039,d3c862b1-5404-4635-a90b-056537c50e81,380,van
+parking,35c923fd-78f5-471d-a548-efb0dabca3b7,c702915e-9b2e-45a5-ab30-f4413cdb1a1b,38.257359,-85.7629518,38.258139,-85.7629615,1642140839,1642119050,d3c862b1-5404-4635-a90b-056537c50e81,980,freight
 ```
 
 [Top](#table-of-contents)
