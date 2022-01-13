@@ -128,6 +128,7 @@ A Session is represented as a CSV object, whose fields are as follows, pulled fr
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `session_type` | Enum | Required | The type of session that happened for this event: `parking` or `area` |
+| `session_id` | [UUID][uuid] | Optional | If known and recorded to tie two Events together, then include the `event_session_id` recorded in the [Curb Event](/events#curb-event). |
 | `event_id_start` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **start/enter** event that occurred. |
 | `event_id_end` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **end/exit** event that occurred. |
 | `event_location_start_latitude` | Number | Conditionally Required | The geographic latitude point location where the **start/enter** of the event occurred. |
