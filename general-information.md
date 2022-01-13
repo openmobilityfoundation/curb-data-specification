@@ -272,4 +272,12 @@ If an unsupported or invalid version is requested, the API must respond with a s
 
 [Top][toc]
 
+[decimal-degrees]: https://en.wikipedia.org/wiki/Decimal_degrees
+[hdop]: https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
+[geo]: #geographic-data
+[geojson-feature]: https://tools.ietf.org/html/rfc7946#section-3.2
+[geojson-point]: https://tools.ietf.org/html/rfc7946#section-3.1.2
+[st-intersects]: https://postgis.net/docs/ST_Intersects.html
 [toc]: #table-of-contents
+[ts]: /general-information.md#timestamps
+[wgs84]: https://en.wikipedia.org/wiki/World_Geodetic_System
