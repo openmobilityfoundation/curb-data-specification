@@ -101,10 +101,10 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
-| `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
-| `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
+| `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for these event_types: _enter_area, exit_area, park_start, park_end_ |
+| `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space, if known and used, for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `data_source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
-| `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. IDs can identify the fleet operator sending a data feed, or the organization (company or city) operating the sensor. IDs for fleet operators are required and global and come from the [data_source_operators.csv](/data_source_operators.csv) file, and optional for others. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `data_source_operator_name` string instead of this field.  |
+| `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. IDs can identify the fleet operator sending a data feed, or the organization (company or city) operating the sensor. IDs for fleet operators are required and global and come from the [data_source_operators.csv](/data_source_operators.csv) file, and optional for others. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `data_source_operator_name` string instead of this field, otherwise this field is required. |
 | `data_source_operator_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. May be sent along with `data_source_operator_id` or on its own for small operators at the discretion of the city. |
 | `data_source_device_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded by the same source. If coming from a provider, this is a generated UUID they use and not the same as the external `vehicle_id`. |
 | `data_source_manufacturer` | String | Optional | Manufacturer of the data source hardware or vehicle reporting event data. |
@@ -117,17 +117,17 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
-| `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for the following event_types: _park_start_ |
-| `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for the following event_types: _park_start, park_end, scheduled_report_ |
+| `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
+| `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
 
 [Top][toc]
 
 ### Event Type
 
-`event_type`. Curb Event Type enumerates the set of possible types of Curb Event. The values that it can assume are listed below:
+Curb Event Type `event_type` enumerates the set of possible types of Curb Event. The values that it can assume are listed below:
 
-| `event_type`       | Description |
+| Name               | Description |
 |--------------------|-------------|
 | `comms_lost`       | communications with the event source were lost |
 | `comms_restored`   | communications with the event source were restored |
@@ -142,15 +142,16 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 ### Source Type
 
-`data_source_type`. Curb Data Source Type enumerates the set of possible categories of sources that are sending this event. The values that it can assume are listed below:
+Curb Data Source Type `data_source_type` enumerates the set of possible categories of sources that are sending this event. The values that it can assume are listed below:
 
-| `data_source_type`  | Description |
+| Name           | Description |
 |----------------| ----------- |
 | `data_feed`    | directly from a provider data feed sent to the agency |
 | `camera`       | video or static image processing source |
-| `above_ground` | sensor deployed above ground  |
+| `above_ground` | sensor deployed above ground |
 | `in_ground`    | sensor deployed in the ground |
 | `meter`        | a smart parking meter |
+| `payment`      | from payment system or app |
 | `in_person`    | an individual on site recording the event digitally or otherwise |
 | `other`        | sources not enumerated above |
 
@@ -158,10 +159,10 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 
 ### Vehicle Type
 
-Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS vehicle types can occur.
+Type of vehicle `vehicle_type` similar to vehicle_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS vehicle types can occur.
 
-| `vehicle_type`   | Description |
-|------------------| ----------- |
+| Name             | Description |
+|----------------- | ----------- |
 | `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
 | `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
 | `car`            | A passenger car or similar light-duty vehicle |
@@ -178,9 +179,9 @@ Type of vehicle, similar to vehicle_type in MDS. For this CDS release the list w
 
 ### Propulsion Type
 
-Propulsion type of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
+Propulsion type `vehicle_propulsion_types` of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
-| `vehicle_propulsion_types`      | Description                              |
+| Name              | Description                                            |
 | ----------------- | ------------------------------------------------------ |
 | `human`           | Pedal or foot propulsion                               |
 | `electric_assist` | Provides power only alongside human propulsion         |
@@ -193,9 +194,9 @@ A vehicle may have one or more values from the `vehicle_propulsion_types`, depen
 
 ### Event Purpose
 
-General purpose that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed. If multiple purposes apply, then use the more descriptive/specific value.
+General event purpose `event_purpose` that the vehicle performed during its event, discernible by observation, sensors, or self-reported in company data feeds. New event purposes MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. It may not always be knowable, but where it is possible this information should be conveyed. If multiple purposes apply, then use the more descriptive/specific value.
 
-| `event_purpose`       | Description                                            |
+| Name                  | Description                                            |
 | --------------------- | ------------------------------------------------------ |
 | `construction`        | Construction of hard assets including buildings and roadside infrastructure |
 | `delivery`            | General delivery of parcels, goods, freight |
@@ -224,9 +225,9 @@ General purpose that the vehicle performed during its event, discernible by obse
 
 ### Lane Type
 
-`vehicle_blocked_lane_types`. Type(s) of lane used or blocked by the vehicle performing the event, outside of curb zones. E.g., double parking.
+Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle performing the event, outside of curb zones. E.g., double parking.
 
-| `vehicle_blocked_lane_types`    | Description                                            |
+| Name           | Description                                            |
 | -------------- | ------------------------------------------------------ |
 | `travel_lane`  | A standard vehicle travel lane. |
 | `turn_lane`    | A dedicated turn lane. |
@@ -242,13 +243,13 @@ General purpose that the vehicle performed during its event, discernible by obse
 
 ### Curb Occupants
 
-`curb_occupants`. A Curb Occupant object represents a specific vehicle’s occupancy in a curb region at a specific point in time. Curb Occupant objects contain the following fields:
+A Curb Occupant `curb_occupants` object represents a specific vehicle’s occupancy in a curb region at a specific point in time. Curb Occupant objects contain the following fields:
 
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `type` | [Vehicle Type](#vehicle-type) | Required | The vehicle type of the occupant. When the event source is not capable of distinguishing vehicle type, this property must take the value "unspecified".
-| `length` | Float | Conditionally required | The approximate length in centimeters of the vehicle. Required when the event source is capable of determining vehicle length.
-| `linear_location` | Array of Float | Conditionally required | A two-element array that specifies the start and end of the occupant’s linear location relative to the start of the Curb Zone in that order. Required when the event source is capable of determining the linear location of occupants.
+| Name              | Type           | Required/Optional       | Description |
+| ----------------- | -------------- | ----------------------- | ----------- |
+| `type`            | [Vehicle Type](#vehicle-type) | Required | The vehicle type of the occupant. When the event source is not capable of distinguishing vehicle type, this property must take the value "unspecified".
+| `length`          | Float          | Conditionally required  | The approximate length in centimeters of the vehicle. Required when the event source is capable of determining vehicle length.
+| `linear_location` | Array of Float | Conditionally required  | A two-element array that specifies the start and end of the occupant’s linear location relative to the start of the Curb Zone in that order. Required when the event source is capable of determining the linear location of occupants.
 
 [Top][toc]
 
