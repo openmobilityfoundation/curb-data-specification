@@ -32,9 +32,9 @@ CDS is at its core a set of Application Programming Interfaces (APIs) and endpoi
 
 | API | Description |
 |---|---|
-| **[Curbs](/curbs)** | communicate curb locations and policies publicly |
-| **[Events](/events)** | capture activity at Curbs from sensors and curb users |
-| **[Metrics](/metrics)** | methodology and metrics to understand Events at Curbs |
+| **[Curbs](/curbs)** | A standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. |
+| **[Events](/events)** | A standard way to transmit real-time and historic commercial events happening at the curb to cities. Event data can be derived from company data feeds, sensors, payments, check-ins, enforcement, and other city data sources. |
+| **[Metrics](/metrics)** | Track curb usage session details and define common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. |
 
 CDS is a data exchange format and a translation layer between internal systems and external entities using data feeds. It is not expected that CDS will be the format used internally to store curb regulations in a city. The internal storage format is something different, and a subset of that data should be able to be converted to CDS for publishing out to the public and curb users. 
 
