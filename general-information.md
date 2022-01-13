@@ -8,6 +8,7 @@ This document contains specifications that are shared between the various CDS AP
 - [Authorization](#authorization)
 - [Beta Features](#beta-features)
 - [Costs and Currencies](#costs-and-currencies)
+- [Event Times](#event-times)
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
