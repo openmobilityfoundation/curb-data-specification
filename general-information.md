@@ -88,6 +88,12 @@ Defining terminology and abbreviations used throughout CDS.
 - Curb Zone - A geographically and policy defined area where transactions may happen at curb space.
 - Curb Space - A geographically defined area within a Curb Zone for a single vehicle.
 
+# Event Times
+
+Return data in the order of timestamps of the events on the ground, with most recent items returned first to construct as accurate a timeline as possible.
+
+Because of unreliability of some device clocks and other factors, sensors and operators are unlikely to know with total confidence what time an event occurred at. However, endpoint producers are responsible for constructing as accurate a timeline as possible. Most importantly, the order of the timestamps for a particular vehicle's events must reflect the producer's best understanding of the order in which those events occurred.
+
 # Geographic Data
 
 References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
@@ -157,6 +163,8 @@ For the purposes of this specification, the intersection of two geographic datat
 
 # Responses
 
+List of acceptable endpoint responses.
+
 * **200:** OK: operation successful.
 * **201:** Created: `POST` operations, new object created
 * **400:** Bad request.
@@ -208,7 +216,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 # Pagination
 
-Endpoints may use pagination, which must comply with the [JSON API][json-api-pagination] specification.
+Endpoints may use pagination, which must comply with the [JSON API][json-api-pagination] specification. See [Event Times](/general-information.md#event-times) guideance about the order of data returned.
 
 The following keys must be used for pagination links:
 
