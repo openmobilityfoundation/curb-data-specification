@@ -15,6 +15,8 @@
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Membership](#membership) 
+- [Data Privacy](#data-privacy)
+- [Use Cases](#use-cases)
 
 # Overview
 
@@ -106,6 +108,28 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
 Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+
+[Top][toc]
+
+# Data Privacy
+
+CDS includes information about commercial vehicles using select curb zones in a city to allow agencies to regulate curb use and policy in the public right of way and to conduct analysis for program improvements. While CDS is not designed to convey any personal information and is focused on commerical curb activity, some uses of some fields can be sensitive. The OMF community has created a number of resources to help cities, fleet operators, and software companies handle vehicle data safely:
+
+* [CDS Privacy Guidance](https://docs.google.com/document/d/117kJhXp6ldv7KHq7k9wHONHVVHw00xweaHpORVu_c10/edit?usp=sharing) - identifies relevant data in CDS, use cases, and provides suggestions on the safe handling of this data.
+* [Privacy Guide for Cities](https://github.com/openmobilityfoundation/governance/raw/main/documents/OMF-MDS-Privacy-Guide-for-Cities.pdf) - guide that covers essential privacy topics and best practices
+* [The Privacy Principles for Mobility Data](https://www.mobilitydataprivacyprinciples.org/) - principles endorsed by the OMF and other mobility organizations to guide the mobility ecosystem in the responsible use of data and the protection of individual privacy
+* [Mobility Data State of Practice](https://github.com/openmobilityfoundation/privacy-committee/blob/main/products/state-of-the-practice.md) - real-world examples related to the handling and protection of MDS and other types of mobility data
+* [CDS Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Curbs-Use-Cases) - outlines real-world use cases, and how to use CDS to make them happen and why.
+
+The OMF’s [Privacy, Security, and Transparency Committee](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee) creates many of these resources, and advises the OMF on principles and practices that ensure the secure handling of mobility data. The committee – which is composed of both private and public sector OMF members – also holds regular public meetings, which provide additional resources and an opportunity to discuss issues related to privacy and mobility data. Learn more [here](https://github.com/openmobilityfoundation/privacy-committee#welcome-to-the-privacy-security-and-transparency-committee).
+
+[Top][toc]
+
+# Use Cases
+
+How cities use CDS depends on a variety of factors: their transportation goals, existing services and infrastructure, and the unique needs of their communities. Cities are using CDS to create policy, manage curbs, and ensure the safe operation of vehicles in the public right of way. 
+
+A list of use cases is useful to show what's possible with CDS, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [CDS Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Curbs-Use-Cases).
 
 [Top][toc]
 
