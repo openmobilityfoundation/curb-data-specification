@@ -21,7 +21,8 @@ There are four different endpoints that are part of the Curbs API:
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
   - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
-    users from using a particular curb at a particular time or times.  Curb policies are *optional*.
+    users from using a particular curb at a particular time or times.  Curb policies are *optional* 
+    but recommended with Curb Zones.
 
 **See [examples](examples.md) for these endpoints.**
 
@@ -68,9 +69,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 Endpoint: `/curbs/zone`  
 Method: `GET`  
-`data` Payload: a JSON object with the following fields:
-  - `zones`: an array of [Curb Zone](#curb-zone) objects
-  - `policies`: an array of [Policy](#policy) objects
+`data` Payload: a JSON object with a `zones` field containing an array of [Curb Zone](#curb-zone) objects.
 
 _This endpoint must be implemented by every Curbs API server._
 
@@ -84,7 +83,6 @@ All query parameters are optional.
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a bounding box; if one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `include_geometry` | `true`/`false` |  If the value is `false`, do not include the `geometry` field within the [Curb Zone](#curb-zone) feature object. |
-| `include_policies` | `true`/`false` | If the value is `false`, do not include the `policies` field within the response. |
 | `time` | [Timestamp][ts] | Only Curb Zone objects whose validity period includes this time will be returned; availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
@@ -135,7 +133,7 @@ Endpoint: `/curb/policy`
 Method: `GET`  
 `data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, but required if Curb Zones contain policy_id references; if not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
@@ -159,10 +157,10 @@ _Optional endpoint; if not implemented, the server should reply with `501 Not Im
 
 All query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `time` | [Timestamp][ts] | The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with `404 Not Found`. Availability data (if supplied) will be returned as of this time. |
-| `show_historic` | Boolean | Whether to return historic, retired curb zone data. Default is "false" to reduce payload size and complexity. |
+| Name            | Type            | Description                                    |
+| --------------- | --------------- | ---------------------------------------------- |
+| `time`          | [Timestamp][ts] | The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with `404 Not Found`. Availability data (if supplied) will be returned as of this time. |
+| `show_historic` | Boolean         | Whether to return historic, retired curb zone data. Default is "false" to reduce payload size and complexity. |
 
 [Top][toc]
 
@@ -190,9 +188,9 @@ Method: `GET`
 
 All query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `time` | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
+| Name         | Type            | Description                                    |
+| ------------ | --------------- | ---------------------------------------------- |
+| `time`       | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
 
@@ -484,7 +482,7 @@ A Location Reference is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li> |
+| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li></ul> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
 | `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone. |
 | `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
