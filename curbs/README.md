@@ -365,7 +365,7 @@ for instance, implies that the Curb Zone does allow loading at the time in quest
 `no parking` rule would not. If "negative", `rate` array should be empty.
 
 - `parking` - implies that loading and stopping are also permitted
-- `no parking`
+- `no parking` - may not stop and leave vehicle unattended
 - `loading` - of goods; implies that stopping is also permitted
 - `no loading` - implies that parking is also prohibited
 - `stopping` - stopping briefly to pick up or drop off passengers
