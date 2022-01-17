@@ -9,11 +9,11 @@ This file presents a series of CDS [Curbs](/curbs) endpoint examples to use as t
 
 ## Curb Zones Minimum
 
-A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, plus a max parking stay of 60 minutes, and some parameters passed in.
+A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, and some parameters passed in.
 
 **Query**: 
 
-`/curbs/zone?include_geometry=true&include_policies=true&timestamp=1552678594427`
+`/curbs/zone?include_geometry=true&timestamp=1552678594427`
 
 **Payload**:
 
@@ -46,19 +46,6 @@ A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with mini
           "published_date": 1552678594428,
           "last_updated_date": 1552678594428,
           "start_date": 1552678594428
-        }
-      ],
-      "policies": [
-        {
-          "curb_policy_id": "cd0996d7-3765-4f0b-a72e-7caf7cf3fe21",
-          "published_date": 1552678594428,
-          "priority": 1,
-          "rules": [
-            {
-              "activity": "parking",
-              "max_stay": 60
-            }
-          ]
         }
       ] 
     }
