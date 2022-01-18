@@ -26,7 +26,7 @@ Urban curb is a valuable, limited, and often under-managed part of the public ri
 
 **CDS** is a key piece of digital infrastructure that supports the effective implementation of curb policies in cities and for curb users. For a high level overview and visuals, see the **[About CDS](https://www.openmobilityfoundation.org/about-cds/) page** on the OMF website.
 
-![Curb Data Specification Logo](https://i.imgur.com/pj3ig4F.png)
+![Curb Data Specification Logo](https://i.imgur.com/pvZZQF4.png)
 
 [Top][toc]
 
