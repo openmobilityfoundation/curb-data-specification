@@ -24,7 +24,9 @@ The Curb Data Specification (**CDS**), a project of the [Open Mobility Foundatio
 
 Urban curb is a valuable, limited, and often under-managed part of the public right of way. Curb demand is growing, including from commercial activity like passenger pickup/drop off, traditional and on-demand delivery services, new mobility programs like scooters, bikeshare, and carshare, and goods and freight delivery. While cities have made some progress in digitizing their curb and using curb data, more tools are needed to proactively manage curbs and sidewalks, and to deliver more public value from this scarce resource. Curb data standards can provide a mechanism for expressing static and dynamic regulations, measuring activity at the curb, and developing policies that create more accessible, useful curbs.
 
-![Curb Data Specification Logo](https://i.imgur.com/dc855VZ.png)
+**CDS** is a key piece of digital infrastructure that supports the effective implementation of curb policies in cities and for curb users. For a high level overview and visuals, see the **[About CDS](https://www.openmobilityfoundation.org/about-cds/) page** on the OMF website.
+
+![Curb Data Specification Logo](https://i.imgur.com/pj3ig4F.png)
 
 [Top][toc]
 
@@ -46,7 +48,7 @@ Many parts of the CDS definitions and APIs align across each other. In these cas
 
 CDS contains a series of connected endpoints and fields beneath each interconnected API.
 
-<p align="center"><img src="https://i.imgur.com/cqvXO6w.png" width="600" align="center" /></p>
+<p align="center"><img src="https://i.imgur.com/4DxMu6t.png" width="600" align="center" /></p>
 
 ## Modularity
 
