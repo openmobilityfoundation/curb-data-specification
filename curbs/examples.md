@@ -13,7 +13,7 @@ A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with mini
 
 **Query**: 
 
-`/curbs/zone?include_geometry=true&timestamp=1552678594427`
+`/curbs/zone?include_geometry=true&time=1552678594427`
 
 **Payload**:
 
