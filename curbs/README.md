@@ -366,12 +366,14 @@ for instance, implies that the Curb Zone does allow loading at the time in quest
 
 - `parking` - implies that loading and stopping are also permitted
 - `no parking` - may not stop and leave vehicle unattended
-- `loading` - of goods; implies that stopping is also permitted
-- `no loading` - implies that parking is also prohibited
+- `loading` - loading of goods; implies that stopping is also permitted
+- `no loading` - no loading allowed; implies that parking is also prohibited
+- `unloading` - unloading of goods; implies that stopping is also permitted
+- `no unloading` - no unloading allowed; implies that parking is also prohibited
 - `stopping` - stopping briefly to pick up or drop off passengers
-- `no stopping` - stopping, loading, and parking are all prohibited
+- `no stopping` - stopping, loading, unloading, and parking are all prohibited; not a typical travel lane
 - `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
-  and rush-hour-only travel lanes; implies that parking, loading, and stopping are prohibited.
+  and rush-hour-only travel lanes; implies that parking, loading, unloading, and stopping are prohibited.
 
 [Top][toc]
 
