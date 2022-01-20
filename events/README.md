@@ -207,6 +207,7 @@ General event purpose `event_purpose` that the vehicle performed during its even
 | `special_events`      | Includes unloading equipment for concerts, theatre, street events |
 | `waste_management`    | Retrieval/disposal of waste |
 | `device_maintenance`  | Includes scooter pickup, drop off, battery swapping |
+| `autonomous`          | Autonomous vehicle use |
 | `ems`                 | Emergency medical vehicle use |
 | `fire`                | Emergency fire vehicle |
 | `food_delivery`       | Delivery of food items ready for consumption to an end consumer |
@@ -220,6 +221,7 @@ General event purpose `event_purpose` that the vehicle performed during its even
 | `utility_work`        | Includes public sector activity like sewer, water, telecoms |
 | `vehicle_charging`    | Parking for electric vehicles to charge |
 | `vehicle_parking`     | Includes private or commercial vehicle free or paid/metered parking |
+| `vending`             | Mobile vending or food truck curb uses |
 | `unspecified`         | Unknown or unspecified activity type |
 
 [Top][toc]
