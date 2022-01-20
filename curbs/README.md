@@ -67,7 +67,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ##  Query Curb Zones
 
-Endpoint: `/curbs/zone`  
+Endpoint: `/curbs/zones`  
 Method: `GET`  
 `data` Payload: a JSON object with a `zones` field containing an array of [Curb Zone](#curb-zone) objects.
 
@@ -89,7 +89,7 @@ All query parameters are optional.
 
 ##  Query Curb Areas
 
-Endpoint: `/curbs/area`  
+Endpoint: `/curbs/areas`  
 Method: `GET`  
 `data` Payload: a JSON object with an `areas` field containing an array of [Curb Area](#curb-area) objects.
 
@@ -108,7 +108,7 @@ All query parameters are optional.
 
 ## Query Curb Spaces
 
-Endpoint: `/curbs/space`  
+Endpoint: `/curbs/spaces`  
 Method: `GET`  
 `data` Payload: a JSON object with a `spaces` field containing an array of [Curb Space](#curb-space) objects.
 
@@ -129,7 +129,7 @@ All query parameters are optional.
 
 ## Query Curb Policies
 
-Endpoint: `/curb/policy`  
+Endpoint: `/curb/policies`  
 Method: `GET`  
 `data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
@@ -147,7 +147,7 @@ All query parameters are optional.
 
 ##  Fetch a Curb Zone
 
-Endpoint: `/curbs/zone/<id>`  
+Endpoint: `/curbs/zones/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Zone](#curb-zone) object with the ID provided in the path.
 
@@ -166,7 +166,7 @@ All query parameters are optional.
 
 ##  Fetch a Curb Area
 
-Endpoint: `/curbs/area/<id>`  
+Endpoint: `/curbs/areas/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Area](#curb-area) object with the ID provided in the path.
 
@@ -180,7 +180,7 @@ This endpoint takes no query parameters.
 
 ## Fetch a Curb Space
 
-Endpoint: `/curbs/space/<id>`  
+Endpoint: `/curbs/spaces/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Space](#curb-space) object with the ID provided in the path.
 
@@ -198,7 +198,7 @@ All query parameters are optional.
 
 ## Fetch a Curb Policy
 
-Endpoint: `/curb/policy/<id>`  
+Endpoint: `/curb/policies/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Policy](#policy) object with the ID provided in the path. 
 
