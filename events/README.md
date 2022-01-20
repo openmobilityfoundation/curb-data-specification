@@ -45,7 +45,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ##  Query Event
 
-Endpoint: `/events/event`  
+Endpoint: `/events/events`  
 Method: `GET`  
 `data` Payload: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
