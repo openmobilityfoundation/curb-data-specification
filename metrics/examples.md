@@ -9,11 +9,11 @@ This file presents a series of CDS [Metrics](/metrics) endpoint examples to use 
 
 ## Dynamic Sessions
 
-A [Query Session](/metrics#query-session) example of `/metrics/session` with all fields returned for parking events in a specific zone over a short time period. Dynamic endpoint with [query parameters](/metrics#query-parameters) passed in.
+A [Query Session](/metrics#query-session) example of `/metrics/sessions` with all fields returned for parking events in a specific zone over a short time period. Dynamic endpoint with [query parameters](/metrics#query-parameters) passed in.
 
 **Query**: 
 
-`/metrics/session?curb_place_type=zone&curb_place_id=d3c862b1-5404-4635-a90b-056537c50e81&start_time=1641738460&end_time=1642119064`
+`/metrics/sessions?curb_place_type=zone&curb_place_id=d3c862b1-5404-4635-a90b-056537c50e81&start_time=1641738460&end_time=1642119064`
 
 **Payload**:
 
@@ -29,11 +29,11 @@ parking,35c923fd-78f5-471d-a548-efb0dabca3b7,c702915e-9b2e-45a5-ab30-f4413cdb1a1
 
 ## Static Aggregate Metrics
 
-A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregate` that collects 2 aggregate metrics in 2 places over a 1 day period. Static endpoint, so no [query parameters](/metrics#query-parameters) passed in.
+A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregates` that collects 2 aggregate metrics in 2 places over a 1 day period. Static endpoint, so no [query parameters](/metrics#query-parameters) passed in.
 
 **Query**: 
 
-`/metrics/aggregate`
+`/metrics/aggregates`
 
 **Payload**:
 
