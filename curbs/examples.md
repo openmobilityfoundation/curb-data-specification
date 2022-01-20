@@ -9,7 +9,7 @@ This file presents a series of CDS [Curbs](/curbs) endpoint examples to use as t
 
 ## Curb Zones Minimum
 
-A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, and some [query parameters](/curbs/README.md#query-parameters) passed in.
+A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with minimum required fields returned, and some [query parameters](/curbs#query-parameters) passed in.
 
 **Query**: 
 
@@ -57,7 +57,7 @@ A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zone` with mini
 
 ## Curb Policies
 
-A [Query Curb Policies](https://github.com/openmobilityfoundation/curb-data-specification/tree/feature-release-work-1/curbs#query-curb-policies) example of `/curbs/policy` showing policies giving 3 fleet operators using electric vehicles operating rideshare curb access for max 15 minute drop-offs on weekdays from 10am to 4pm, other commerical activity for up to 60 minutes between 8am and 10pm, but otherwise no stopping (eg overnight). No [query parameters](/curbs/README.md#query-parameters) passed in.
+A [Query Curb Policies](https://github.com/openmobilityfoundation/curb-data-specification/tree/feature-release-work-1/curbs#query-curb-policies) example of `/curbs/policy` showing policies giving 3 fleet operators using electric vehicles operating rideshare curb access for max 15 minute drop-offs on weekdays from 10am to 4pm, other commerical activity for up to 60 minutes between 8am and 10pm, but otherwise no stopping (eg overnight). No [query parameters](/curbs#query-parameters-3) passed in.
 
 **Query**: 
 
