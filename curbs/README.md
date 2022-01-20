@@ -415,6 +415,7 @@ Vehicle properties
 - `electric_assist`
 - `electric`
 - `combustion`
+- `autonomous`
 
 Purpose
 - `construction`
@@ -429,6 +430,7 @@ Purpose
 - `special_events`
 - `taxi`
 - `utilities`
+- `vending`
 - `waste_management`
 
 [Top][toc]
