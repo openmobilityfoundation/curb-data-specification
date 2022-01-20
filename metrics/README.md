@@ -69,7 +69,7 @@ The agency serving the data may choose how frequently they want to update the da
 
 ##  Query Session
 
-Endpoint: `/metrics/session`  
+Endpoint: `/metrics/sessions`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
   - `session`: an array of [Session](#session) objects
@@ -93,7 +93,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 ##  Query Aggregate
 
-Endpoint: `/metrics/aggregate`  
+Endpoint: `/metrics/aggregates`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
   - `aggregate`: an array of [Aggregate](#aggregate) objects
