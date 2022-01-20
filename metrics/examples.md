@@ -9,7 +9,7 @@ This file presents a series of CDS [Metrics](/metrics) endpoint examples to use 
 
 ## Dynamic Sessions
 
-A [Query Session](/metrics#query-session) example of `/metrics/session` with all fields returned for parking events in a specific zone over a short time period. Dynamic endpoint with parameters passed in.
+A [Query Session](/metrics#query-session) example of `/metrics/session` with all fields returned for parking events in a specific zone over a short time period. Dynamic endpoint with [query parameters](/metrics#query-parameters) passed in.
 
 **Query**: 
 
@@ -29,7 +29,7 @@ parking,35c923fd-78f5-471d-a548-efb0dabca3b7,c702915e-9b2e-45a5-ab30-f4413cdb1a1
 
 ## Static Aggregate Metrics
 
-A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregate` that collects 2 aggregate metrics in 2 places over a 1 day period. Static endpoint so no parameters passed in.
+A [Query Aggregate](/metrics#query-aggregate) example of `/metrics/aggregate` that collects 2 aggregate metrics in 2 places over a 1 day period. Static endpoint, so no [query parameters](/metrics#query-parameters) passed in.
 
 **Query**: 
 
