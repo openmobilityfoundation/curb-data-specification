@@ -9,7 +9,7 @@ This file presents a series of CDS [Events](/events) endpoint examples to use as
 
 ## Curb Event Minimum
 
-A [Query Event](/events#query-event) example of `/events/event` with minimum required fields showing the start of a `park_start` event at a specific curb zone detected by an above ground sensor, and no parameters passed in.
+A [Query Event](/events#query-event) example of `/events/event` with minimum required fields showing the start of a `park_start` event at a specific curb zone detected by an above ground sensor, and no [query parameters](/events#query-parameters) passed in.
 
 **Query**: 
 
@@ -53,7 +53,7 @@ A [Query Event](/events#query-event) example of `/events/event` with minimum req
 
 ## Fleet Operator
 
-A [Query Event](/events#query-event) example of `/events/event` from a fleet operator's data feed with many optional fields showing the start of a `park_start` with event details and vehicle properties, and the curb_zone_id parameter passed in.
+A [Query Event](/events#query-event) example of `/events/event` from a fleet operator's data feed with many optional fields showing the start of a `park_start` with event details and vehicle properties, and the curb_zone_id [query parameter](/events#query-parameters) passed in.
 
 **Query**: 
 
