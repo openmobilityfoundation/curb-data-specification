@@ -129,7 +129,7 @@ All query parameters are optional.
 
 ## Query Curb Policies
 
-Endpoint: `/curb/policies`  
+Endpoint: `/curbs/policies`  
 Method: `GET`  
 `data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
@@ -198,7 +198,7 @@ All query parameters are optional.
 
 ## Fetch a Curb Policy
 
-Endpoint: `/curb/policies/<id>`  
+Endpoint: `/curbs/policies/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Policy](#policy) object with the ID provided in the path. 
 
