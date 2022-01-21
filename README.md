@@ -32,13 +32,28 @@ Urban curb is a valuable, limited, and often under-managed part of the public ri
 
 # Curb Data Specification APIs
 
-CDS is at its core a set of Application Programming Interfaces (APIs) and endpoints within those APIs, which allow information to flow between organizations managing and using curb places. It includes the following APIs and their associated endpoints:
+CDS is at its core a set of Application Programming Interfaces (APIs) and endpoints within those APIs, which allow information to flow between organizations managing and using curb places. It includes the following three APIs, with multiple endpoints under each API:
 
-| API | Description |
-|---|---|
-| **[Curbs](/curbs)** | A standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. |
-| **[Events](/events)** | A standard way to transmit real-time and historic commercial events happening at the curb to cities. Event data can be derived from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. |
-| **[Metrics](/metrics)** | Track curb usage session details and define common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. |
+---
+
+<a href="/curbs/"><img src="https://i.imgur.com/ta5z101.png" width="80" align="left" alt="CDS Curbs Icon" border="0"></a>
+
+The [`Curbs`](/curbs/) API is a standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. It defines curb policies, curb zones, spaces in zones, and areas around curbs. 
+
+---
+
+<a href="/events/"><img src="https://i.imgur.com/p6Lp7Rv.png" width="80" align="left" alt="CDS Events Icon" border="0"></a>
+
+The [`Events`](/events/) API is a standard way to transmit real-time and historic commercial events happening at the curb to cities. Event data can be derived from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. 
+
+---
+
+<a href="/metrics/"><img src="https://i.imgur.com/9NkdqGs.png" width="80" align="left" alt="CDS Metrics Icon" border="0"></a>
+
+The [`Metrics`](/metrics/) API is a way to track curb usage session details and define common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. It defines sessions and aggregates derived from Events.
+
+---
+
 
 CDS is a data exchange format and a translation layer between internal systems and external entities using data feeds. It is not expected that CDS will be the format used internally to store curb regulations in a city. The internal storage format is something different, and a subset of that data should be able to be converted to CDS for publishing out to the public and curb users. 
 
