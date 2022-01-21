@@ -1,6 +1,8 @@
 # Curb Data Specification: Metrics API
 
-The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places.
+<a href="/metrics/"><img src="https://i.imgur.com/9NkdqGs.png" width="120" align="right" alt="CDS Metrics Icon" border="0"></a>
+
+The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places. Defines common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. 
 
 **See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
 
