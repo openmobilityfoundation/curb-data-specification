@@ -1,5 +1,7 @@
 # Curb Data Specification: Curbs API
-<a href="/curbs/"><img src="https://i.imgur.com/aBqI6yr.png" width="120" align="right" alt="CDS Curbs Icon" border="0"></a>
+
+<a href="/curbs/"><img src="https://i.imgur.com/aBqI6yr.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
+
 The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with
 the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc.,
 for how long, for what price (if any), at what times, and on which days. Locations defined in the
