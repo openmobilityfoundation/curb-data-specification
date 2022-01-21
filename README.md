@@ -38,19 +38,19 @@ CDS is at its core a set of Application Programming Interfaces (APIs) and endpoi
 
 <a href="/curbs/"><img src="https://i.imgur.com/ta5z101.png" width="80" align="left" alt="CDS Curbs Icon" border="0"></a>
 
-The [`Curbs`](/curbs/) API is a standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. It defines curb policies, curb zones, spaces in zones, and areas around curbs. 
+The [`Curbs`](/curbs/) API is a standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. It defines curb policies, curb zones, spaces in zones, and areas around curbs, and is used by Events and Metrics. 
 
 ---
 
 <a href="/events/"><img src="https://i.imgur.com/p6Lp7Rv.png" width="80" align="left" alt="CDS Events Icon" border="0"></a>
 
-The [`Events`](/events/) API is a standard way to transmit real-time and historic commercial events happening at the curb to cities. Event data can be derived from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. 
+The [`Events`](/events/) API is a standard way to transmit real-time and historic commercial events happening at the curb to cities. Event data can be derived from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. Connected to Curbs and used by Metrics.
 
 ---
 
 <a href="/metrics/"><img src="https://i.imgur.com/9NkdqGs.png" width="80" align="left" alt="CDS Metrics Icon" border="0"></a>
 
-The [`Metrics`](/metrics/) API is a way to track curb usage session details and define common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. It defines sessions and aggregates derived from Events.
+The [`Metrics`](/metrics/) API is a way to track curb usage session details and define common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. It defines sessions and aggregates data derived from raw Events data.
 
 ---
 
