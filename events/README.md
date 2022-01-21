@@ -1,6 +1,6 @@
 # Curb Data Specification: Events API
 
-<a href="/events/"><img src="https://i.imgur.com/p6Lp7Rv.png" width="120" align="right" alt="CDS Events Icon" border="0"></a>
+<a href="/events/"><img src="https://i.imgur.com/hC8py0L.png" width="100" align="right" alt="CDS Events Icon" border="0"></a>
 
 The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
 
