@@ -261,7 +261,7 @@ in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 
 A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
 
-## Time Ranges
+## Time Range
 
 All ranges across the spec of timestamps, times, or dates are 'inclusive' at the start and 'exclusive' at the end, unless otherwise noted. 
 
