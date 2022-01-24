@@ -18,6 +18,7 @@ This document contains specifications that are shared between the various CDS AP
 - [Pagination](#pagination)
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
+  - [Time Range](#time-range)
 - [Versioning](#versioning)
 
 # Authorization
