@@ -88,8 +88,8 @@ An agency may choose to make this endpoint static (and return all the available 
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
-| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
-| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
 
@@ -113,8 +113,8 @@ An agency may choose to make this endpoint static (and return all the available 
 | `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
-| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data |
-| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)).  |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
 
