@@ -478,7 +478,7 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `increment_minutes` | Integer | Optional | If specified, this is the smallest amount of time a user can pay for (e.g., if `increment_minutes` is `15`, a user can pay for 15, 30, 45, etc. minutes). |
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same units as `per_hour`. |
 | `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate starts when the vehicle arrives. |
-| `end_minutes` | Integer | Optional | The amount of time after which the rate stops applying (_inclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs. |
+| `end_minutes` | Integer | Optional | The amount of time after which the rate stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs. |
 
 [Top][toc]
 
