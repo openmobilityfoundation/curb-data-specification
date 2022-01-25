@@ -1,6 +1,6 @@
 ## 1.0.0
 
-**Release Candidate submitted 2022-01-25**
+**Released yyyy-MM-dd**
 
 [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0)
 
