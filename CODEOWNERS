@@ -1,4 +1,7 @@
-## Below is the MDS CODEOWNERS file, which dictates who is required for review on any given file.
+## Below is the CDS CODEOWNERS file, which dictates who is required for review on any given file.
 
-## All MDS approvals
+## All CDS approvals
 * @openmobilityfoundation/omf-admin
+
+## CDS Working Group
+* @openmobilityfoundation/cds-maintainers @openmobilityfoundation/omf-admin
