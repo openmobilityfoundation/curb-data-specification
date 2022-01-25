@@ -244,8 +244,8 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some curb objects fields may have changed. |
 | `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. They are listed in order with the most recent ones first. |
-| `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid (_inclusive_, see [Time Range](/general-information.md#time-range)). This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
-| `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid (_exclusive_, see [Time Range](/general-information.md#time-range)). If not present, the data will be presumed to be valid indefinitely. |
+| `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
+| `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not present, the data will be presumed to be valid indefinitely. |
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
@@ -454,13 +454,13 @@ A Time Span is represented as a JSON object whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `start_date` | [Timestamp][ts] | Optional | The earliest point in time that this Time Span could apply (_inclusive_, see [Time Range](/general-information.md#time-range)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the past. See note below for more details. |
-| `end_date` | [Timestamp][ts] | Optional | The latest point in time that this Time Span could apply (_exclusive_, see [Time Range](/general-information.md#time-range)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the future. See note below for more details. |
+| `start_date` | [Timestamp][ts] | Optional | The earliest point in time that this Time Span could apply (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the past. See note below for more details. |
+| `end_date` | [Timestamp][ts] | Optional | The latest point in time that this Time Span could apply (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the future. See note below for more details. |
 | `days_of_week` | Array of strings | Optional | An array of days of the week when this Time Span applies, specified as 3-character strings (`"sun"`, `"mon"`, `"tue"`, `"wed"`, `"thu"`, `"fri"`, `"sat"`). |
 | `days_of_month` | Array of integers | Optional | An array of days of the month when this Time Span applies, specified as integers (1-31). Note that, in order to specify, e.g., the "2nd Monday of the month", you can use `days_of_month` combined with `days_of_week` (in this example, `days_of_week = ["mon"]` and `days_of_month = [8,9,10,11,12,13,14]`). |
 | `months` | Array of integers | Optional | If specified, this Time Span applies only during these months (1=January, 12=December). |
-| `time_of_day_start` | "HH:MM" string | Optional | The 24-hour local time that this Time Span starts to apply (_inclusive_, see [Time Range](/general-information.md#time-range)). If unspecified, this Time Span starts at midnight. |
-| `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
+| `time_of_day_start` | "HH:MM" string | Optional | The 24-hour local time that this Time Span starts to apply (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, this Time Span starts at midnight. |
+| `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
 | `designated_period` | String | Optional | A string representing an arbitrarily-named, externally-defined period of time. Any values MAY be specified but the following known values SHOULD be used when possible: <ul><li>`snow emergency`</li><li>`holidays`</li><li>`school days`</li><li>`game days`</li></ul> |
 | `designated_period_except` | `Boolean` | `Optional` | If specified and `true`, this Time Span applies at all times not matching the named designated period. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, this Time Span does not apply on snow days). |
 
@@ -478,7 +478,7 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "year". |
 | `increment_minutes` | Integer | Optional | If specified, this is the smallest amount of time a user can pay for (e.g., if `increment_minutes` is `15`, a user can pay for 15, 30, 45, etc. minutes). |
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same units as `per_hour`. |
-| `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate starts when the vehicle arrives. |
+| `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
 | `end_minutes` | Integer | Optional | The amount of time after which the rate stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs. |
 
 [Top][toc]
@@ -493,8 +493,8 @@ A Location Reference is a JSON object with the following fields:
 | ------ | ------ | ------------------- | ------------- |
 | `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li></ul> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
-| `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone. |
-| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
+| `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature - in this case the [Range Boundaries](/general-information.md#range-boundaries)) are reversed. |
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
 
 [Top][toc]
@@ -508,8 +508,8 @@ A Previous Policy is a JSON object with the following fields:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the previous regulations of this Curb Zone. |
-| `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location. |
-| `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location. |
+| `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
  

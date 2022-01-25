@@ -16,9 +16,9 @@ This document contains specifications that are shared between the various CDS AP
 - [Responses](#responses)
 - [REST Endpoints](#rest-endpoints)
 - [Pagination](#pagination)
+- [Range Boundaries](#range-boundaries)
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
-  - [Time Range](#time-range)
 - [Versioning](#versioning)
 
 # Authorization
@@ -248,6 +248,18 @@ At a minimum, payloads that use pagination must include a `next` key, which must
 
 [Top][toc]
 
+# Range Boundaries
+
+All ranges across the spec of timestamps, times, measurements, dates, etc are 'inclusive' at the start and 'exclusive' at the end, unless otherwise noted. 
+
+For example:
+
+- `start_datetime`: "2021-08-12 00:00:00" and `end_datetime`: "2021-08-13 00:00:00"
+
+This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
+
+[Top][toc]
+
 # UUID
 
 A UUID is a 128-bit, globally unique identifier represented as a string using the format defined in
@@ -260,18 +272,6 @@ in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 # Timestamp
 
 A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
-
-## Time Range
-
-All ranges across the spec of timestamps, times, or dates are 'inclusive' at the start and 'exclusive' at the end, unless otherwise noted. 
-
-For example:
-
-- `start_datetime`: "2021-08-12 00:00:00" and `end_datetime`: "2021-08-13 00:00:00"
-
-This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
-
-[Top][toc]
 
 # Versioning
 
