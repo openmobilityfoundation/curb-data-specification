@@ -1,28 +1,56 @@
 # Curb Data Specification: Metrics API
 
-The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places.
+<a href="/metrics/"><img src="https://i.imgur.com/5u6S0H8.png" width="100" align="right" alt="CDS Metrics Icon" border="0"></a>
 
-## ⚠ Beta
-> **This feature is current a draft of the initial CDS beta release. It will change as development and real-world feedback happens.**
+The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places. Defines common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. 
+
+**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
 
 # Endpoints
 
 There are two different endpoints that are part of the Metrics API:
 
-  - A [Activities](#curb-event) is infomration about an activity that occurs near, at, or within a pre-defined curb area. Activities is a subset of items from the Events API.  Activities is *optional*.
-  - A [Aggregates](#status) is aggregated counts and methodology of curb events. Aggregates is *optional*.
+  - [Session](#session) is information about an activity that occurs near, at, or within a pre-defined curb area. Sessions is a subset of items from the Events API.  Sessions is *optional* within Metrics.
+  - [Aggregate](#aggregate) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
+
+**See [examples](examples.md) for these endpoints.**
 
 # Table of Contents
 
+- [Representative Sample Data](#representative-sample-data)
 - [REST Endpoints](#rest-endpoints)
+  - [Authorization](#authorization)
   * [Update Frequency](#update-frequency)
-  * [Query Activities](#query-activities)
-  * [Query Aggregates](#query-aggregates)
+  * [Query Session](#query-session)
+  * [Query Aggregate](#query-aggregate)
 - [Data Objects](#data-objects)
-  * [Activities](#activities)
-  * [Aggregates](#aggregates)
+  * [Session](#session)
+  * [Aggregate](#aggregate)
     * [Methodology](#methodology)
-    * [Examples](#examples)
+- [Examples](#examples)
+
+# Representative Sample Data
+
+All data returned by the Metrics API should be viewed as using representative sample data, and not necessarily a 100% accurate picture of what happens at every defined curb space. This is because CDS Events can come from multiple sources (company data feeds, sensors, video analysis, payments, check-ins, enforcement, and/or other city data sources), cities may implement only one or more of these sources, each source returns different types and accuracy of data, and sources may not be easily cross-comparible. It is up to the city consuming Events and producing Metrics to determine accuracy and methodology details within their circumstances, and we welcome feedback, refinement, clarification, and more defined methodology per source type for future CDS releases.
+
+# REST Endpoints
+
+All endpoints return a CSV file that can either be pre-computed or created on demand dynamically.
+
+If returning data from a static CSV file directly (e.g, from a web-based file system, service, or data portal), then adding header information is not required.
+
+If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.0` to support
+versioning in the future.  Clients SHOULD specify an `Accept` header containing 
+`application/vnd.cds+csv;version=1.0`. If the server receives a request that contains an `Accept`
+header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
+
+[Top][toc]
+
+## Authorization
+
+[Authorization](/general-information.md#authorization) is **optionally required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. It is recommended to authenticate when in doubt, though the information in [Query Aggregate](#query-aggregate) is aggregated report level data suitable for data analysis and public release. Review our [Privacy Guidance](/README.md#data-privacy) for more details.
+
+[Top][toc]
 
 # REST Endpoints
 
@@ -33,80 +61,111 @@ versioning in the future.  Clients SHOULD specify an `Accept` header containing
 `application/vnd.cds+csv;version=0.0`. If the server receives a request that contains an `Accept`
 header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
 
-You may choose to serve a CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
+You may choose to serve a static CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
 
 ## Update Frequency
 
-The agency serving the data may choose how frequently they want to update the data. At least monthly is recommended but it may be longer or weekly, daily, hourly, or even more frequently.
+The agency serving the data may choose how frequently they want to update the data. At least monthly is recommended but it may be longer, or weekly, daily, hourly, or even more frequently.
 
 [Top][toc]
 
-##  Query Activities
+##  Query Session
 
-Endpoint: `/metrics/activities`  
+Endpoint: `/metrics/sessions`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
-  - `activities`: an array of [Activities](#activity) objects
+  - `session`: an array of [Session](#session) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
 
 ### Query Parameters
 
-No query parameters for this endpoint.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data). If dynamic, all query parameters are optional.
+
+| Name         | Type      | Required/Optional | Description                                    |
+| ------------ | --------- | ----------------- | ---------------------------------------------- |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
 
-##  Query Aggregates
+##  Query Aggregate
 
 Endpoint: `/metrics/aggregates`  
 Method: `GET`  
 `data` Payload: a CSV object with the following fields:
-  - `activities`: an array of [Aggregates](#aggregates) objects
+  - `aggregate`: an array of [Aggregate](#aggregate) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
 
 ### Query Parameters
 
-No query parameters for this endpoint.
+An agency may choose to make this endpoint static (and return all the available data at once in a single file) or dynamic (and allow the use of any or all of the query parameters below to filter the data). If dynamic, all query parameters are optional.
+
+| Name         | Type      | Required/Optional | Description                                    |
+| ------------ | --------- | ----------------- | ---------------------------------------------- |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
+| `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
+| `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)).  |
+| `end_time` | [Timestamp][ts] | Optional | The end of the time period to return data (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
 
 # Data Objects 
 
-## Activities
+## Session
 
-Activities are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for some curb event types. 
-Activities are meant to provide a granular view of activity happening around the curb places, so consumers can do their own analysis and aggregation.
+Sessions are a historic subset of curb events, with some rows combined, some columns removed for clarity and privacy, and for only some curb event types. 
+Sessions are meant to provide a granular view of parking and area sessions happening around the curb places, so consumers can do their own analysis.
 
-An Activity is represented as a CSV object, whose fields are as follows, pulled from the Curb Events endpoint in the Events API:
+A Session is represented as a CSV object, whose fields are as follows, pulled from the Curb Events endpoint in the Events API:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
-| `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
-| `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
-| `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
+| `session_type` | Enum | Required | The type of session that happened for this event: `parking` or `area` |
+| `event_session_id` | [UUID][uuid] | Optional | If known and recorded to tie two Events together, then include the `event_session_id` from the [Curb Event](/events#curb-event). |
+| `event_id_start` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **start/enter** event that occurred. |
+| `event_id_end` | [UUID][uuid] | Conditionally Required | The globally unique identifier of the **end/exit** event that occurred. |
+| `event_location_start_latitude` | Number | Conditionally Required | The geographic latitude point location where the **start/enter** of the event occurred. |
+| `event_location_start_longitude` | Number | Conditionally Required | The geographic longitude point location where the **start/enter** of the event occurred. |
+| `event_location_end_latitude` | Number | Conditionally Required | The geographic latitude point location where the **end/exit** of the event occurred. |
+| `event_location_end_longitude` | Number | Conditionally Required | The geographic longitude point location where the **end/exit** of the event occurred. |
+| `event_time_start` | [Timestamp][ts] | Conditionally Required | Timestamp (date/time) at which the event started with the `park_start` or `enter_area` event types. |
+| `event_time_end` | [Timestamp][ts] | Conditionally Required | Timestamp (date/time) at which the event occurred. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
-| `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
-| `propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
+| `vehicle_type` | [Vehicle Type](/events#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 
 ### Event Types
 
-The following Event Types are included in the Activities data, and the others event types are not returned.
+The following Event Types are relevant to the Session data, and the other event types are not utilized.
 
+For `session_type` of `parking`:
 - **park_start**: a vehicle stopped, parked, or double parked
 - **park_end**: a parked vehicle leaving a parked or stopped state and resuming movement
+
+For `session_type` of `area`:
 - **enter_area**: vehicle enters the relevant geographic area
 - **exit_area**: vehicle exits the relevant geographic area
 
+**Note:** It is preferable to return both start/end or enter/exit pairs of events. However, even if only one of these is present, the available data should be returned with the corresponding missing values of `event_id_X`, `event_location_X`, `event_time_X` returned as _null_.
+
+A "session duration" or "dwell time" can be calculated by calculating the difference between the `event_time_start` and `event_time_end`.
+
 [Top][toc]
 
-## Aggregates
+## Aggregate
 
-Aggregates are historic pre-computed counts and metrics of Events occuring in curb places, aggregated to the hour. 
+Aggregates are historic pre-computed counts and metrics of Events occurring in curb places, aggregated to the hour. All Aggregates can be calculated from the data included in [Session](#session).
 
 An Aggregate is represented as a CSV object, whose fields are as follows, as calculated from the Metrics [Methodology](#methodology):
 
@@ -114,31 +173,27 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 | ------ | ------ | ------------------- | ------------- |
 | `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
-| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
 | `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
-| `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means the the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
+| `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means that the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
 
 ### Methodology
 
-Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics can be useful in understanding how curb usage aligns with priorities.
+Cities are facilitating access to the curb for different users based on the curb access priorities of that particular area. The following metrics will be used in understanding how curb usage aligns with priorities. The metrics may be calculated using the [Session](#session) data and returned here, 
 
-An event/transaction at the curb is defined as... TBD
+#### Total Sessions
 
-Unit of measure, time, length, etc... TBD
-
-#### Total Events
-
-`count[events]` for a specific time period  
-Name: `total_events`
+`count[sessions]` for a specific time period  
+Name: `total_sessions`
 
 _Use Case_
 
-Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. Seems pretty basic but a lot of cities don’t have this insight or if they do it’s not current or comprehensive.
+Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. A session is a parking event, defined by the `park_start` and `park_end` event types.
 
 #### Turnover
  
-`count[events]/hour` for a specific time period  
+`count[sessions]/hour` for a specific time period  
 Name: `turnover`
 
 _Use Case_
@@ -147,7 +202,7 @@ Used together with Average Dwell Time by cities to understand how long vehicles 
 
 #### Average Dwell Time
 
-`sum[dwell time] / count[events]` for a specific time period  
+`sum[dwell time] / count[sessions]` for a specific time period  
 Name: `average_dwell_time`
 
 _Use Case_
@@ -169,61 +224,9 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 
 [Top][toc]
 
-### Examples
+# Examples
 
-Example of available for 2 aggregate metrics in 2 places over a 1 day period.
-
-```
-curb_place_type,curb_place_id,metric_type,date,hour,value
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,0,3
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,1,7
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,2,2
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,3,7
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,4,9
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,5,10
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,6,13
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,7,16
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,8,17
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,9,13
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,10,15
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,11,19
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,12,29
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,13,27
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,14,26
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,15,38
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,16,34
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,17,35
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,18,33
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,19,20
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,20,16
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,21,12
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,22,-1
-Zone,0f6a052d-f934-4159-8da4-3135e453b968,total_events,2021-10-31,23,8
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,0,10.5
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,1,5.0
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,2,3.0
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,3,2.9
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,4,8.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,5,14.5
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,6,15.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,7,16.2
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,8,18.1
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,9,21.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,10,15.2
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,11,12.1
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,12,11.8
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,13,9.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,14,5.7
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,15,6.7
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,16,9.2
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,17,6.4
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,18,8.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,19,10.3
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,20,13.5
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,21,14.2
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,22,12.1
-Space,7e6be807-ff61-4f12-85c8-0fb740b24436,average_dwell_time,2021-10-31,23,9.6
-```
+See a series of [CDS Metrics endpoint examples](examples.md) to use as templates. 
 
 [Top][toc]
 

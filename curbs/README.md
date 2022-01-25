@@ -1,14 +1,15 @@
 # Curb Data Specification: Curbs API
 
+<a href="/curbs/"><img src="https://i.imgur.com/aBqI6yr.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
+
 The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with
-the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc. at the curb,
-for how long, for what price (if any), at what times, and on what days. Locations defined in the
-Curbs API can be connected to event and metric data and shared with companies and the public, for
+the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc.,
+for how long, for what price (if any), at what times, and on which days. Locations defined in the
+Curbs API can be connected to event and metrics data, and can be shared with companies and the public, for
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
 curb utilization over time.
 
-## ⚠ Beta
-> **This feature is current a draft of the initial CDS beta. It will be change as development and real-world feedback happens.**
+**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
 
 # Endpoints
 
@@ -21,58 +22,58 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
-  - A [Curb Policy](#curb-area) A Policy object is a rule that allows or prohibits a particular set of 
-    users from using a particular curb at a particular time or times.  Curb policies are *optional*.
+  - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
+    users from using a particular curb at a particular time or times.  Curb policies are *optional* 
+    but recommended with Curb Zones.
+
+**See [examples](examples.md) for these endpoints.**
 
 ![Curb Places](https://i.imgur.com/YQ7P243.jpg)
 
 # Table of Contents
 
 - [REST Endpoints](#rest-endpoints)
-  * [Query Curb Zones](#query-curb-zones)
-  * [Query Curb Areas](#query-curb-areas)
-  * [Query Curb Spaces](#query-curb-spaces)
-  * [Query Curb Policies](#query-curb-policies)
-  * [Fetch a Curb Zone](#fetch-a-curb-zone)
-  * [Fetch a Curb Area](#fetch-a-curb-area)
-  * [Fetch a Curb Space](#fetch-a-curb-space)
-  * [Fetch a Curb Policy](#fetch-a-curb-policy)
+  - [Authorization](#authorization)
+  - [Query Curb Zones](#query-curb-zones)
+  - [Query Curb Areas](#query-curb-areas)
+  - [Query Curb Spaces](#query-curb-spaces)
+  - [Query Curb Policies](#query-curb-policies)
+  - [Fetch a Curb Zone](#fetch-a-curb-zone)
+  - [Fetch a Curb Area](#fetch-a-curb-area)
+  - [Fetch a Curb Space](#fetch-a-curb-space)
+  - [Fetch a Curb Policy](#fetch-a-curb-policy)
 - [Data Objects](#data-objects)
-  * [Curb Zone](#curb-zone)
-  * [Curb Area](#curb-area)
-  * [Curb Space](#curb-space)
-  * [Policy](#policy)
+  - [Curb Zone](#curb-zone)
+  - [Curb Area](#curb-area)
+  - [Curb Space](#curb-space)
+  - [Policy](#policy)
+    - [Rule](#rule)
+      - [Activities](#activities)
+      - [User Classes](#user-classes)
+    - [Time Span](#time-span)
+    - [Rate](#rate) 
+  - [Location Reference](#location-reference)
+- [Examples](#examples)
 
 # REST Endpoints
 
-All endpoints return a JSON object containing the following fields:
+All endpoints return a JSON object containing the fields as specified in the [REST Endpoint](/general-information.md#rest-endpoints) details.
 
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `data` | _Endpoint-dependent_ | Required | The requested data objects. |
-| `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
-| `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | [Timestamp][ts] | Required | The last time the data in this API was updated. |
-| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. |
-| `author` | String | Optional | The name of the organization that produces and maintains this data. |
-| `license_url` | URL | Optional | The licensing terms under which this data is provided. |
+[Top][toc]
 
-Servers MUST set the `Content-Type` header to `application/vnd.cds+json;version=0.0` to support
-versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+json;version=0.0`. If the server receives a request that contains an `Accept`
-header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
+## Authorization
+
+[Authorization](/general-information.md#authorization) is not required for any of the Curbs endpoints, as this information should be made public and easily accessible.
 
 [Top][toc]
 
 ##  Query Curb Zones
 
-Endpoint: `/curbs/zone`  
+Endpoint: `/curbs/zones`  
 Method: `GET`  
-`data` Payload: a JSON object with the following fields:
-  - `zones`: an array of [Curb Zone](#curb-zone) objects
-  - `policies`: an array of [Policy](#policy) objects
+`data` Payload: a JSON object with a `zones` field containing an array of [Curb Zone](#curb-zone) objects.
 
-_This endpoint must be implemented by every Curbs API server._
+_This required endpoint must be implemented by every Curbs API server. If attaching policies to curb zones, the [Query Curb Policies](#query-curb-policies) endpoint is also required._
 
 ### Query Parameters
 
@@ -84,18 +85,17 @@ All query parameters are optional.
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a bounding box; if one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `include_geometry` | `true`/`false` |  If the value is `false`, do not include the `geometry` field within the [Curb Zone](#curb-zone) feature object. |
-| `include_policies` | `true`/`false` | If the value is `false`, do not include the `policies` field within the response. |
 | `time` | [Timestamp][ts] | Only Curb Zone objects whose validity period includes this time will be returned; availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
 
 ##  Query Curb Areas
 
-Endpoint: `/curbs/area`  
+Endpoint: `/curbs/areas`  
 Method: `GET`  
 `data` Payload: a JSON object with an `areas` field containing an array of [Curb Area](#curb-area) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
@@ -110,11 +110,11 @@ All query parameters are optional.
 
 ## Query Curb Spaces
 
-Endpoint: `/curbs/space`  
+Endpoint: `/curbs/spaces`  
 Method: `GET`  
 `data` Payload: a JSON object with a `spaces` field containing an array of [Curb Space](#curb-space) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
@@ -131,11 +131,11 @@ All query parameters are optional.
 
 ## Query Curb Policies
 
-Endpoint: `/curb/policy`  
+Endpoint: `/curbs/policies`  
 Method: `GET`  
-`data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#curb-policy) objects.
+`data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, but required if Curb Zones contain policy_id references. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
@@ -149,29 +149,30 @@ All query parameters are optional.
 
 ##  Fetch a Curb Zone
 
-Endpoint: `/curbs/zone/<id>`  
+Endpoint: `/curbs/zones/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Zone](#curb-zone) object with the ID provided in the path.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
 All query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `time` | [Timestamp][ts] | The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with `404 Not Found`. Availability data (if supplied) will be returned as of this time. |
+| Name            | Type            | Description                                    |
+| --------------- | --------------- | ---------------------------------------------- |
+| `time`          | [Timestamp][ts] | The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with `404 Not Found`. Availability data (if supplied) will be returned as of this time. |
+| `show_historic` | Boolean         | Whether to return historic, retired curb zone data. Default is "false" to reduce payload size and complexity. |
 
 [Top][toc]
 
 ##  Fetch a Curb Area
 
-Endpoint: `/curbs/area/<id>`  
+Endpoint: `/curbs/areas/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Area](#curb-area) object with the ID provided in the path.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
@@ -181,25 +182,27 @@ This endpoint takes no query parameters.
 
 ## Fetch a Curb Space
 
-Endpoint: `/curbs/space/<id>`  
+Endpoint: `/curbs/spaces/<id>`  
 Method: `GET`  
 `data` Payload: the [Curb Space](#curb-space) object with the ID provided in the path.
+
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
 ### Query Parameters
 
 All query parameters are optional.
 
-| Name         | Type      | Description                                    |
-| ------------ | --------- | ---------------------------------------------- |
-| `time` | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
+| Name         | Type            | Description                                    |
+| ------------ | --------------- | ---------------------------------------------- |
+| `time`       | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
 
 ## Fetch a Curb Policy
 
-Endpoint: `/curb/policy/<id>`  
+Endpoint: `/curbs/policies/<id>`  
 Method: `GET`  
-`data` Payload: the [Curb Policy](#curb-policy) object with the ID provided in the path. 
+`data` Payload: the [Curb Policy](#policy) object with the ID provided in the path. 
 
 ### Query Parameters
 
@@ -224,7 +227,8 @@ criteria:
   1. Never overlap other Curb Zones in the same dataset with overlapping validity times. This
      applies to both the zone's polygon geometries and linear references (if used).
   1. Be assigned a unique ID, in the form of a [UUID][uuid]. This ID SHOULD remain consistent as long as
-     the Curb Zone's extent and policies remain substantially the same.
+     the Curb Zone's geography remains substantially the same. Policies may be updated without changing
+     the ID.
   1. It SHOULD NOT be possible to legally park a single vehicle in two different Curb Zone at the 
      same time (i.e., a given non-demarcated parking area or loading zone should be represented as
      a single curb location), unless this conflicts with the requirements above.
@@ -234,10 +238,14 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
-| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. |
+| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
-| `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid. This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
-| `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid. If not present, the data will be presumed to be valid indefinitely. |
+| `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. They are listed in order with the most recent ones first. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some curb objects fields may have changed. |
+| `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. They are listed in order with the most recent ones first. |
+| `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
+| `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not present, the data will be presumed to be valid indefinitely. |
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
@@ -255,19 +263,14 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_id`| [UUID][uuid] | Optional | The ID of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 
+[Top][toc]
+
 ### Curb Zone ID Stability
 
-The `curb_zone_id` field uniquely identifies a particular zone with one particular set of policies.
+The `curb_zone_id` field uniquely identifies a particular zone with one particular set of policies in a specific geographic area.
 
-  - *New ID*: When a Curb Zone ceases to be valid, or it needs substantive changes, its ID
-    MUST NOT not be reused by a Curb Zone with different data, even if it occupies the same
-    location. If data updates reflect changes in the physical world or agency regulations,
-    a new ID MUST be assigned. 
-  - *No new ID*: data updates that reflect changes in how the same physical locations or
-    regulations are modeled digitally -- e.g., additional metadata, or regulations being modeled
-    more accurately -- SHOULD NOT be implemented by ending a Curb Zone's validity and creating a
-    new one with a new ID. The existing Curb Zone can be updated silently with the new data;
-    callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time.
+- *New ID*: When a Curb Zone ceases to be valid, or it needs substantive geometric changes, it will be retired and returned only when the `show_historic` flag is "true" in the [Query Curb Zones](#query-curb-zones) endpoint parameters. Its ID _MUST NOT_ not be reused by a Curb Zone with different data. If geometric data updates reflect changes in the physical world, a new ID MUST be assigned and the previous one stored for historic lookups. 
+- *No new ID*: data updates that reflect changes in how the same physical locations or regulations are modeled digitally -- e.g., additional metadata, or regulations being modeled more accurately -- SHOULD NOT be implemented by ending a Curb Zone's validity and creating a new one with a new ID. The existing Curb Zone can be updated silently with the new data and its `last_updated_date` changed. Callers MAY NOT rely on a Curb Zone with the same ID remaining identical over time. If policies in a zone change, you may update the policy IDs, track previous policies, and reset the `last_updated_date`, but keep the zone ID the same.
 
 [Top][toc]
 
@@ -276,9 +279,10 @@ The `curb_zone_id` field uniquely identifies a particular zone with one particul
 Defines curb areas in a city and their properties. A Curb Area is a particular neighborhood or area
 of interest that includes one or more [Curb Zones](#curb-zone). Important notes about Curb Areas:
 
-  * Curb Areas MAY overlap with other Curb Areas
-  * Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
+  - Curb Areas MAY overlap with other Curb Areas
+  - Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
     or more Curb Zones that is no bigger than a neighborhood.
+  - Unlike Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
 
 A Curb Area is represented as a JSON object, whose fields are as follows:
 
@@ -286,7 +290,9 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_area_id` | [UUID][uuid] | Required | The ID for the curb area. |
 | `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb location. |
-| `name` | String | Required | The name of this curb area. |
+| `name` | String | Optional | The name of this curb area for reference. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
 
 [Top][toc]
@@ -294,8 +300,10 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 ## Curb Space
 
 Defines individual demarcated spaces within a Curb Zone. Important notes about Curb Spaces:
+
   - Curb Spaces may NOT overlap with other Curb Spaces
   - Curb Spaces must be wholly contained within a single Curb Zone
+  - Unlike Zones, Spaces may be updated as needed, with a new `curb_space_id` being optionally assigned by the city
 
 A Curb Space is represented as a JSON object whose fields are as follows:
 
@@ -303,6 +311,9 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_space_id` | [UUID][uuid] | Required | The ID of the curb space. |
 | `geometry` | [Polygon][polygon] | Required |The spatial extent of this curb location. |
+| `name` | String | Optional | The name of this curb space for reference. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of the Curb Zone this space is within. The geometry of the specified Curb Zone MUST contain the geometry of this space. |
 | `space_number` | Integer | Optional | The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1. |
 | `length` | Integer | Required | Length in centimeters of this Space. If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
@@ -314,7 +325,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 ## Policy
 
-A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). Much of this is similar to curbLR.
+A Policy object is a rule that allows or prohibits a particular set of users from using a particular curb at a particular time or times. Multiple Policy objects together define the full extent of regulations within a [Curb Zone](#curb-zone). The design of the Policy object borrows heavily from the work of the [CurbLR](https://github.com/curblr/curblr-spec) project, with additions for the larger scope of CDS.
 
 The `policy` field within the FeatureCollection returned by [Query Curb Zones](#query-curb-zones) contains a list of the Policy objects referenced by the returned zones. In addition, the [Query Curb Policies](#query-curb-policies) endpoint return the complete list of policies.
 
@@ -322,23 +333,30 @@ A Policy is represented as a JSON object whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `curb_policy_id` | UUD | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
-| `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. Two Policies that apply to the same Curb Zone with overlapping Time Spans and user classes MUST NOT have the same priority. |
+| `curb_policy_id` | UUID | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this policy was first published in this data feed. |
+| `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and user classes MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
+| `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
+
+[Top][toc]
 
 ### Rule
 
 A rule defines who is allowed to do what, and for how long, on a curb, per the policy.
+
 It is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `activity` | String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities below](#activities). |
-| `max_stay` | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. |
-| `no_return` | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before allowed to return for another stay. |
-| `user_classes` | Array of Strings | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
-| `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. |
+| `activity`     | [Activity](#activities) String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
+| `max_stay`     | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. |
+| `no_return`    | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before being allowed to return for another stay. |
+| `user_classes` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
+| `rate`         | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. |
+
+[Top][toc]
 
 #### Activities
 
@@ -346,37 +364,78 @@ The following activities may be specified for rules within a policy. The reason 
 "positive" and "negative" versions of the same activities (like `loading` and `no parking`)
 is due to priorities: a `loading` rule that is higher priority than a `no loading` rule,
 for instance, implies that the Curb Zone does allow loading at the time in question, while a
-`no parking` rule would not.
+`no parking` rule would not. If "negative", `rate` array should be empty.
 
-- `parking` (implies that loading and stopping are also permitted)
-- `no parking`
-- `loading` (of goods; implies that stopping is also permitted)
-- `no loading` (implies that parking is also prohibited)
-- `stopping`  (stopping briefly to pick up or drop off passengers)
-- `no stopping` (stopping, loading, and parking are all prohibited)
-- `travel`: represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
-  and rush-hour-only travel lanes; implies that parking, loading, and stopping are prohibited).
+- `parking` - implies that loading and stopping are also permitted
+- `no parking` - may not stop and leave vehicle unattended
+- `loading` - loading of goods; implies that stopping is also permitted
+- `no loading` - no loading allowed; implies that parking is also prohibited
+- `unloading` - unloading of goods; implies that stopping is also permitted
+- `no unloading` - no unloading allowed; implies that parking is also prohibited
+- `stopping` - stopping briefly to pick up or drop off passengers
+- `no stopping` - stopping, loading, unloading, and parking are all prohibited; not a typical travel lane
+- `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
+  and rush-hour-only travel lanes; implies that parking, loading, unloading, and stopping are prohibited.
+
+[Top][toc]
 
 #### User Classes
 
 A user class represents any class of vehicles that is regulated by a city with respect to curb
 space. They can be defined by the vehicle's physical characteristics (e.g., trucks, vans, EVs),
-the presence/absence of a particular permit (e.g., residential parking permits) or even by the
+the presence/absence of a particular permit (e.g., residential parking permits), or even by the
 intent or destination of the driver, for things like hotel or school unloading zones.
 
-New user classes MAY be generated by data providers to reflect their regulations, but when possible,
-the following known values should be used:
+These are not meant to be a mirror to similarly named items in the Events API, but instead serve a 
+unique purpose of describing locally defined regulations at a curb.
 
+This array of user classes serves as an 'AND' function. A vehicle must have all the properties listed
+in the array to use the curb. For example, an accessible EV bus will use `handicap-accessible` AND `electric` 
+AND `bus`. To create 'OR' values at the same curb, you must create a new rule 
+with the new array of values.
+
+New user classes MAY be generated to reflect local regulations, but when possible,
+the following well-known recommended values should be used. If multiple similar values apply, then use the more 
+descriptive/specific value when possible.
+
+**Well-known values:**
+
+Vehicle types
 - `bicycle`
 - `bus`
-- `handicap`
+- `cargo_bicycle`
+- `car`
+- `moped`
 - `motorcycle`
-- `resident`
-- `rideshare`
-- `taxi`
-- `commercial` (applies to "truck"; if "commercial" and "truck" user classes have separate rules,
-  trucks use the "truck" rule)
+- `scooter`
 - `truck`
+- `van`
+
+Vehicle properties
+- `handicap-accessible`
+- `human`
+- `electric_assist`
+- `electric`
+- `combustion`
+- `autonomous`
+
+Purpose
+- `construction`
+- `delivery`
+- `emergency_use`
+- `freight`
+- `parking`
+- `permit`
+- `rideshare`
+- `school`
+- `service_vehicles`
+- `special_events`
+- `taxi`
+- `utilities`
+- `vending`
+- `waste_management`
+
+[Top][toc]
 
 ### Time Span 
 
@@ -394,15 +453,19 @@ A Time Span is represented as a JSON object whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `from` | [Timestamp][ts] | Optional |  The earliest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the past. |
-| `to` | [Timestamp][ts] | Optional | The latest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the future. |
+| `start_date` | [Timestamp][ts] | Optional | The earliest point in time that this Time Span could apply (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the past. See note below for more details. |
+| `end_date` | [Timestamp][ts] | Optional | The latest point in time that this Time Span could apply (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, the Time Span applies to all matching periods arbitrarily far in the future. See note below for more details. |
 | `days_of_week` | Array of strings | Optional | An array of days of the week when this Time Span applies, specified as 3-character strings (`"sun"`, `"mon"`, `"tue"`, `"wed"`, `"thu"`, `"fri"`, `"sat"`). |
 | `days_of_month` | Array of integers | Optional | An array of days of the month when this Time Span applies, specified as integers (1-31). Note that, in order to specify, e.g., the "2nd Monday of the month", you can use `days_of_month` combined with `days_of_week` (in this example, `days_of_week = ["mon"]` and `days_of_month = [8,9,10,11,12,13,14]`). |
 | `months` | Array of integers | Optional | If specified, this Time Span applies only during these months (1=January, 12=December). |
-| `time_of_day_start` | "HH:MM" string | Optional | The 24-hour local time that this Time Span starts to apply. If unspecified, this Time Span starts at midnight. |
-| `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying. This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
+| `time_of_day_start` | "HH:MM" string | Optional | The 24-hour local time that this Time Span starts to apply (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If unspecified, this Time Span starts at midnight. |
+| `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
 | `designated_period` | String | Optional | A string representing an arbitrarily-named, externally-defined period of time. Any values MAY be specified but the following known values SHOULD be used when possible: <ul><li>`snow emergency`</li><li>`holidays`</li><li>`school days`</li><li>`game days`</li></ul> |
 | `designated_period_except` | `Boolean` | `Optional` | If specified and `true`, this Time Span applies at all times not matching the named designated period. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, this Time Span does not apply on snow days). |
+
+**Note about `start_date` and `end_date` in _Time Span_:** these fields are optional but useful for defining policies that will be used once and won't be reused later, like around a specific, temporary event. If used, they are only applicable in any connected Curb Zone during their overlapping time frames.
+
+[Top][toc]
 
 ### Rate
 
@@ -410,11 +473,12 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `per_hour` | Integer | Required | The rate per hour for this space in cents (or the smallest denomination of local currency). |
+| `rate` | Integer | Required | The rate for this space in cents (or the smallest denomination of local currency) per `rate_unit`. |
+| `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "year". |
 | `increment_minutes` | Integer | Optional | If specified, this is the smallest amount of time a user can pay for (e.g., if `increment_minutes` is `15`, a user can pay for 15, 30, 45, etc. minutes). |
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same units as `per_hour`. |
-| `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying. If not specified, this rate starts when the vehicle arrives. |
-| `end_minutes` | Integer | Optional | The amount of time after which the rate stops applying. If not specified, this rate ends when the vehicle departs. |
+| `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
+| `end_minutes` | Integer | Optional | The amount of time after which the rate stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs. |
 
 [Top][toc]
 
@@ -426,11 +490,31 @@ A Location Reference is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li> |
+| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li></ul> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
-| `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone. |
-| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. end MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature. |
+| `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature - in this case the [Range Boundaries](/general-information.md#range-boundaries)) are reversed. |
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
+
+[Top][toc]
+  
+## Previous Policy
+
+An array of information about what previous policies applied to a [curb zone](#curb-zone) and when. This allows cities to historically track what policies applied to a curb zone.
+
+A Previous Policy is a JSON object with the following fields:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the previous regulations of this Curb Zone. |
+| `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+| `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+
+[Top][toc]
+ 
+# Examples
+
+See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
 
 [Top][toc]
 
