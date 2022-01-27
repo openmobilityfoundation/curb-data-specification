@@ -1,7 +1,8 @@
-
 # Curb Data Specification: General Information
 
-This document contains specifications that are shared between the various CDS APIs.
+<a href="/curbs/"><img src="https://i.imgur.com/at5rrjR.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
+
+This document contains specifications and common concepts that are shared between the various CDS APIs, such as [`Curbs`](/curbs), [`Events`](/events), and [`Metrics`](/metrics).
 
 # Table of Contents
 
