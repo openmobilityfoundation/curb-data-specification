@@ -366,16 +366,17 @@ is due to priorities: a `loading` rule that is higher priority than a `no loadin
 for instance, implies that the Curb Zone does allow loading at the time in question, while a
 `no parking` rule would not. If "negative", `rate` array should be empty.
 
-- `parking` - implies that loading and stopping are also permitted
-- `no parking` - may not stop and leave vehicle unattended
-- `loading` - loading of goods; implies that stopping is also permitted
-- `no loading` - no loading allowed; implies that parking is also prohibited
-- `unloading` - unloading of goods; implies that stopping is also permitted
-- `no unloading` - no unloading allowed; implies that parking is also prohibited
-- `stopping` - stopping briefly to pick up or drop off passengers
-- `no stopping` - stopping, loading, unloading, and parking are all prohibited; not a typical travel lane
-- `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
-  and rush-hour-only travel lanes; implies that parking, loading, unloading, and stopping are prohibited.
+| Activity     | Description                                                                                                         | parking allowed | loading allowed | unloading allowed | stopping allowed | travel allowed |
+|--------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------|-------------------|------------------|----------------|
+| parking      | pay stop and leave vehicle unattended                                                                               | ✅               | ✅               | ✅                 | ✅                | 〰️             |
+| no parking   | may not stop and leave vehicle unattended                                                                           | ❌               | ✅               | ✅                 | ✅                | 〰️             |
+| loading      | loading of goods                                                                                                    | ❌               | ✅               | 〰️                | ✅                | 〰️             |
+| no loading   | no loading allowed                                                                                                  | ❌               | ❌               | 〰️                | ✅                | 〰️             |
+| unloading    | unloading of goods                                                                                                  | ❌               | 〰️              | ✅                 | ✅                | 〰️             |
+| no unloading | no unloading allowed                                                                                                | ❌               | 〰️              | ❌                 | ✅                | 〰️             |
+| stopping     | stopping briefly to pick up or drop off passengers                                                                  | ❌               | ❌               | ❌                 | ✅                | 〰️             |
+| no stopping  | not a typical travel lane                                                                                           | ❌               | ❌               | ❌                 | ❌                | ✅              |
+| travel       | represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes, and rush-hour-only travel lanes | ❌               | ❌               | ❌                 | ❌                | ✅              |
 
 [Top][toc]
 
