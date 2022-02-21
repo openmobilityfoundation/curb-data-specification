@@ -351,10 +351,10 @@ It is a JSON object with the following fields:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `activity`     | [Activity](#activities) String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
-| `max_stay`     | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. |
-| `no_return`    | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before being allowed to return for another stay. |
+| `max_stay`     | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. May not be applicable for all [activity](#activities). |
+| `no_return`    | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before being allowed to return for another stay. May not be applicable for all [activity](#activities). |
 | `user_classes` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. |
-| `rate`         | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. |
+| `rate`         | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. May not be applicable for all [activity](#activities). |
 
 [Top][toc]
 
@@ -374,8 +374,9 @@ for instance, implies that the Curb Zone does allow loading at the time in quest
 - `no unloading` - no unloading allowed; implies that parking is also prohibited
 - `stopping` - stopping briefly to pick up or drop off passengers
 - `no stopping` - stopping, loading, unloading, and parking are all prohibited; not a typical travel lane
-- `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
+- `travel` - represents curbside lanes typically intended for moving vehicles, like bus lanes, bike lanes,
   and rush-hour-only travel lanes; implies that parking, loading, unloading, and stopping are prohibited.
+- `no travel` - no travel allowed; implies it could be used for other activities
 
 [Top][toc]
 
