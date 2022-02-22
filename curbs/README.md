@@ -475,7 +475,8 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `rate` | Integer | Required | The rate for this space in cents (or the smallest denomination of local currency) per `rate_unit`. |
-| `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "year". |
+| `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "quarter", "year". |
+| `rate_unit_period` | Enum | Optional | The period of time that the `rate_unit` covers. Is it from the start of the unit to the end of the unit (e.g. "calendar" from the 1st day of a month to the last day of the same month) or is it rolling based on a time from within the `rate_unit` (e.g. "rolling" from the 8th of a month to the 8th of the next month). One of "calendar", "rolling". Default if not specified is "calendar". | 
 | `increment_minutes` | Integer | Optional | If specified, this is the smallest amount of time a user can pay for (e.g., if `increment_minutes` is `15`, a user can pay for 15, 30, 45, etc. minutes). |
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same units as `per_hour`. |
 | `start_minutes` | Integer | Optional | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
