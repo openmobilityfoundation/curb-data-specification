@@ -261,7 +261,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `street_side` | String | Optional | The cardinal or subcardinal direction representing the side of the roadway that this curb is on. May be `N`, `NE`, `E`, `SE`, `S`, `SW`, `W`, or `NW`. For cities with "grid directions", the side MAY be based on the grid direction rather than the closest true-north compass direction, but MUST NOT be more than 90 degrees away from the true compass direction. |
 | `median`| Boolean | Optional | If "true", this curb location is on the median of a street, rather than its edge. A median is a strip of land separating two roadways within the same street. Note that, for medians, `street_side` is interpreted relative to the roadway that the particular curb is on, so the curb along the median of the southern roadway of a divided street would have `street_side` of `N`. |
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
-| `curb_area_id`| [UUID][uuid] | Optional | The ID of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
+| `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 
 [Top][toc]
 
@@ -280,6 +280,7 @@ Defines curb areas in a city and their properties. A Curb Area is a particular n
 of interest that includes one or more [Curb Zones](#curb-zone). Important notes about Curb Areas:
 
   - Curb Areas MAY overlap with other Curb Areas
+  - Multiple Curb Areas MAY include the same Curb Zones
   - Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
     or more Curb Zones that is no bigger than a neighborhood.
   - Unlike Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
