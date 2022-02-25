@@ -6,6 +6,7 @@ This file presents a series of CDS [Curbs](/curbs) endpoint examples to use as t
 
 - [Curb Zones Minimum](#curb-zones-minimum)
 - [Curb Policies](#curb-policies)
+- [Curb Policy Rate Units](#curb-policy-rate-units)
 
 ## Curb Zones Minimum
 
