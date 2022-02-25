@@ -219,7 +219,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 # Pagination
 
-Endpoints may use pagination, which must comply with the [JSON API][http://jsonapi.org/format/#fetching-pagination] specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
+Endpoints may use pagination, which must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
 The following keys must be used for pagination links:
 
