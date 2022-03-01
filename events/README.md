@@ -29,7 +29,7 @@ There are two different endpoints that are part of the Events API:
     * [Propulsion Type](#propulsion-type)
     * [Event Purpose](#event-purpose)
     * [Lane Type](#lane-type)
-    * [Curb Occupant](#curb-occupant)
+    * [Curb Occupant](#curb-occupants)
   * [Status](#status)
 - [Examples](#examples)
 
@@ -104,7 +104,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
-| `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for these event_types: _enter_area, exit_area, park_start, park_end_ |
+| `curb_area_ids` | Array of [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for these event_types: _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space, if known and used, for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `data_source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
 | `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. IDs can identify the fleet operator sending a data feed, or the organization (company or city) operating the sensor. IDs for fleet operators are required and global and come from the [data_source_operators.csv](/data_source_operators.csv) file, and optional for others. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `data_source_operator_name` string instead of this field, otherwise this field is required. |
