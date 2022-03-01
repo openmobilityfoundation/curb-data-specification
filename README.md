@@ -1,8 +1,5 @@
 # Curb Data Specification
 
-## Release Candidate
-> ⚠ **This repository is a [release candidate](https://github.com/openmobilityfoundation/curb-data-specification/releases) for CDS 1.0. It has been approved by the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki). You may start to use it in your development and production environments for real world use cases. The release is going through the final [OMF approval process](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md#approval-by-the-open-mobility-foundation), where it may be tweaked or enhanced with more guidance and resources. See the [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0) page for updates.**
-
 ## Table of Contents
 
 - [Overview](#overview)
