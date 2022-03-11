@@ -48,7 +48,9 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **optionally required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. It is recommended to authenticate when in doubt, though the information in [Query Aggregate](#query-aggregate) is aggregated report level data suitable for data analysis and public release. Review our [Privacy Guidance](/README.md#data-privacy) for more details.
+[Authorization](/general-information.md#authorization) is **required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
+
+Future versions of Metrics may contain publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. In the meantime, aggencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
 
 [Top][toc]
 
