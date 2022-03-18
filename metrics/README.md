@@ -52,17 +52,6 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 [Top][toc]
 
-# REST Endpoints
-
-All endpoints return a CSV file that can either be pre-computed or created on demand.
-
-If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=0.0` to support
-versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+csv;version=0.0`. If the server receives a request that contains an `Accept`
-header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
-
-You may choose to serve a static CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
-
 ## Update Frequency
 
 The agency serving the data may choose how frequently they want to update the data. At least monthly is recommended but it may be longer, or weekly, daily, hourly, or even more frequently.
