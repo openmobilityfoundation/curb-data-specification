@@ -12,6 +12,7 @@
 - [Versions](#versions)
   - [Technical Information](#technical-information)
 - [Membership](#membership) 
+- [Organizations Using CDS](#organizations-using-cds) 
 - [Data Privacy](#data-privacy)
 - [Use Cases](#use-cases)
 
@@ -123,6 +124,18 @@ OMF Members (public agencies and commercial companies) have additional participa
   - [Curb Working Group](https://github.com/openmobilityfoundation/curb-data-specification/wiki)
 
 Read about [how to become an OMF member](https://www.openmobilityfoundation.org/how-to-become-a-member/), [how to get involved and our governance model](https://www.openmobilityfoundation.org/how-to-get-involved-in-the-open-mobility-foundation/), and [contact us](https://mailchi.mp/openmobilityfoundation/membership) for more details. 
+
+[Top][toc]
+
+# Organizations Using CDS
+
+Cities and public agencies, technology companies, commercial curb users, and operators are using CDS now and in the near term.  
+
+- See our **[list of organizations using CDS](https://github.com/openmobilityfoundation/curb-data-specification/wiki#cds-users)**.
+
+Please let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) if you are an organization using CDS so we can add you to the list.
+
+If you are a data source operator, you may also add yourself to the [operator list](/data_source_operators.csv) for a global ID and website link. Let us know [via our website](https://www.openmobilityfoundation.org/get-in-touch/) or find out how to do it yourself in our [Adding a CDS Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) help document.
 
 [Top][toc]
 
