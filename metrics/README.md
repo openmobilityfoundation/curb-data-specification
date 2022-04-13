@@ -48,20 +48,13 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **optionally required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. It is recommended to authenticate when in doubt, though the information in [Query Aggregate](#query-aggregate) is aggregated report level data suitable for data analysis and public release. Review our [Privacy Guidance](/README.md#data-privacy) for more details.
+[Authorization](/general-information.md#authorization) is **required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
+
+Future versions of Metrics may contain publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. Authorization on Metrics is a [beta feature](/general-information.md#beta-features) and will be revisited in future releases. In the meantime, agencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
+
+
 
 [Top][toc]
-
-# REST Endpoints
-
-All endpoints return a CSV file that can either be pre-computed or created on demand.
-
-If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=0.0` to support
-versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+csv;version=0.0`. If the server receives a request that contains an `Accept`
-header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
-
-You may choose to serve a static CSV file directly from a web-based file system, service, or data portal, in which case adding a header is not required.
 
 ## Update Frequency
 

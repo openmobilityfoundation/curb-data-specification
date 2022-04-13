@@ -261,7 +261,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `street_side` | String | Optional | The cardinal or subcardinal direction representing the side of the roadway that this curb is on. May be `N`, `NE`, `E`, `SE`, `S`, `SW`, `W`, or `NW`. For cities with "grid directions", the side MAY be based on the grid direction rather than the closest true-north compass direction, but MUST NOT be more than 90 degrees away from the true compass direction. |
 | `median`| Boolean | Optional | If "true", this curb location is on the median of a street, rather than its edge. A median is a strip of land separating two roadways within the same street. Note that, for medians, `street_side` is interpreted relative to the roadway that the particular curb is on, so the curb along the median of the southern roadway of a divided street would have `street_side` of `N`. |
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
-| `curb_area_id`| [UUID][uuid] | Optional | The ID of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
+| `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Area](#curb-area) that this Curb Zone is a part of. If specified, the area identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 
 [Top][toc]
 
@@ -280,6 +280,7 @@ Defines curb areas in a city and their properties. A Curb Area is a particular n
 of interest that includes one or more [Curb Zones](#curb-zone). Important notes about Curb Areas:
 
   - Curb Areas MAY overlap with other Curb Areas
+  - Multiple Curb Areas MAY include the same Curb Zones
   - Curb Areas are not meant to be city-wide, and instead should be an area of interest around one
     or more Curb Zones that is no bigger than a neighborhood.
   - Unlike Zones, Areas may be updated as needed, with a new `curb_area_id` being optionally assigned by the city
@@ -335,7 +336,7 @@ A Policy is represented as a JSON object whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_policy_id` | UUID | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this policy was first published in this data feed. |
-| `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and user classes MUST NOT have the same priority. |
+| `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and equivalent User Class enumerations MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 | `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
@@ -358,6 +359,14 @@ It is a JSON object with the following fields:
 | `user_classes`   | Array of [user class](#user-classes) Strings | Optional          | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone.                                                                                                                                                                                                                                                                                                                                                                                      |
 | `rate`           | Array of [Rates](#rate)                      | Optional          | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. |
 
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `activity`     | [Activity](#activities) String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
+| `max_stay`     | Integer | Optional | The length of time (in minutes) for which the curb may be used under this regulation. May not be applicable for all [activity](#activities). |
+| `no_return`    | Integer | Optional | The length of time (in minutes) that a user must vacate a Curb Zone before being allowed to return for another stay. May not be applicable for all [activity](#activities). |
+| `user_classes` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. The order of `user_classes` is not relevant, but a vehicle using a curb with this rule must match all `user_classes` contained in the array. |
+| `rate`         | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. May not be applicable for all [activity](#activities). |
+
 [Top][toc]
 
 #### Activities
@@ -376,8 +385,9 @@ for instance, implies that the Curb Zone does allow loading at the time in quest
 - `no unloading` - no unloading allowed; implies that parking is also prohibited
 - `stopping` - stopping briefly to pick up or drop off passengers
 - `no stopping` - stopping, loading, unloading, and parking are all prohibited; not a typical travel lane
-- `travel` - represents curbside lanes intended for moving vehicles, like bus lanes, bike lanes,
+- `travel` - represents curbside lanes typically intended for moving vehicles, like bus lanes, bike lanes,
   and rush-hour-only travel lanes; implies that parking, loading, unloading, and stopping are prohibited.
+- `no travel` - no travel allowed; implies it could be used for other activities
 
 [Top][toc]
 
@@ -482,6 +492,16 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `start_minutes`     | Integer | Optional          | The amount of time the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
 | `end_minutes`       | Integer | Optional          | The amount of time after which the rate stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs.                                                                        |
 
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `rate` | Integer | Required | The rate for this space in cents (or the smallest denomination of local currency) per `rate_unit`. |
+| `rate_unit` | Enum | Required | The unit of time associated with the rate. One of "second", "minute", "hour", "day", "week", "month", "quarter", "year". |
+| `rate_unit_period` | Enum | Optional | The period of time that the `rate_unit` covers. One of "rolling" or "calendar". If not specified, **defaults** to "rolling". When **rolling**, the `rate_unit` begins (inclusive) at the timestamp of the event and ends (exclusive) when one full `rate_unit` has elapsed. For example, with `{"rate_unit": "month", "rate_unit_period": "rolling"}` the `rate_unit` for an event starting at `2022-02-25 19:25:52` would be interpreted as ranging from the start of the event - `2022-02-25 19:25:52` (inclusive) - to the timestamp when one "month" has elapsed: `2022-03-25 19:25:52` (exclusive). E.g. from the 25th of one month to the 25th of the next month. When **calendar**, the `rate_unit` begins (inclusive) at the start of the `rate_unit` in question and ends (exclusive) when one full `rate_unit` has elapsed. For example, with `{"rate_unit": "month", "rate_unit_period": "calendar"}` the `rate_unit` for an event starting at `2022-02-25 19:25:52` would be interpreted as ranging from the start of the "month" - `2022-02-01 00:00:00` (inclusive) - to the end of the "month": `2022-03-01 00:00:00` (exclusive). E.g. from the 25th of the month to the end of the current calendar month only. The "week" `rate_unit` is defined as starting on Monday, per the ISO 8601 standard. See [example](/curbs/examples.md#curb-policy-rate-units) for other scenarios in action. | 
+| `increment_duration` | Integer | Optional | If specified, this is the smallest number of `rate_unit`s a user can pay for (e.g., if `increment_duration` is `15` and `rate_unit` is `minute`, a user can pay for 15, 30, 45, etc. minutes).    |
+| `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as `rate`. |
+| `start_duration` | Integer | Optional | The number of `rate_unit`s the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
+| `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate ends when the vehicle departs. |
+
 [Top][toc]
 
 ## Location Reference
@@ -492,7 +512,7 @@ A Location Reference is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li></ul> |
+| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://yourcityname.gov/LR`: custom city LR, direct link if possible</li></ul> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
 | `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 | `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature - in this case the [Range Boundaries](/general-information.md#range-boundaries)) are reversed. |

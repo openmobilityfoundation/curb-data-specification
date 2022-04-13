@@ -1,7 +1,8 @@
-
 # Curb Data Specification: General Information
 
-This document contains specifications that are shared between the various CDS APIs.
+<a href="/curbs/"><img src="https://i.imgur.com/at5rrjR.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
+
+This document contains specifications and common concepts that are shared between the various CDS APIs, such as [`Curbs`](/curbs), [`Events`](/events), and [`Metrics`](/metrics).
 
 # Table of Contents
 
@@ -203,9 +204,9 @@ All dynamic REST endpoints will return a JSON object containing the following fi
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `data` | _Endpoint-dependent_ | Required | The requested data objects. |
-| `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
+| `version` | String | Required | The specification version that the API conforms to (e.g. `1.0.0`) |
 | `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | [Timestamp][#timestamp] | Required | The last time the data in this API was updated. |
+| `last_updated` | [timestamp][ts] | Required | The last time the data in this API was updated. |
 | `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
@@ -219,7 +220,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 # Pagination
 
-Endpoints may use pagination, which must comply with the [JSON API][json-api-pagination] specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
+Endpoints may use pagination, which must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
 The following keys must be used for pagination links:
 
