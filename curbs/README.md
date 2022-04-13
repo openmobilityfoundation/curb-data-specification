@@ -481,7 +481,7 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `increment_duration` | Integer | Optional | If specified, this is the smallest number of `rate_unit`s a user can pay for (e.g., if `increment_duration` is `15` and `rate_unit` is `minute`, a user can pay for 15, 30, 45, etc. minutes).    |
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as `rate`. |
 | `start_duration` | Integer | Optional | The number of `rate_unit`s the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
-| `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Time Range](/general-information.md#time-range)). If not specified, this rate ends when the vehicle departs. |
+| `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate ends when the vehicle departs. |
 
 [Top][toc]
 
@@ -493,7 +493,7 @@ A Location Reference is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://coord.com`: Coord</li><li>`https://yourcityname.gov`: custom city LR, direct link if possible</li></ul> |
+| `source` | URL | Required | An identifier for the source of the linear reference. This MUST be a URL pointing to more information about the underlying map or reference system. Values include (but other can be used): <ul><li>`https://sharedstreets.io`: SharedStreets</li><li>`http://openlr.org`: OpenLR</li><li>`https://yourcityname.gov/LR`: custom city LR, direct link if possible</li></ul> |
 | `ref_id` | String | Required | The linear feature being referenced (usually a street or curb segment). For OpenLR, this is the Base64-encoded OpenLR line location for the street segment of which this Curb Zone is part, and the start and end offsets below are relative to this segment. |
 | `start` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the start of the Curb Zone (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 | `end` | Integer | Required | The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature - in this case the [Range Boundaries](/general-information.md#range-boundaries)) are reversed. |
