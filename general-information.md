@@ -18,6 +18,7 @@ This document contains specifications and common concepts that are shared betwee
 - [REST Endpoints](#rest-endpoints)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
+- [Unit of Time Enum](#unit-of-time-enum)
 - [UUID](#uuid)
 - [Timestamp](#timestamp)
 - [Versioning](#versioning)
@@ -258,6 +259,12 @@ For example:
 - `start_datetime`: "2021-08-12 00:00:00" and `end_datetime`: "2021-08-13 00:00:00"
 
 This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
+
+[Top][toc]
+
+# Unit of Time Enum
+
+An enumeration for units of time. Defined as "second", "minute", "hour", "day", "week", "month", and "year".
 
 [Top][toc]
 
