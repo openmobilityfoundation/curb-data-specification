@@ -14,13 +14,14 @@ This document contains specifications and common concepts that are shared betwee
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
   - [Intersection Operation](#intersection-operation)
-- [Responses](#responses)
-- [REST Endpoints](#rest-endpoints)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
+- [Responses](#responses)
+- [REST Endpoints](#rest-endpoints)
+- [Schema](#schema)
+- [Timestamp](#timestamp)
 - [Unit of Time Enum](#unit-of-time-enum)
 - [UUID](#uuid)
-- [Timestamp](#timestamp)
 - [Versioning](#versioning)
 
 # Authorization
@@ -165,6 +166,50 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
+# Pagination
+
+Endpoints may use pagination, which must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
+
+The following keys must be used for pagination links:
+
+* `first`: url to the first page of data
+* `last`: url to the last page of data
+* `prev`: url to the previous page of data
+* `next`: url to the next page of data
+
+At a minimum, payloads that use pagination must include a `next` key, which must be set to `null` to indicate the last page of data.
+
+```json
+{
+    "version": "x.y.z",
+    "data": {
+        "endpoint": [{
+            "field_name": "..."
+        }]
+    },
+    "links": {
+        "first": "https://...",
+        "last": "https://...",
+        "prev": "https://...",
+        "next": "https://..."
+    }
+}
+```
+
+[Top][toc]
+
+# Range Boundaries
+
+All ranges across the spec of timestamps, times, measurements, dates, etc are 'inclusive' at the start and 'exclusive' at the end, unless otherwise noted. 
+
+For example:
+
+- `start_datetime`: "2021-08-12 00:00:00" and `end_datetime`: "2021-08-13 00:00:00"
+
+This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
+
+[Top][toc]
+
 # Responses
 
 List of acceptable endpoint responses.
@@ -218,47 +263,15 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 [Top][toc]
 
-# Pagination
+# Schema
 
-Endpoints may use pagination, which must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
-
-The following keys must be used for pagination links:
-
-* `first`: url to the first page of data
-* `last`: url to the last page of data
-* `prev`: url to the previous page of data
-* `next`: url to the next page of data
-
-At a minimum, payloads that use pagination must include a `next` key, which must be set to `null` to indicate the last page of data.
-
-```json
-{
-    "version": "x.y.z",
-    "data": {
-        "endpoint": [{
-            "field_name": "..."
-        }]
-    },
-    "links": {
-        "first": "https://...",
-        "last": "https://...",
-        "prev": "https://...",
-        "next": "https://..."
-    }
-}
-```
+There is no validation schema for the first release of CDS. A schema and/or digital definition will come in a future CDS release as the spec is refined after real-world usage and feedback. To leave your thoughts and follow along, see this [discussion issue](https://github.com/openmobilityfoundation/curb-data-specification/issues/87).
 
 [Top][toc]
 
-# Range Boundaries
+# Timestamp
 
-All ranges across the spec of timestamps, times, measurements, dates, etc are 'inclusive' at the start and 'exclusive' at the end, unless otherwise noted. 
-
-For example:
-
-- `start_datetime`: "2021-08-12 00:00:00" and `end_datetime`: "2021-08-13 00:00:00"
-
-This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
+A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
 
 [Top][toc]
 
@@ -276,10 +289,6 @@ A UUID is a 128-bit, globally unique identifier represented as a string using th
 in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 
 [Top][toc]
-
-# Timestamp
-
-A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
 
 # Versioning
 
