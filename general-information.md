@@ -208,6 +208,8 @@ For example:
 
 This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
 
+All HH:MM times in CDS are in UTC, unless otherwise specified at the field level.
+
 [Top][toc]
 
 # Responses
