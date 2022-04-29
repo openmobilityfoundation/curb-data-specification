@@ -6,6 +6,7 @@ This file presents a series of CDS [Curbs](/curbs) endpoint examples to use as t
 
 - [Curb Zones Minimum](#curb-zones-minimum)
 - [Curb Policies](#curb-policies)
+- [Curb Policy Rate Units](#curb-policy-rate-units)
 
 ## Curb Zones Minimum
 
@@ -57,7 +58,7 @@ A [Query Curb Zones](/curbs#query-curb-zones) example of `/curbs/zones` with min
 
 ## Curb Policies
 
-A [Query Curb Policies](https://github.com/openmobilityfoundation/curb-data-specification/tree/feature-release-work-1/curbs#query-curb-policies) example of `/curbs/policies` showing policies giving 3 fleet operators using electric vehicles operating rideshare curb access for max 15 minute drop-offs on weekdays from 10am to 4pm, other commerical activity for up to 60 minutes between 8am and 10pm, but otherwise no stopping (eg overnight). No [query parameters](/curbs#query-parameters-3) passed in.
+A [Query Curb Policies](/curbs#query-curb-policies) example of `/curbs/policies` showing policies giving 3 fleet operators using electric vehicles operating rideshare curb access for max 15 minute drop-offs on weekdays from 10am to 4pm, other commerical activity for up to 60 minutes between 8am and 10pm, but otherwise no stopping (eg overnight). No [query parameters](/curbs#query-parameters-3) passed in.
 
 **Query**: 
 
@@ -124,6 +125,62 @@ A [Query Curb Policies](https://github.com/openmobilityfoundation/curb-data-spec
           "rules": [
             {
               "activity": "no stopping"
+            }
+          ]
+        }
+      ] 
+    }
+  ]
+}
+```
+
+## Curb Policy Rate Units
+
+A [Query Curb Policies](/curbs#query-curb-policies) example of `/curbs/policies` showing some `rate_unit' in [Rate](/curbs#rate) options. $5 dollars for one hour of parking on a rolling basis (from the moment the parking started), and $30 for one day of parking on a caledar basis (at the end of the day regardless of the start time). No [query parameters](/curbs#query-parameters-3) passed in.
+
+**Query**: 
+
+`/curbs/policies`
+
+**Payload**:
+
+```json
+{
+  "version": "1.0",
+  "time_zone": "US/Eastern",
+  "last_updated": 1552678594428,
+  "currency": "USD",
+  "author": "City of Metropolis",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "data": [
+    {
+      "policies": [
+        {
+          "curb_policy_id": "cd0996d7-3765-4f0b-a72e-7caf7cf3fe21",
+          "published_date": 1552678594428,
+          "priority": 1,          
+          "rules": [
+            {
+              "activity": "parking",
+              "rate": [
+                "rate": 500,
+                "rate_unit": "hour",
+                "rate_unit_period": "rolling"
+              ]
+            }
+          ]
+        },{
+          "curb_policy_id": "51f58575-1042-4254-b5fc-fed97124a6c7",
+          "published_date": 1552678857362,
+          "priority": 2,
+          "rules": [
+            {
+              "activity": "parking",
+              "rate": [
+                "rate": 3000,
+                "rate_unit": "day",
+                "rate_unit_period": "calendar"
+              ]
             }
           ]
         }

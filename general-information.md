@@ -1,7 +1,8 @@
-
 # Curb Data Specification: General Information
 
-This document contains specifications that are shared between the various CDS APIs.
+<a href="/README.md"><img src="https://i.imgur.com/at5rrjR.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
+
+This document contains specifications and common concepts that are shared between the various CDS APIs, such as [`Curbs`](/curbs), [`Events`](/events), and [`Metrics`](/metrics).
 
 # Table of Contents
 
@@ -13,12 +14,14 @@ This document contains specifications that are shared between the various CDS AP
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
   - [Intersection Operation](#intersection-operation)
-- [Responses](#responses)
-- [REST Endpoints](#rest-endpoints)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
-- [UUID](#uuid)
+- [Responses](#responses)
+- [REST Endpoints](#rest-endpoints)
+- [Schema](#schema)
 - [Timestamp](#timestamp)
+- [Unit of Time Enum](#unit-of-time-enum)
+- [UUID](#uuid)
 - [Versioning](#versioning)
 
 # Authorization
@@ -163,62 +166,9 @@ For the purposes of this specification, the intersection of two geographic datat
 
 [Top][toc]
 
-# Responses
-
-List of acceptable endpoint responses.
-
-* **200:** OK: operation successful.
-* **201:** Created: `POST` operations, new object created
-* **400:** Bad request.
-* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
-* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
-* **406:** Not Acceptable. Invalid response.
-* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
-* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
-* **501:** Not Implemented. 
-
-## Error Messages
-
-```json
-{
-    "error": "...",
-    "error_description": "...",
-    "error_details": [ "...", "..." ]
-}
-```
-
-| Field               | Type     | Field Description      |
-| ------------------- | -------- | ---------------------- |
-| `error`             | String   | Error message string   |
-| `error_description` | String   | Human readable error description (can be localized) |
-| `error_details`     | String[] | Array of error details |
-
-[Top][toc]
-
-# REST Endpoints
-
-All dynamic REST endpoints will return a JSON object containing the following fields:
-
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `data` | _Endpoint-dependent_ | Required | The requested data objects. |
-| `version` | String | Required | The specification version that the API conforms to (currently, `0.0`) |
-| `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
-| `last_updated` | [Timestamp][#timestamp] | Required | The last time the data in this API was updated. |
-| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
-| `author` | String | Optional | The name of the organization that produces and maintains this data. |
-| `license_url` | URL | Optional | The licensing terms under which this data is provided. |
-
-Servers MUST set the `Content-Type` header to `application/vnd.cds+json;version=1.0` to support
-versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+json;version=1.0`. If the server receives a request that contains an `Accept`
-header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
-
-[Top][toc]
-
 # Pagination
 
-Endpoints may use pagination, which must comply with the [JSON API][json-api-pagination] specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
+Endpoints may use pagination, which must comply with the [JSON API](http://jsonapi.org/format/#fetching-pagination) specification. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
 The following keys must be used for pagination links:
 
@@ -258,6 +208,79 @@ For example:
 
 This covers all of 2021-08-12, which is inclusive of the time "2021-08-12 00:00:00", but exclusive (does not include) the time "2021-08-13 00:00:00". This is easier and more clear than using "2021-08-12 23:59:59" as the `end_datetime`.
 
+All HH:MM times in CDS are in UTC, unless otherwise specified at the field level.
+
+[Top][toc]
+
+# Responses
+
+List of acceptable endpoint responses.
+
+* **200:** OK: operation successful.
+* **201:** Created: `POST` operations, new object created
+* **400:** Bad request.
+* **401:** Unauthorized: Invalid, expired, or insufficient scope of token.
+* **404:** Not Found: Object does not exist, returned on `GET` or `POST` operations if the object does not exist.
+* **406:** Not Acceptable. Invalid response.
+* **409:** Conflict: `POST` operations when an object already exists and an update is not possible.
+* **500:** Internal server error: In this case, the answer may contain a `text/plain` body with an error message for troubleshooting.
+* **501:** Not Implemented. 
+
+## Error Messages
+
+```json
+{
+    "error": "...",
+    "error_description": "...",
+    "error_details": [ "...", "..." ]
+}
+```
+
+| Field               | Type     | Field Description      |
+| ------------------- | -------- | ---------------------- |
+| `error`             | String   | Error message string   |
+| `error_description` | String   | Human readable error description (can be localized) |
+| `error_details`     | String[] | Array of error details |
+
+[Top][toc]
+
+# REST Endpoints
+
+All dynamic REST endpoints will return a JSON object containing the following fields:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `data` | _Endpoint-dependent_ | Required | The requested data objects. |
+| `version` | String | Required | The specification version that the API conforms to (e.g. `1.0.0`) |
+| `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
+| `last_updated` | [timestamp][ts] | Required | The last time the data in this API was updated. |
+| `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `author` | String | Optional | The name of the organization that produces and maintains this data. |
+| `license_url` | URL | Optional | The licensing terms under which this data is provided. |
+
+Servers MUST set the `Content-Type` header to `application/vnd.cds+json;version=1.0` to support
+versioning in the future.  Clients SHOULD specify an `Accept` header containing 
+`application/vnd.cds+json;version=1.0`. If the server receives a request that contains an `Accept`
+header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
+
+[Top][toc]
+
+# Schema
+
+There is no validation schema for the first release of CDS. A schema and/or digital definition will come in a future CDS release as the spec is refined after real-world usage and feedback. To leave your thoughts and follow along, see this [discussion issue](https://github.com/openmobilityfoundation/curb-data-specification/issues/87).
+
+[Top][toc]
+
+# Timestamp
+
+A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
+
+[Top][toc]
+
+# Unit of Time Enum
+
+An enumeration for units of time. Defined as "second", "minute", "hour", "day", "week", "month", and "year".
+
 [Top][toc]
 
 # UUID
@@ -268,10 +291,6 @@ A UUID is a 128-bit, globally unique identifier represented as a string using th
 in RFC 4122, including time-based (V1), random (V4), or name-based (V5).
 
 [Top][toc]
-
-# Timestamp
-
-A timestamp is an integer representing a number of milliseconds since midnight, January 1st, 1970 UTC (the UNIX epoch). E.g., `1643130000000` is Tuesday, January 25, 2022 5:00:00 PM UTC.
 
 # Versioning
 
