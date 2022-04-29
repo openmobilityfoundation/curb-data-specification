@@ -1,10 +1,10 @@
 ## 1.0.0
 
-**Release Candidate submitted 2022-01-25**
+> Released: 2022-04-29
 
-[Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0)
+> [Release Plan](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Release-1.0.0)
 
-The 1.0.0 major release is the first release of the Curb Data Specification (CDS) after over 15 months of community work across dozens of public meetings, with 70+ organizations and 160+ individuals participating. It includes three major APIs to define Curbs and policies, track Events at the curb and determine sensor status, and derive Metrics for sessions and aggregate curb usage with a well defined methodology.
+The 1.0.0 major release is the first release of the Curb Data Specification (CDS) after over 17 months of community work across dozens of public meetings, with 70+ organizations and 160+ individuals participating. It includes three major APIs to define Curbs and policies, track Events at the curb and determine sensor status, and derive Metrics for sessions and aggregate curb usage with a well defined methodology. CDS is currently being used by over [two dozen organizations](https://github.com/openmobilityfoundation/curb-data-specification/wiki#cds-users).
 
 ### CHANGES
 
