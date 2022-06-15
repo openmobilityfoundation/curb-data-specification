@@ -518,7 +518,7 @@ A WZDx Reference is a JSON array with the following fields within objects:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `wzdx_feed_url` | URL | Required | An identifier for the source of the publicly accessible WZDx feed. This MUST be a full HTTPS URL pointing to the data feed which contains more information about the underlying work zone impacting the CDS place. |
-| `wzdx_road_event_feature_id` | String | Required | The `id` of a WZDx [RoadEventFeature](https://github.com/usdot-jpo-ode/wzdx/blob/main/spec-content/objects/RoadEventFeature.md#roadeventfeature-object-geojson-feature) that impacts the curb zone. In case multiple road event `wzdx_id`s are needed, it would be provided in another object with another `wzdx_feed_url`. |
+| `wzdx_road_event_feature_id` | String | Required | The `id` of a WZDx [RoadEventFeature](https://github.com/usdot-jpo-ode/wzdx/blob/main/spec-content/objects/RoadEventFeature.md#roadeventfeature-object-geojson-feature) that impacts the use of a curb zone. In case multiple road event `wzdx_id`s are needed, it would be provided in another object with another `wzdx_feed_url`. |
 
 [Top][toc]
 
