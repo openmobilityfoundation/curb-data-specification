@@ -53,7 +53,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Time Span](#time-span)
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
-  - [WXDz Reference](#wzdx-reference)
+  - [WZDx Reference](#wzdx-reference)
   - [Previous Policy](#previous-policy)
 - [Examples](#examples)
 
@@ -511,14 +511,14 @@ A Location Reference is a JSON object with the following fields:
 
 ## WZDx Reference
 
-A WZDx Reference object defines an external connection to a [Work Zone Data Exchange](https://github.com/usdot-jpo-ode/wzdx) data feed for a given curb place. This allows CDS users to reference public WZDx feeds that impact the area, and see full details in the agency data feed.
+A WZDx Reference object describes a specific WZDx road event feature that is relevant to the curb place via an external reference to a [Work Zone Data Exchange](https://github.com/usdot-jpo-ode/wzdx) data feed. This allows CDS users to reference public WZDx feeds that impact the area, and see full details in the agency data feed.
 
 A WZDx Reference is a JSON array with the following fields within objects:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `wzdx_feed_url` | URL | Required | An identifier for the source of the publicly accessible WZDx feed. This MUST be a full HTTPS URL pointing to the data feed which contains more information about the underlying work zone impacting the CDS place. |
-| `wzdx_id` | String | Required | The relevant `id` in the WZDx data feed that impacts the CDS place issued by the data feed provider to identify the WZDx road event, from the [RoadEventFeature](https://github.com/usdot-jpo-ode/wzdx/blob/main/spec-content/objects/RoadEventFeature.md#roadeventfeature-object-geojson-feature). In case multiple road event `wzdx_id`s are needed, then they would be provided in another object with another `wzdx_feed_url`. |
+| `wzdx_road_event_feature_id` | String | Required | The `id` of a WZDx [RoadEventFeature](https://github.com/usdot-jpo-ode/wzdx/blob/main/spec-content/objects/RoadEventFeature.md#roadeventfeature-object-geojson-feature) that impacts the curb zone. In case multiple road event `wzdx_id`s are needed, it would be provided in another object with another `wzdx_feed_url`. |
 
 [Top][toc]
 
