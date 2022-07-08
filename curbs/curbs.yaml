@@ -97,8 +97,7 @@ paths:
           description: 'Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
-            minimum: 0
-            exclusiveMinimum: true
+            exclusiveMinimum: 0
           in: query
           name: radius
           description: 'Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
@@ -181,8 +180,7 @@ paths:
           description: 'Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
-            minimum: 0
-            exclusiveMinimum: true
+            exclusiveMinimum: 0
           in: query
           name: radius
           description: 'Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
@@ -265,8 +263,7 @@ paths:
           description: 'Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
-            minimum: 0
-            exclusiveMinimum: true
+            exclusiveMinimum: 0
           in: query
           name: radius
           description: 'Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
@@ -696,8 +693,7 @@ components:
         length:
           type: integer
           description: 'The length, in centimeters, of the Curb Zone when projected along the street centerline. Note that this is the definitive length of the curb area, and not the edge length of the geographic polygon.'
-          minimum: 0
-          exclusiveMinimum: true
+          exclusiveMinimum: 0
         available_space_lengths:
           type: array
           items:
@@ -710,8 +706,7 @@ components:
         width:
           type: integer
           description: 'The width, in centimeters, that the Curb Zone occupies from the curb to the roadway lane.'
-          minimum: 0
-          exclusiveMinimum: true
+          exclusiveMinimum: 0
         parking_angle:
           type: string
           enum:
@@ -972,37 +967,39 @@ components:
                   - $ref: '#/components/schemas/unit-of-time'
                   - description: The Unit of Time associated with the no_return value.
               user_classes:
-                type: string
-                enum:
-                  - bicycle
-                  - bus
-                  - cargo_bicycle
-                  - car
-                  - moped
-                  - motorcycle
-                  - scooter
-                  - truck
-                  - van
-                  - handicap-accessible
-                  - human
-                  - electric_assist
-                  - electric
-                  - combustion
-                  - autonomous
-                  - construction
-                  - delivery
-                  - emergency_use
-                  - freight
-                  - parking
-                  - permit
-                  - rideshare
-                  - school
-                  - service_vehicles
-                  - special_events
-                  - taxi
-                  - utilities
-                  - vending
-                  - waste_management
+                type: array
+                items:
+                  type: string
+                  enum:
+                    - bicycle
+                    - bus
+                    - cargo_bicycle
+                    - car
+                    - moped
+                    - motorcycle
+                    - scooter
+                    - truck
+                    - van
+                    - handicap-accessible
+                    - human
+                    - electric_assist
+                    - electric
+                    - combustion
+                    - autonomous
+                    - construction
+                    - delivery
+                    - emergency_use
+                    - freight
+                    - parking
+                    - permit
+                    - rideshare
+                    - school
+                    - service_vehicles
+                    - special_events
+                    - taxi
+                    - utilities
+                    - vending
+                    - waste_management
                 description: A user class represents any class of vehicles that is regulated by a city with respect to curb space.
               rate:
                 type: array
