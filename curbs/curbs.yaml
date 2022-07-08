@@ -1,21 +1,25 @@
 openapi: 3.1.0
 info:
-  title: Curbs
-  version: "1.0"
-  summary: "The Curbs API is a standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. It defines curb policies, curb zones, spaces in zones, and areas around curbs, and is used by Events and Metrics."
-  description: "The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc., for how long, for what price (if any), at what times, and on which days. Locations defined in the Curbs API can be connected to event and metrics data, and can be shared with companies and the public, for purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing curb utilization over time."
+  title: CDS Curbs
+  version: '1.0'
+  summary: 'The Curbs API is a standard way for cities to digitally publish curb locations and regulations, which can be shared with the public and with companies using curb space. It defines curb policies, curb zones, spaces in zones, and areas around curbs, and is used by Events and Metrics.'
+  description: 'The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc., for how long, for what price (if any), at what times, and on which days. Locations defined in the Curbs API can be connected to event and metrics data, and can be shared with companies and the public, for purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing curb utilization over time.'
   contact:
-    url: "https://github.com/openmobilityfoundation/curb-data-specification/tree/main/curbs"
+    url: 'https://github.com/openmobilityfoundation/curb-data-specification/tree/main/curbs'
     name: Open Mobility Foundation
+    email: info@openmobilityfoundation.org
+  license: 
+    name: Creative Commons Attribution 4.0 International Public License
+    url: http://www.apache.org/licenses/LICENSE-2.0.htmlhttps://github.com/openmobilityfoundation/curb-data-specification/blob/0706316a7bfb0d6b5104c75608d8f66cb8101fe7/LICENCE
 servers:
-  - description: ""
-    url: "http://localhost:4000/curbs"
+  - description: ''
+    url: 'http://localhost:4000/curbs'
 paths:
   /curbs/zones:
     get:
       summary: Query Curb Zones
       responses:
-        "200":
+        '200':
           description: Zones Found
           content:
             application/json:
@@ -27,7 +31,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -42,67 +46,67 @@ paths:
                         zones:
                           type: array
                           items:
-                            $ref: "#/components/schemas/curb-zone"
-        "400":
+                            $ref: '#/components/schemas/curb-zone'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "500":
+        '500':
           description: SERVER_ERROR
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-zones
-      description: This required endpoint must be implemented by every Curbs API server. If attaching policies to curb zones, the Query Curb Policies endpoint is also required.
+      description: 'This required endpoint must be implemented by every Curbs API server. If attaching policies to curb zones, the Query Curb Policies endpoint is also required.'
       parameters:
         - schema:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           in: query
           name: area
-          description: The ID of a Curb Area. If specified, only return Curb Zones contained within this area.
+          description: 'The ID of a Curb Area. If specified, only return Curb Zones contained within this area.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: min_lat
-          description: If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: min_lng
-          description: If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: max_lat
-          description: If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: max_lng
-          description: If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Zones that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: lat
-          description: Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: lng
-          description: Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
             minimum: 0
             exclusiveMinimum: true
           in: query
           name: radius
-          description: Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Zones that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
   /curbs/areas:
     get:
       summary: Query Curb Areas
       responses:
-        "200":
+        '200':
           description: Areas Found
           content:
             application/json:
@@ -114,7 +118,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -129,64 +133,64 @@ paths:
                         areas:
                           type: array
                           items:
-                            $ref: "#/components/schemas/curb-area"
-        "400":
+                            $ref: '#/components/schemas/curb-area'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-areas
-      description: Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: min_lat
-          description: If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: min_lng
-          description: If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: max_lat
-          description: If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: max_lng
-          description: If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Areas that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: lat
-          description: Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: lng
-          description: Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
             minimum: 0
             exclusiveMinimum: true
           in: query
           name: radius
-          description: Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Areas that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
   /curbs/spaces:
     get:
       summary: Query Curb Spaces
       responses:
-        "200":
+        '200':
           description: Spaces Found
           content:
             application/json:
@@ -198,7 +202,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -213,64 +217,64 @@ paths:
                         spaces:
                           type: array
                           items:
-                            $ref: "#/components/schemas/curb-space"
-        "400":
+                            $ref: '#/components/schemas/curb-space'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-spaces
-      description: Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: min_lat
-          description: If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lng`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: min_lng
-          description: If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lat`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: max_lat
-          description: If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lng`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: max_lng
-          description: If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.
+          description: 'If specified only return Curb Spaces that intersect the supplied bounding box. Must be used together with `min_lat`, `max_lng`, and `max_lat`. This parameter is incompatible with `lat`, `lng`, and `radius`.'
         - schema:
-            $ref: "#/components/schemas/latitude"
+            $ref: '#/components/schemas/latitude'
           in: query
           name: lat
-          description: Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lng` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
-            $ref: "#/components/schemas/longitude"
+            $ref: '#/components/schemas/longitude'
           in: query
           name: lng
-          description: Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `radius`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
         - schema:
             type: integer
             minimum: 0
             exclusiveMinimum: true
           in: query
           name: radius
-          description: Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.
+          description: 'Returns only Curb Spaces that are within radius centimeters of the point identified by lat/lng. Must be used together with `lat` and `lng`. This parameter is incompatible with `min_lat`, `min_lng`, `max_lat` and `max_lng`.'
   /curbs/policies:
     get:
       summary: Query Curb Policies
       responses:
-        "200":
+        '200':
           description: Policies Found
           content:
             application/json:
@@ -282,7 +286,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -297,32 +301,32 @@ paths:
                         policies:
                           type: array
                           items:
-                            $ref: "#/components/schemas/curb-policy"
-        "400":
+                            $ref: '#/components/schemas/curb-policy'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-policies
-      description: Optional endpoint, but required if Curb Zones contain policy_id references. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Optional endpoint, but required if Curb Zones contain policy_id references. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
             type: string
           in: query
           name: ids
           description: Comma-separated list of Policy IDs.
-  /curbs/zones/{id}:
+  '/curbs/zones/{id}':
     get:
       summary: Fetch a Curb Zone
       responses:
-        "200":
+        '200':
           description: Zone Found
           content:
             application/json:
@@ -334,7 +338,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -347,23 +351,23 @@ paths:
                       type: object
                       properties:
                         zone:
-                          $ref: "#/components/schemas/curb-zone"
-        "400":
+                          $ref: '#/components/schemas/curb-zone'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "404":
+        '404':
           description: NOT_FOUND
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-zone
-      description: Fetch a single Curb Zone by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Fetch a single Curb Zone by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
             type: string
@@ -372,20 +376,20 @@ paths:
           required: true
           description: Curb Zone ID
         - schema:
-            $ref: "#/components/schemas/timestamp"
+            $ref: '#/components/schemas/timestamp'
           in: query
           name: time
-          description: The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with 404 Not Found.
+          description: 'The Curb Zone object will only be returned if its validity period includes this time; otherwise, the server should reply with 404 Not Found.'
         - schema:
             type: boolean
           in: query
           name: show_historic
-          description: Whether to return historic, retired curb zone data.
-  /curbs/areas/{id}:
+          description: 'Whether to return historic, retired curb zone data.'
+  '/curbs/areas/{id}':
     get:
       summary: Fetch a Curb Area
       responses:
-        "200":
+        '200':
           description: Area Found
           content:
             application/json:
@@ -397,7 +401,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -410,23 +414,23 @@ paths:
                       type: object
                       properties:
                         area:
-                          $ref: "#/components/schemas/curb-area"
-        "400":
+                          $ref: '#/components/schemas/curb-area'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "404":
+        '404':
           description: NOT_FOUND
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-area
-      description: Fetch a single Curb Area by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Fetch a single Curb Area by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
             type: string
@@ -434,11 +438,11 @@ paths:
           in: path
           required: true
           description: Curb Area ID
-  /curbs/spaces/{id}:
+  '/curbs/spaces/{id}':
     get:
       summary: Fetch a Curb Space
       responses:
-        "200":
+        '200':
           description: Space Found
           content:
             application/json:
@@ -450,7 +454,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -463,23 +467,23 @@ paths:
                       type: object
                       properties:
                         space:
-                          $ref: "#/components/schemas/curb-space"
-        "400":
+                          $ref: '#/components/schemas/curb-space'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "404":
+        '404':
           description: NOT_FOUND
-        "500":
+        '500':
           description: SERVER_ERROR
-        "501":
+        '501':
           description: NOT_IMPLEMENTED
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-space
-      description: Fetch a single Curb Space by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.
+      description: 'Fetch a single Curb Space by ID. Optional endpoint. If not implemented, the server should reply with 501 Not Implemented.'
       parameters:
         - schema:
             type: string
@@ -488,15 +492,15 @@ paths:
           required: true
           description: Curb Space ID
         - schema:
-            $ref: "#/components/schemas/timestamp"
+            $ref: '#/components/schemas/timestamp'
           in: query
           name: time
           description: Availability data (if supplied) will be returned as of this time.
-  /curbs/policies/{id}:
+  '/curbs/policies/{id}':
     get:
       summary: Fetch a Curb Policy
       responses:
-        "200":
+        '200':
           description: Policy Found
           content:
             application/json:
@@ -508,7 +512,7 @@ paths:
                   time_zone:
                     type: string
                   last_updated:
-                    $ref: "#/components/schemas/timestamp"
+                    $ref: '#/components/schemas/timestamp'
                   currency:
                     type: string
                   author:
@@ -521,18 +525,18 @@ paths:
                       type: object
                       properties:
                         policy:
-                          $ref: "#/components/schemas/curb-policy"
-        "400":
+                          $ref: '#/components/schemas/curb-policy'
+        '400':
           description: BAD_REQUEST
-        "401":
+        '401':
           description: UNAUTHORIZED
-        "403":
+        '403':
           description: FORBIDDEN
-        "404":
+        '404':
           description: NOT_FOUND
-        "500":
+        '500':
           description: SERVER_ERROR
-        "503":
+        '503':
           description: SERVICE_UNAVAILABLE
       operationId: get-curbs-policy
       description: Fetch a single Curb Policy by ID.
@@ -577,7 +581,7 @@ components:
       properties:
         curb_zone_id:
           allOf:
-            - $ref: "#/components/schemas/uuid"
+            - $ref: '#/components/schemas/uuid'
             - description: The ID of this Curb Zone.
         geometry:
           type: object
@@ -595,8 +599,8 @@ components:
         curb_policy_ids:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
-          description: An array of IDs of Policy objects. Together, these define the regulations of this Curb Zone.
+            $ref: '#/components/schemas/uuid'
+          description: 'An array of IDs of Policy objects. Together, these define the regulations of this Curb Zone.'
         prev_policies:
           type: array
           items:
@@ -605,15 +609,15 @@ components:
               curb_policy_ids:
                 type: array
                 items:
-                  $ref: "#/components/schemas/uuid"
-                description: An array of IDs of Policy objects. Together, these define the previous regulations of this Curb Zone.
+                  $ref: '#/components/schemas/uuid'
+                description: 'An array of IDs of Policy objects. Together, these define the previous regulations of this Curb Zone.'
               start_date:
                 allOf:
-                  - $ref: "#/components/schemas/timestamp"
+                  - $ref: '#/components/schemas/timestamp'
                   - description: The date/time that this policy started being active for this curb location.
               end_date:
                 allOf:
-                  - $ref: "#/components/schemas/timestamp"
+                  - $ref: '#/components/schemas/timestamp'
                   - description: The date/time that this policy ended being active for this curb location.
             required:
               - curb_policy_ids
@@ -622,24 +626,24 @@ components:
           description: An array of information about what previous policies applied to a curb zone and when.
         published_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that this curb zone was first published in this data feed.
         last_updated_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that the properties of ths curb zone were last updated.
         prev_curb_zone_ids:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           description: An array of IDs of previous curb zone objects. They are listed in order with the most recent ones first.
         start_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The earliest time that the data for this curb location is known to be valid.
         end_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The time at which the data for this curb location ceases to be valid.
         location_references:
           type: array
@@ -659,27 +663,27 @@ components:
                 minimum: 0
               end:
                 type: integer
-                description: The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. 'end' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature.
+                description: 'The distance (in centimeters) from the start of the referenced linear feature to the end of the Curb Zone. ''end'' MAY be smaller than start, implying that the direction of the Curb Zone is opposite to the direction of the referenced linear feature.'
                 minimum: 0
               side:
                 type: string
                 enum:
                   - left
                   - right
-                description: If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation.
+                description: 'If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation.'
             required:
               - source
               - ref_id
               - start
               - end
-            description: A linear reference defines a Curb Zone's position by reference to a linear feature, like a street centerline or edge-of-pavement line.
+            description: 'A linear reference defines a Curb Zone''s position by reference to a linear feature, like a street centerline or edge-of-pavement line.'
           description: One or more linear references for this Curb Zone.
         name:
           type: string
           description: A human-readable name for this Curb Zone that identifies it to end users.
         user_zone_id:
           type: string
-          description: An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes.
+          description: 'An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes.'
         street_name:
           type: string
           description: The name of the street that this Curb Zone is on.
@@ -691,21 +695,21 @@ components:
           description: The name of the cross street at the end of this Curb Zone.
         length:
           type: integer
-          description: The length, in centimeters, of the Curb Zone when projected along the street centerline. Note that this is the definitive length of the curb area, and not the edge length of the geographic polygon.
+          description: 'The length, in centimeters, of the Curb Zone when projected along the street centerline. Note that this is the definitive length of the curb area, and not the edge length of the geographic polygon.'
           minimum: 0
           exclusiveMinimum: true
         available_space_lengths:
           type: array
           items:
             type: integer
-          description: If availability information is present, an array of numbers containing the lengths (in centimeters) of all known non-overlapping available spaces within this Curb Zone.
+          description: 'If availability information is present, an array of numbers containing the lengths (in centimeters) of all known non-overlapping available spaces within this Curb Zone.'
         availability_time:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
-            - description: If availability information is present, the timestamp corresponding to the most recent time that availability was computed for this zone.
+            - $ref: '#/components/schemas/timestamp'
+            - description: 'If availability information is present, the timestamp corresponding to the most recent time that availability was computed for this zone.'
         width:
           type: integer
-          description: The width, in centimeters, that the Curb Zone occupies from the curb to the roadway lane.
+          description: 'The width, in centimeters, that the Curb Zone occupies from the curb to the roadway lane.'
           minimum: 0
           exclusiveMinimum: true
         parking_angle:
@@ -721,7 +725,7 @@ components:
         street_side:
           type: string
           enum:
-            - N
+            - 'N'
             - NE
             - E
             - SE
@@ -732,19 +736,19 @@ components:
           description: The cardinal or subcardinal direction representing the side of the roadway that this curb is on.
         median:
           type: boolean
-          description: If "true", this curb location is on the median of a street, rather than its edge.
+          description: 'If "true", this curb location is on the median of a street, rather than its edge.'
         entire_roadway:
           type: boolean
-          description: If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading).
+          description: 'If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading).'
         curb_area_ids:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           description: The ID(s) of the Curb Areas that this Curb Zone is a part of.
         curb_space_ids:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           description: The ID(s) of the Curb Spaces that this Curb Zone contains.
       required:
         - curb_zone_id
@@ -779,7 +783,7 @@ components:
       properties:
         curb_area_id:
           allOf:
-            - $ref: "#/components/schemas/uuid"
+            - $ref: '#/components/schemas/uuid'
             - description: The ID for the Curb Area.
         geometry:
           type: object
@@ -799,16 +803,16 @@ components:
           description: The name of this curb area for reference.
         published_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that this curb area was first published in this data feed.
         last_updated_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that the properties of ths curb area were last updated.
         curb_zone_ids:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           description: The IDs of all the Curb Zones included within this Curb Area at the requested time.
       required:
         - curb_area_id
@@ -842,7 +846,7 @@ components:
       properties:
         curb_space_id:
           allOf:
-            - $ref: "#/components/schemas/uuid"
+            - $ref: '#/components/schemas/uuid'
             - description: The ID of the Curb Space.
         geometry:
           type: object
@@ -862,19 +866,19 @@ components:
           description: The name of this curb space for reference.
         published_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that this curb area was first published in this data feed.
         last_updated_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that the properties of ths curb area were last updated.
         curb_zone_id:
           allOf:
-            - $ref: "#/components/schemas/uuid"
+            - $ref: '#/components/schemas/uuid'
             - description: The ID of the Curb Zone this space is within.
         space_number:
           type: integer
-          description: The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1.
+          description: 'The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1.'
         length:
           type: integer
           description: Length in centimeters of this Space.
@@ -886,8 +890,8 @@ components:
           description: Whether this space is available for vehicles to park in at the specified time.
         availability_time:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
-            - description: If availability information is present, the most recent time that availability was computed for this space.
+            - $ref: '#/components/schemas/timestamp'
+            - description: 'If availability information is present, the most recent time that availability was computed for this space.'
       required:
         - curb_space_id
         - geometry
@@ -925,15 +929,15 @@ components:
       properties:
         curb_policy_id:
           allOf:
-            - $ref: "#/components/schemas/uuid"
+            - $ref: '#/components/schemas/uuid'
             - description: An ID that uniquely identifies this exact policy across Curb Zones.
         published_date:
           allOf:
-            - $ref: "#/components/schemas/timestamp"
+            - $ref: '#/components/schemas/timestamp'
             - description: The date/time that this policy was first published in this data feed.
         priority:
           type: integer
-          description: Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping Time Spans and apply to the same user class, the one that applies at a given time is the one with the lowest priority.
+          description: 'Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping Time Spans and apply to the same user class, the one that applies at a given time is the one with the lowest priority.'
         rules:
           type: array
           items:
@@ -955,17 +959,17 @@ components:
                 description: The activity that is forbidden or permitted by this regulation.
               max_stay:
                 type: integer
-                description: The length of time (in units of max_stay_unit) for which the curb may be used under this regulation. If not specified, the curb may be used under this regulation indefinitely.
+                description: 'The length of time (in units of max_stay_unit) for which the curb may be used under this regulation. If not specified, the curb may be used under this regulation indefinitely.'
               max_stay_unit:
                 allOf:
-                  - $ref: "#/components/schemas/unit-of-time"
+                  - $ref: '#/components/schemas/unit-of-time'
                   - description: The Unit of Time associated with the max_stay value.
               no_return:
                 type: integer
                 description: The length of time (in units of no_return_unit) that a user must vacate a Curb Zone before being allowed to return for another stay.
               no_return_unit:
                 allOf:
-                  - $ref: "#/components/schemas/unit-of-time"
+                  - $ref: '#/components/schemas/unit-of-time'
                   - description: The Unit of Time associated with the no_return value.
               user_classes:
                 type: string
@@ -1010,7 +1014,7 @@ components:
                       description: The rate for this space in cents (or the smallest denomination of local currency) per rate_unit.
                     rate_unit:
                       allOf:
-                        - $ref: "#/components/schemas/unit-of-time"
+                        - $ref: '#/components/schemas/unit-of-time'
                         - description: The unit of time associated with the rate.
                     rate_unit_period:
                       type: string
@@ -1020,10 +1024,10 @@ components:
                       description: The period of time that the rate_unit covers.
                     increment_duration:
                       type: integer
-                      description: If specified, this is the smallest number of rate_units a user can pay for.
+                      description: 'If specified, this is the smallest number of rate_units a user can pay for.'
                     increment_amount:
                       type: integer
-                      description: If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as rate.
+                      description: 'If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as rate.'
                     start_duration:
                       type: integer
                       description: The number of rate_units the vehicle must have already been present in the Curb Zone before this rate starts applying.
@@ -1037,7 +1041,7 @@ components:
                 description: The cost of using this Curb Zone when this regulation applies.
             required:
               - activity
-            description: A rule defines who is allowed to do what, and for how long, on a curb, per the policy.
+            description: 'A rule defines who is allowed to do what, and for how long, on a curb, per the policy.'
           description: The rule(s) that this policy applies.
         time_spans:
           type: array
@@ -1046,12 +1050,12 @@ components:
             properties:
               start_date:
                 allOf:
-                  - $ref: "#/components/schemas/timestamp"
-                  - description: The earliest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the past.
+                  - $ref: '#/components/schemas/timestamp'
+                  - description: 'The earliest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the past.'
               end_date:
                 allOf:
-                  - $ref: "#/components/schemas/timestamp"
-                  - description: The latest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the future.
+                  - $ref: '#/components/schemas/timestamp'
+                  - description: 'The latest point in time that this Time Span could apply. If unspecified, the Time Span applies to all matching periods arbitrarily far in the future.'
               days_of_week:
                 type: string
                 enum:
@@ -1076,13 +1080,13 @@ components:
                   type: integer
                   minimum: 1
                   maximum: 12
-                description: If specified, this Time Span applies only during these months (1=January, 12=December).
+                description: 'If specified, this Time Span applies only during these months (1=January, 12=December).'
               time_of_day_start:
                 type: string
-                description: The local time that this Time Span starts to apply, as 24-hour "HH:MM".
+                description: 'The local time that this Time Span starts to apply, as 24-hour "HH:MM".'
               time_of_day_end:
                 type: string
-                description: The local time that this Time Span stops applying, as 24-hour "HH:MM".
+                description: 'The local time that this Time Span stops applying, as 24-hour "HH:MM".'
               designated_period:
                 type: string
                 enum:
@@ -1090,16 +1094,16 @@ components:
                   - holidays
                   - school days
                   - game days
-                description: A string representing an arbitrarily-named, externally-defined period of time.
+                description: 'A string representing an arbitrarily-named, externally-defined period of time.'
               designated_period_except:
                 type: boolean
-                description: If specified and true, this Time Span applies at all times not matching the named designated period.
-            description: A Time Span defines a period of time (that may occur once or repeatedly) during which a given regulation applies. When multiple fields are combined, all criteria must be met in order for a given Time Span to apply.
-          description: If specified, this regulation only applies at the times defined within.
+                description: 'If specified and true, this Time Span applies at all times not matching the named designated period.'
+            description: 'A Time Span defines a period of time (that may occur once or repeatedly) during which a given regulation applies. When multiple fields are combined, all criteria must be met in order for a given Time Span to apply.'
+          description: 'If specified, this regulation only applies at the times defined within.'
         data_source_operator_id:
           type: array
           items:
-            $ref: "#/components/schemas/uuid"
+            $ref: '#/components/schemas/uuid'
           description: An array of Data Source Operator IDs that this policy only applies to.
       required:
         - curb_policy_id
@@ -1121,8 +1125,8 @@ components:
               - wed
               - thu
               - fri
-            time_of_day_start: 10:00
-            time_of_day_end: 16:00
+            time_of_day_start: '10:00'
+            time_of_day_end: '16:00'
         rules:
           - activity: parking
             max_stay: 15
