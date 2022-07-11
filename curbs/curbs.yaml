@@ -585,10 +585,14 @@ components:
           properties:
             type:
               type: string
-            coordinates:
-              type: array
-              items:
-                type: number
+              coordinates:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: number
           required:
             - type
             - coordinates
@@ -788,7 +792,11 @@ components:
             coordinates:
               type: array
               items:
-                type: number
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
           required:
             - type
             - coordinates
@@ -851,7 +859,11 @@ components:
             coordinates:
               type: array
               items:
-                type: number
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
           required:
             - type
             - coordinates
