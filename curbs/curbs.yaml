@@ -13,7 +13,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.htmlhttps://github.com/openmobilityfoundation/curb-data-specification/blob/0706316a7bfb0d6b5104c75608d8f66cb8101fe7/LICENCE
 servers:
   - description: ''
-    url: 'http://localhost:4000/curbs'
+    url: 'http://localhost:4000'
 paths:
   /curbs/zones:
     get:
@@ -585,14 +585,14 @@ components:
           properties:
             type:
               type: string
-              coordinates:
+            coordinates:
+              type: array
+              items:
                 type: array
                 items:
                   type: array
                   items:
-                    type: array
-                    items:
-                      type: number
+                    type: number
           required:
             - type
             - coordinates
