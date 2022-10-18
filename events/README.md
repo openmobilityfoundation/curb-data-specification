@@ -32,6 +32,7 @@ There are two different endpoints that are part of the Events API:
     * [Curb Occupant](#curb-occupants)
   * [Status](#status)
 - [Examples](#examples)
+- [Schema](#schema)
 
 # REST Endpoints
 
@@ -277,6 +278,12 @@ A Curb Status is represented as a JSON object array of all deployed sensors, who
 # Examples
 
 See a series of [CDS Events endpoint examples](examples.md) to use as templates. 
+
+[Top][toc]
+
+# Schema
+
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi/tree/main) repository.
 
 [Top][toc]
 
