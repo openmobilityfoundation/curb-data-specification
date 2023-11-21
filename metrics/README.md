@@ -101,7 +101,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
-| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`,`object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
 | `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
@@ -135,6 +135,7 @@ A Session is represented as a CSV object, whose fields are as follows, pulled fr
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
+| `curb_object_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Object where the event occurred. Required for events that occurred at a known Curb Object for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](/events#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 
