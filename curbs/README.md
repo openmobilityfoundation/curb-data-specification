@@ -22,7 +22,8 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
-  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space that is grouped under a certain type and contains a unique set of     attributes. Curb objects are *optional*.
+  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space
+    that is grouped under a certain type and contains a unique set of attributes. Curb objects are *optional*.
   - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional* 
     but recommended with Curb Zones.
@@ -47,6 +48,8 @@ There are four different endpoints that are part of the Curbs API:
   - [Curb Zone](#curb-zone)
   - [Curb Area](#curb-area)
   - [Curb Space](#curb-space)
+  - [Curb Object](#curb-object)
+    - [Object Types](#object-types) 
   - [Policy](#policy)
     - [Rule](#rule)
       - [Activities](#activities)
@@ -340,26 +343,54 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
 | `geometry` | [Point][point] | Required |The spatial extent of this curb object location. |
-| `name` | String | Optional | The name of this curb object for reference. |
+| `name` | String | Optional | A short name of this curb object for reference. |
+| `description` | String | Optional | A more detailed description of the object if needed. |
+| `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
+| `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. |
+| `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
+| `max_depth` | Integer | Optional | Maximum, bounding box depth of the object perpendicular to the curb, in centimeters. |
+| `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is related to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is related to. The geometry of the specified Curb ZSpace does not need to directly relate to the geometry of this object. |
-| `object_type` | [Object Types](#object-types) String | Required | The categrory of each curb object. Value MUST be one of the [Object Types](#object-types). |
+| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
 
 [Top][toc]
 
 ### Object Types
 
-The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type.
+The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type. New objects MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
 
-- `ramp` - 
-- `signage` -
-- `locker` -
-- `bus stop` -
-- `ev charging` -
-- `street tree` -
-- ...
+**Well-known values:**
+
+- `ramp` 
+- `signage`
+- `locker` 
+- `bus_stop`
+- `ev_charging`
+- `street_tree`
+- `planter`
+- `utility_box`
+- `bench`
+- `art`
+- `sculpture`
+- `fountain`
+- `post_box`
+- `bollard`
+- `barrier`
+- `surveillance_camera`
+- `bike_rack`
+- `meter_pay_station`
+- `signal_cabinet`
+- `scooter_parking`
+- `electric_charging`
+- `solid_waste_bin`
+- `lighting`
+- `drinking_fountain`
+- `toilet`
+- `food_vendor`
+- `fire_hydrant`
 
 [Top][toc]
 
