@@ -22,7 +22,7 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
-  - A Curb Object is a physical item or asset located adjacent to or within a curb space that is grouped under a certain type and contains a unique set of     attributes. Curb objects are *optional*.
+  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space that is grouped under a certain type and contains a unique set of     attributes. Curb objects are *optional*.
   - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional* 
     but recommended with Curb Zones.
@@ -323,6 +323,43 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
+
+[Top][toc]
+
+## Curb Object
+
+Defines individual assets located adjacent to a Curb Space or Curb Zone. Important notes about Curb Objects:
+
+  - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or othe Curb Objects
+  - Curb Objects must be related to either a Curb Space or Curb Zone
+  - ...
+
+A Curb Object is represented as a JSON object whose fields are as follows:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
+| `geometry` | [Point][point] | Required |The spatial extent of this curb object location. |
+| `name` | String | Optional | The name of this curb object for reference. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
+| `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is related to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. |
+| `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is related to. The geometry of the specified Curb ZSpace does not need to directly relate to the geometry of this object. |
+| `object_type` | [Object Types](#object-types) String | Required | The categrory of each curb object. Value MUST be one of the [Object Types](#object-types). |
+
+[Top][toc]
+
+### Object Types
+
+The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type.
+
+- `ramp` - 
+- `signage` -
+- `locker` -
+- `bus stop` -
+- `ev charging` -
+- `street tree` -
+- ...
 
 [Top][toc]
 
