@@ -365,34 +365,41 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type. New objects MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
 
 **Well-known values:**
+Mobility Related
+- `signage` -
+- `bus_stop` -
+- `bike_rack` -
+- `scooter_parking` -
+- `ev_charging` -
+- `ramp` -
+- `meter` -
+- `pay_station` - 
 
-- `ramp` 
-- `signage`
-- `locker` 
-- `bus_stop`
-- `ev_charging`
-- `street_tree`
-- `planter`
-- `utility_box`
-- `bench`
-- `art`
-- `sculpture`
-- `fountain`
-- `post_box`
-- `bollard`
-- `barrier`
-- `surveillance_camera`
-- `bike_rack`
-- `meter_pay_station`
-- `signal_cabinet`
-- `scooter_parking`
-- `electric_charging`
-- `solid_waste_bin`
-- `lighting`
-- `drinking_fountain`
-- `toilet`
-- `food_vendor`
-- `fire_hydrant`
+Curbside Infrastructure 
+- `lighting` -
+- `signal_cabinet` -
+- `utility_box` -
+- `fire_hydrant` -
+- `surveillance_camera` -
+
+Curbside Furniture
+- `barrier` -
+- `bollard` -
+- `street_trees` -
+- `planter` - 
+- `drinking_fountain` -
+- `toilet` -
+- `bench` -
+- `sculpture` -
+- `art` -
+- `fountain` -
+- `solid_waste_bins` -
+- `post_box` -
+- `locker` -
+
+Other
+- `food_vendor` -
+- ...
 
 [Top][toc]
 
