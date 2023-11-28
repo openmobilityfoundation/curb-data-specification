@@ -335,7 +335,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 Defines individual assets located adjacent to a Curb Space or Curb Zone. Important notes about Curb Objects:
 
-  - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or othe Curb Objects
+  - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
   - Curb Objects must be related to either a Curb Space or Curb Zone
   - ...
 
@@ -344,11 +344,11 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
-| `geometry` | [Point][point] | Required |The spatial extent of this curb object location. |
+| `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the location of the object or the centroid location of the object depending on its size. |
 | `name` | String | Optional | A short name of this curb object for reference. |
 | `description` | String | Optional | A more detailed description of the object if needed. |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
-| `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. |
+| `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
 | `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
 | `max_depth` | Integer | Optional | Maximum, bounding box depth of the object perpendicular to the curb, in centimeters. |
 | `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
@@ -400,6 +400,25 @@ Curbside Furniture
 Other
 - `food_vendor` -
 - ...
+
+[Top][toc]
+
+### Type Specific Attributes
+
+Some object types will have unique attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. 
+
+#### Signage
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `purpose` | List - String | Optional | The reason the sign is there or what type of information it is providing. See the list of purposes in XXX. |
+| `sign_text` | String | Optional |All relevant text located on the sign. |
+| `owner` | String | Optional | The entity that owns and maintains the sign. |
+
+#### Object Type X
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
 
 [Top][toc]
 
