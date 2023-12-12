@@ -164,7 +164,7 @@ A list of use cases is useful to show what's possible with CDS, to see many use 
 
 # Schema
 
-For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi/tree/main) repository.
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
