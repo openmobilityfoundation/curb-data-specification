@@ -54,6 +54,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
 - [Examples](#examples)
+- [Schema](#schema)
 
 # REST Endpoints
 
@@ -521,6 +522,12 @@ A Previous Policy is a JSON object with the following fields:
 # Examples
 
 See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
+
+[Top][toc]
+
+# Schema
+
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
