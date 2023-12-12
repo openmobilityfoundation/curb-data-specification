@@ -527,7 +527,7 @@ See a series of [CDS Curbs endpoint examples](examples.md) to use as templates.
 
 # Schema
 
-For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi/tree/main) repository.
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
