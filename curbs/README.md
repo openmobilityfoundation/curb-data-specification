@@ -40,10 +40,12 @@ There are four different endpoints that are part of the Curbs API:
   - [Query Curb Areas](#query-curb-areas)
   - [Query Curb Spaces](#query-curb-spaces)
   - [Query Curb Policies](#query-curb-policies)
+  - [Query Curb Objects](#query-curb-objects)
   - [Fetch a Curb Zone](#fetch-a-curb-zone)
   - [Fetch a Curb Area](#fetch-a-curb-area)
   - [Fetch a Curb Space](#fetch-a-curb-space)
   - [Fetch a Curb Policy](#fetch-a-curb-policy)
+  - [Fetch a Curb Object](#fetch-a-curb-object)
 - [Data Objects](#data-objects)
   - [Curb Zone](#curb-zone)
   - [Curb Area](#curb-area)
@@ -151,6 +153,24 @@ All query parameters are optional.
 
 [Top][toc]
 
+## Query Curb Objects
+
+Endpoint: `/curbs/objects`  
+Method: `GET`  
+`data` Payload: a JSON object with a `objects` field containing an array of [Curb Object](#curb-object) objects.
+
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
+
+### Query Parameters
+
+All query parameters are optional.
+
+| Name         | Type      | Description                                    |
+| ------------ | --------- | ---------------------------------------------- |
+| `time` | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
+
+[Top][toc]
+
 ##  Fetch a Curb Zone
 
 Endpoint: `/curbs/zones/<id>`  
@@ -211,6 +231,24 @@ Method: `GET`
 ### Query Parameters
 
 This endpoint takes no query parameters.
+
+[Top][toc]
+
+## Fetch a Curb Object
+
+Endpoint: `/curbs/objects/<id>`  
+Method: `GET`  
+`data` Payload: the [Curb Object](#curb-object) object with the ID provided in the path.
+
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
+
+### Query Parameters
+
+All query parameters are optional.
+
+| Name         | Type            | Description                                    |
+| ------------ | --------------- | ---------------------------------------------- |
+| `time`       | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
 
