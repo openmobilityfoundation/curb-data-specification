@@ -51,7 +51,8 @@ There are four different endpoints that are part of the Curbs API:
   - [Curb Area](#curb-area)
   - [Curb Space](#curb-space)
   - [Curb Object](#curb-object)
-    - [Object Types](#object-types) 
+    - [Object Types](#object-types)
+    - [Object Type Attributes](#object-type-attributes) 
   - [Policy](#policy)
     - [Rule](#rule)
       - [Activities](#activities)
@@ -387,6 +388,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `description` | String | Optional | A more detailed description of the object if needed. |
 | `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
 | `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `object_type_attributes` | Map | Optional | [Object type attributes](#object-type-attributes) given as unordered key-value pairs. |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
 | `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
 | `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
@@ -406,6 +408,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type. New objects MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
 
 **Well-known values:**
+
 Mobility Related
 - `signage` -
 - `bus_stop` -
@@ -444,9 +447,11 @@ Other
 
 [Top][toc]
 
-### Type Specific Attributes
+### Object Type Attributes
 
-Some object types will have unique attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. 
+Some object types will have unique attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. Given as unordered key-value pairs, e.g. `kilowatts` :  `1.21`.
+
+[Top][toc]
 
 #### Signage
 
