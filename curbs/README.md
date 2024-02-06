@@ -344,9 +344,11 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
-| `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the location of the object or the centroid location of the object depending on its size. |
+| `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the approximate center of the object, or the centroid location of the object, depending on its size and shape. |
 | `name` | String | Optional | A short name of this curb object for reference. |
 | `description` | String | Optional | A more detailed description of the object if needed. |
+| `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
+| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
 | `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
 | `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
@@ -356,7 +358,8 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is related to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is related to. The geometry of the specified Curb ZSpace does not need to directly relate to the geometry of this object. |
-| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `external_object_id` | String | Optional | A unique identifier for this object from an external source, like `external_object_url`. |
+| `external_object_url` | URL | Optional | A URL link to a data feed that contains the `external_object_id`. |
 
 [Top][toc]
 
@@ -625,3 +628,4 @@ See a series of [CDS Curbs endpoint examples](examples.md) to use as templates.
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
 [polygon]: /general-information.md#polygon
+[point]: /general-information.md#point
