@@ -410,17 +410,24 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 
 The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type. New objects MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
 
+Some object types will have unique, custom attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. These are given as unordered key-value pairs, e.g. `kilowatts` :  `1.21`, and defined below for relevant object types.
+
 **Well-known values:**
 
 Mobility Related
-- `signage` -
+- `signage` - street sign
+   - `text` (string): text on the sign 
 - `bus_stop` -
 - `bike_rack` -
 - `scooter_parking` -
-- `ev_charging` -
+- `ev_charging` - charging station for electric devices
+   - `plug_type` (string): type of charger plug
+   - `level` (string): maximum charging level 
+   - `hours` (string): description of hours of operation
 - `ramp` -
 - `meter` -
-- `pay_station` - 
+- `pay_station` -
+- `locker` -
 
 Curbside Infrastructure 
 - `lighting` -
@@ -429,7 +436,7 @@ Curbside Infrastructure
 - `fire_hydrant` -
 - `surveillance_camera` -
 
-Curbside Furniture
+Curbside Obstacles
 - `barrier` -
 - `bollard` -
 - `street_trees` -
@@ -442,17 +449,10 @@ Curbside Furniture
 - `fountain` -
 - `solid_waste_bins` -
 - `post_box` -
-- `locker` -
 
 Other
 - `food_vendor` -
 - ...
-
-[Top][toc]
-
-### Object Type Attributes
-
-Some object types will have unique attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. Given as unordered key-value pairs, e.g. `kilowatts` :  `1.21`.
 
 [Top][toc]
 
