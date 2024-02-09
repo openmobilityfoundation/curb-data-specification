@@ -168,7 +168,9 @@ All query parameters are optional.
 
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
-| `time` | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
+| `time` | [Timestamp][ts] | Only the most recently updated objects as of this time will be returned. |
+| `zone` | [UUID][uuid]    | The ID of a [Curb Zone](#curb-zone). If specified, only return Curb Objects associated within this zone. |
+| `space`| [UUID][uuid]    | The ID of a [Curb Space](#curb-space). If specified, only return Curb Objects associated within this space. |
 
 [Top][toc]
 
@@ -384,10 +386,11 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | ------ | ------ | ------------------- | ------------- |
 | `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
 | `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the approximate center of the object, or the centroid location of the object, depending on its size and shape. |
-| `name` | String | Optional | A short name of this curb object for reference. |
+| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `name` | String | Required | A short name of this curb object for reference. |
 | `description` | String | Optional | A more detailed description of the object if needed. |
 | `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
-| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `operator` | String | Optional | The name of the agency, department, etc responsibile for operating this object. |
 | `object_type_attributes` | Map | Optional | [Object type attributes](#object-type-attributes) given as unordered key-value pairs. |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
 | `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
@@ -396,8 +399,8 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
-| `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is related to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. |
-| `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is related to. The geometry of the specified Curb ZSpace does not need to directly relate to the geometry of this object. |
+| `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is related to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
+| `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is related to. The geometry of the specified Curb Space does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
 | `external_object_id` | String | Optional | A unique identifier for this object from an external source, like `external_object_url`. |
 | `external_object_url` | URL | Optional | A URL link to a data feed that contains the `external_object_id`. |
 
