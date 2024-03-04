@@ -63,6 +63,7 @@ All query parameters are optional.
 | `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occurring within this area. |
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occurring within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occurring within this space. |
+| `curb_object_id` | [UUID][uuid] | The ID of a [Curb Object](#curb-object). If specified, only return events occurring at this object. |
 
 [Top][toc]
 
@@ -83,6 +84,7 @@ All query parameters are optional.
 | `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return sensor statuses within this area. |
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return sensor statuses within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return sensor statuses within this space. |
+| `curb_object_id` | [UUID][uuid] | The ID of a [Curb Object](#curb-object). If specified, only return sensor statuses at this object. |
 
 [Top][toc]
 
