@@ -378,7 +378,7 @@ Defines individual assets located adjacent to a Curb Space or Curb Zone. Importa
 
   - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
   - Curb Objects must be related to either a Curb Space or Curb Zone
-  - ...
+  - Curb Objects do not have Curb Policies linked directly to them. Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space)
 
 A Curb Object is represented as a JSON object whose fields are as follows:
 
@@ -409,63 +409,52 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 
 ### Object Types
 
-The following object types may be specified for Curb Objects. This list is meant to be exhaustive an made to represent all types of objects at the curb. Descriptions have been provided with each object type. New objects MAY be generated to reflect local curb uses, but when possible, the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
-
-Some object types will have unique, custom attributes that can be optionally included with the given object type. A list of these attributes are outlined below for some of these object types. These are given as unordered key-value pairs, e.g. `kilowatts` :  `1.21`, and defined below for relevant object types.
+The following object types may be specified for Curb Objects. This list is NOT meant to be exhaustive as users have the ability to add objects to this list that may be unique to their city. Descriptions have been provided with each object type where warranted. New object types may be generated to reflect local curb uses, but when possible the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible.
 
 **Well-known values:**
 
 Mobility Related
-- `signage` - street sign
-   - `text` (string): text on the sign 
-- `bus_stop` -
-- `bike_rack` -
-- `scooter_parking` -
+- `signage` - street sign or any regulation signs related to the curb
+- `bus_stop` - either a sign, shelter, or zone
+- `bike_rack` - somewhere to lock or store a bike
+- `scooter_parking` - dedicated location to lock or store scooters
 - `ev_charging` - charging station for electric devices
-   - `plug_type` (string): type of charger plug
-   - `level` (string): maximum charging level 
-   - `hours` (string): description of hours of operation
-- `ramp` -
-- `meter` -
-- `pay_station` -
-- `locker` -
+- `ramp` - a curb drop down for accessibility needs
+- `meter` - a device to pay for parking, either single or multi space
+- `pay_station` - a device to pay for parking, applicable for an entire zone
 
 Curbside Infrastructure 
-- `lighting` -
-- `signal_cabinet` -
-- `utility_box` -
-- `fire_hydrant` -
-- `surveillance_camera` -
+- `lighting`
+- `signal_cabinet`
+- `utility_box` 
+- `fire_hydrant` 
+- `surveillance_camera`
 
 Curbside Obstacles
-- `barrier` -
-- `bollard` -
-- `street_trees` -
-- `planter` - 
-- `drinking_fountain` -
-- `toilet` -
-- `bench` -
-- `sculpture` -
-- `art` -
-- `fountain` -
-- `solid_waste_bins` -
-- `post_box` -
+- `barrier`
+- `bollard`
+- `street_trees`
+- `planter`
+- `drinking_fountain`
+- `toilet`
+- `bench`
+- `sculpture`
+- `art`
+- `fountain`
+- `solid_waste_bins`
+- `post_box`
+- `locker`
 
 Other
-- `food_vendor` -
-- ...
+- `food_vendor`
 
 [Top][toc]
 
-#### Signage
+#### Object Type Attributes
 
-| Name   | Type   | Required/Optional   | Description   |
-| ------ | ------ | ------------------- | ------------- |
-| `purpose` | List - String | Optional | The reason the sign is there or what type of information it is providing. See the list of purposes in XXX. |
-| `sign_text` | String | Optional |All relevant text located on the sign. |
-| `owner` | String | Optional | The entity that owns and maintains the sign. |
+Some object types will have unique, custom attributes that can be optionally included with the given object type. These are given as unordered key-value pairs, e.g. `kilowatts` :  `1.21`. For this current version of Curb Objects, specific object type attributes will not be included in the specification. As use of Curb Objects grows or specific use cases become more involved, common object type attributes can be added on an as needed basis. 
 
-#### Object Type X
+##### Sample Object Type Attributes (for Future)
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
