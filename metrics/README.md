@@ -77,7 +77,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
-| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
@@ -101,7 +101,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
-| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`,`object`. Required with `curb_place_id`. |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
 | `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
@@ -165,7 +165,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
+| `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
 | `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
