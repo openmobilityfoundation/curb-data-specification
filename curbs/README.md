@@ -379,6 +379,7 @@ Defines individual assets located adjacent to a Curb Space or Curb Zone. Importa
   - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
   - Curb Objects must be related to either a Curb Space or Curb Zone
   - Curb Objects do not have Curb Policies linked directly to them. Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space)
+  - Unlike Zones and similar to Spaces, Objects may be updated as needed, with a new `curb_object_id` being optionally assigned by the city
 
 A Curb Object is represented as a JSON object whose fields are as follows:
 
