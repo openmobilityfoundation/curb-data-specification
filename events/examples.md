@@ -37,10 +37,7 @@ A [Query Event](/events#query-event) example of `/events/events` with minimum re
           },
           "geometry": {
             "type": "Point",
-            "coordinates": [
-              -85.7629808,
-              38.257341
-            ]
+            "coordinates": [-85.7629808, 38.257341]
           }
         },
         "event_time": "1552678578632",
@@ -80,15 +77,10 @@ A [Query Event](/events#query-event) example of `/events/events` from a fleet op
         "event_purpose": "parcel_delivery",
         "event_location": {
           "type": "Feature",
-          "properties": {
-            "timestamp": 1552678574581
-          },
+          "properties": {"timestamp": 1552678574581},
           "geometry": {
             "type": "Point",
-            "coordinates": [
-              -85.7629808,
-              38.257341
-            ]
+            "coordinates": [-85.7629808, 38.257341]
           }
         },
         "event_time": "1552678578632",
@@ -104,12 +96,8 @@ A [Query Event](/events#query-event) example of `/events/events` from a fleet op
         "vehicle_permit_number": "KYVID-319380-A",
         "vehicle_length": "670",
         "vehicle_type": "truck",
-        "vehicle_propulsion_types": [
-          "electric"
-        ],
-        "vehicle_blocked_lane_types": [
-          "parking"
-        ]
+        "vehicle_propulsion_types": ["electric"],
+        "vehicle_blocked_lane_types": ["parking"]
       }
     ]
   }
