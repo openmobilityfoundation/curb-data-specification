@@ -157,46 +157,44 @@ A [Query Curb Policies](/curbs#query-curb-policies) example of `/curbs/policies`
   "currency": "USD",
   "author": "City of Metropolis",
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
-  "data": [
-    {
-      "policies": [
-        {
-          "curb_policy_id": "cd0996d7-3765-4f0b-a72e-7caf7cf3fe21",
-          "published_date": 1552678594428,
-          "priority": 1,
-          "rules": [
-            {
-              "activity": "parking",
-              "rate": [
-                {
-                  "rate": 500,
-                  "rate_unit": "hour",
-                  "rate_unit_period": "rolling"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "curb_policy_id": "51f58575-1042-4254-b5fc-fed97124a6c7",
-          "published_date": 1552678857362,
-          "priority": 2,
-          "rules": [
-            {
-              "activity": "parking",
-              "rate": [
-                {
-                  "rate": 3000,
-                  "rate_unit": "day",
-                  "rate_unit_period": "calendar"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "data": {
+    "policies": [
+      {
+        "curb_policy_id": "cd0996d7-3765-4f0b-a72e-7caf7cf3fe21",
+        "published_date": 1552678594428,
+        "priority": 1,
+        "rules": [
+          {
+            "activity": "parking",
+            "rate": [
+              {
+                "rate": 500,
+                "rate_unit": "hour",
+                "rate_unit_period": "rolling"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "curb_policy_id": "51f58575-1042-4254-b5fc-fed97124a6c7",
+        "published_date": 1552678857362,
+        "priority": 2,
+        "rules": [
+          {
+            "activity": "parking",
+            "rate": [
+              {
+                "rate": 3000,
+                "rate_unit": "day",
+                "rate_unit_period": "calendar"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
