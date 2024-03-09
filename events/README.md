@@ -100,7 +100,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
-| `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
+| `event_location` | [GeoJSON](/general-information.md#geographic-telemetry-data) | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
