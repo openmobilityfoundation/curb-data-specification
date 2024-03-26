@@ -486,6 +486,7 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as `rate`. |
 | `start_duration` | Integer | Optional | The number of `rate_unit`s the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
 | `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate ends when the vehicle departs. |
+| `maximum_fee` | Integer | Optional | The maximum amount in cents a user of a curb can pay for a particular parking event. |
 
 [Top][toc]
 
