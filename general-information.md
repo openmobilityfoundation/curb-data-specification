@@ -13,6 +13,7 @@ This document contains specifications and common concepts that are shared betwee
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
+  - [Point](#Point)
   - [Intersection Operation](#intersection-operation)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
@@ -153,6 +154,20 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
     [-73.958416, 40.800686],
     [-73.982105, 40.767932]
   ]]
+}
+```
+
+## Point
+
+A point is a GeoJSON geometry of type `"Point"` as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example point is:
+
+```
+{
+  "type": "Point",
+  "coordinates": [
+    -73.982105, 40.767932
+   ]
 }
 ```
 
