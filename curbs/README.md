@@ -53,6 +53,8 @@ There are four different endpoints that are part of the Curbs API:
     - [Time Span](#time-span)
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
+  - [WZDx Reference](#wzdx-reference)
+  - [Previous Policy](#previous-policy)
 - [Examples](#examples)
 - [Schema](#schema)
 
@@ -264,6 +266,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
+| `wzdx_references` | Array of [WZDx Reference](#wzdx-reference) objects | Optional | One or more references to external [WZDX data feeds](https://github.com/usdot-jpo-ode/wzdx) impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -297,6 +300,7 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
+| `wzdx_references` | Array of [WZDx Reference](#wzdx-reference) objects | Optional | One or more references to external [WZDX data feeds](https://github.com/usdot-jpo-ode/wzdx) impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -323,6 +327,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
+| `wzdx_references` | Array of [WZDx Reference](#wzdx-reference) objects | Optional | One or more references to external [WZDX data feeds](https://github.com/usdot-jpo-ode/wzdx) impacting this Curb Zone. |
 
 [Top][toc]
 
@@ -505,7 +510,20 @@ A Location Reference is a JSON object with the following fields:
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
 
 [Top][toc]
-  
+
+## WZDx Reference
+
+A WZDx Reference object describes a specific WZDx road event feature that is relevant to the curb place via an external reference to a [Work Zone Data Exchange](https://github.com/usdot-jpo-ode/wzdx) data feed. This allows CDS users to reference public WZDx feeds that impact the area, and see full details in the agency data feed.
+
+A WZDx Reference is a JSON array with the following fields within objects:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `wzdx_feed_url` | URL | Required | An identifier for the source of the publicly accessible WZDx feed. This MUST be a full HTTPS URL pointing to the data feed which contains more information about the underlying work zone impacting the CDS place. |
+| `wzdx_road_event_feature_id` | String | Required | The `id` of a WZDx [RoadEventFeature](https://github.com/usdot-jpo-ode/wzdx/blob/main/spec-content/objects/RoadEventFeature.md#roadeventfeature-object-geojson-feature) that impacts the use of a curb zone. In case multiple road event `wzdx_id`s are needed, it would be provided in another object with another `wzdx_feed_url`. |
+
+[Top][toc]
+
 ## Previous Policy
 
 An array of information about what previous policies applied to a [curb zone](#curb-zone) and when. This allows cities to historically track what policies applied to a curb zone.
@@ -519,7 +537,7 @@ A Previous Policy is a JSON object with the following fields:
 | `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
- 
+
 # Examples
 
 See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
