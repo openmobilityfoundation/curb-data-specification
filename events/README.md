@@ -61,6 +61,7 @@ All query parameters are optional.
 
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
+| `event_time`    | String | An ISO 8601 extended datetime representing an UTC hour between 00 and 23 in format `YYYY-MM-DDTHH`. Specifies the hour for which data should be returned. If omitted the API should return all events in the last 60 minutes. For example, requesting `event_time=2019-10-01T07` returns all events where `2019-10-01T07:00:00 <= event.event_time < 2019-10-01T08:00:00` UTC. |
 | `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occurring within this area. |
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occurring within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occurring within this space. |
