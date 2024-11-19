@@ -15,6 +15,7 @@
 - [Organizations Using CDS](#organizations-using-cds) 
 - [Data Privacy](#data-privacy)
 - [Use Cases](#use-cases)
+- [Schema](#schema)
 
 # Overview
 
@@ -158,6 +159,12 @@ The OMF’s [Privacy, Security, and Transparency Committee](https://github.com/o
 How cities use CDS depends on a variety of factors: their transportation goals, existing services and infrastructure, and the unique needs of their communities. Cities are using CDS to create policy, manage curbs, and ensure the safe operation of vehicles in the public right of way. 
 
 A list of use cases is useful to show what's possible with CDS, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [CDS Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Use-Cases).
+
+[Top][toc]
+
+# Schema
+
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
