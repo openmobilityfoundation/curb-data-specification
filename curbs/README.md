@@ -250,7 +250,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
-| `street_name` | String | Optional | The name of the street that this Curb Zone is on, including directionals. SHOULD NOT contain address numbers. Example: `Main Street NE`. |
+| `street_name` | String | Optional | The name of the street that this Curb Zone is on, including directionals. SHOULD NOT contain address numbers. Examples: `Main Street NE` or `West Market St`. |
 | `cross_street_start_name` | String | Optional | The name of the cross street at or before the start of this Curb Zone (which cross street is at the start and end of the location is defined in the same direction as the linear reference for this curb; if no linear reference is provided, start and end SHOULD be oriented such that start comes before end when moving in the direction of travel for the roadway immediately adjacent to the curb.) |
 | `cross_street_end_name` | String | Optional | The name of the cross street at the end of this Curb Zone. |
 | `length` | Integer | Optional | The length, in centimeters, of the Curb Zone when projected along the street centerline. Note that this is the definitive length of the curb area, and not the edge length of the geographic polygon. |
