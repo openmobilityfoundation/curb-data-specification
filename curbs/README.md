@@ -358,7 +358,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_space_id` | [UUID][uuid] | Required | The ID of the curb space. |
-| `geometry` | [Polygon][polygon] | Required |The spatial extent of this curb location. |
+| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb location. |
 | `name` | String | Optional | The name of this curb space for reference. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
@@ -374,11 +374,11 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 ## Curb Object
 
-Defines individual assets located adjacent to a Curb Space or Curb Zone. Important notes about Curb Objects:
+Defines individual assets located adjacent to, overlapping, within, or associated with a Curb Space or Curb Zone. Important notes about Curb Objects:
 
   - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
   - Curb Objects must be related to either a Curb Space or Curb Zone
-  - Curb Objects do not have Curb Policies linked directly to them. Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space)
+  - Curb Objects do not typically have Curb Policies linked directly to them (unless the object is directly aligned with a single Policy, using the optional `curb_policy_id` field). Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space).
   - Unlike Zones and similar to Spaces, Objects may be updated as needed, with a new `curb_object_id` being optionally assigned by the city
 
 A Curb Object is represented as a JSON object whose fields are as follows:
