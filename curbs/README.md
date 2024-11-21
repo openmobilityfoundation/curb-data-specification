@@ -389,12 +389,14 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the approximate center of the object, or the centroid location of the object, depending on its size and shape. |
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is physically in or closest to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is physically in or closest to. The geometry of the specified Curb Space does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
+| `curb_policy_id` | [UUIDs][uuid] | Optional | ID of [Policy object](#policy) that is directly associcated with this curb object. For example, `signage` or `paint` that relates to a single policy. |
 | `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
 | `name` | String | Required | A short name of this curb object for reference. |
 | `description` | String | Optional | A more detailed description of the object if needed. |
 | `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
 | `operator` | String | Optional | The name of the agency, department, etc responsibile for operating this object. |
 | `object_shape` | [Polygon][polygon] | Optional | A simplified geometric outline of this object. Recommended for objects that are an unusual shape and may affect curb activities. |
+| `object_polyline` | [Polyline][polyline] | Optional | A simplified geometric line defining this object. Recommended for objects that may affect or help define curb activities, like `paint`. |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
 | `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
 | `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
@@ -422,6 +424,7 @@ Mobility Related
 - `ramp` - a curb drop down for accessibility needs
 - `meter` - a device to pay for parking, either single or multi space
 - `pay_station` - a device to pay for parking, applicable for an entire zone
+- `paint` - curb paint, defining a policy or rule
 
 Curbside Infrastructure 
 - `lighting`
@@ -653,4 +656,5 @@ See a series of [CDS Curbs endpoint examples](examples.md) to use as templates.
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
 [polygon]: /general-information.md#polygon
+[polyline]: /general-information.md#polyline
 [point]: /general-information.md#point
