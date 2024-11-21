@@ -396,7 +396,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
 | `operator` | String | Optional | The name of the agency, department, etc responsibile for operating this object. |
 | `object_shape` | [Polygon][polygon] | Optional | A simplified geometric outline of this object. Recommended for objects that are an unusual shape and may affect curb activities. |
-| `object_polyline` | [Polyline][polyline] | Optional | A simplified geometric line defining this object. Recommended for objects that may affect or help define curb activities, like `paint`. |
+| `object_line` | [LineString][linestring] | Optional | A simplified geometric line defining this object. Recommended for objects that may affect or help define curb activities, like `paint`. |
 | `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
 | `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
 | `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
@@ -656,5 +656,5 @@ See a series of [CDS Curbs endpoint examples](examples.md) to use as templates.
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
 [polygon]: /general-information.md#polygon
-[polyline]: /general-information.md#polyline
+[linestring]: /general-information.md#linestring
 [point]: /general-information.md#point
