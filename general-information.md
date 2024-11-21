@@ -13,6 +13,7 @@ This document contains specifications and common concepts that are shared betwee
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
+  - [LineString](#linestring)
   - [Point](#Point)
   - [Intersection Operation](#intersection-operation)
 - [Pagination](#pagination)
@@ -102,7 +103,7 @@ Because of unreliability of some device clocks and other factors, sensors and op
 
 # Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
+References to geographic datatypes (Point, MultiPolygon, LineString, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
 
 ## Geographic Telemetry Data
 
@@ -153,6 +154,22 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
     [-73.949318, 40.796918],
     [-73.958416, 40.800686],
     [-73.982105, 40.767932]
+  ]]
+}
+```
+
+## LineString
+
+A linestring is a GeoJSON geometry of type `"LineString"` (polyline) as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example linestring is:
+
+```
+{
+  "type": "LineString",
+  "coordinates": [[
+    [-73.982105, 40.767932],
+    [-73.973694, 40.764551],
+    [-73.970913, 40.763627]
   ]]
 }
 ```
