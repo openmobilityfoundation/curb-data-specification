@@ -395,7 +395,7 @@ These are not meant to be a mirror to similarly named items in the Events API, b
 unique purpose of describing locally defined regulations at a curb.
 
 This array of user classes serves as an 'AND' function. A vehicle must have all the properties listed
-in the array to use the curb. For example, an accessible EV bus will use `handicap-accessible` AND `electric` 
+in the array to use the curb. For example, an accessible EV bus will use `accessible` AND `electric` 
 AND `bus`. To create 'OR' values at the same curb, you must create a new rule 
 with the new array of values.
 
@@ -417,7 +417,7 @@ Vehicle types
 - `van`
 
 Vehicle properties
-- `handicap-accessible`
+- `accessible`
 - `human`
 - `electric_assist`
 - `electric`
