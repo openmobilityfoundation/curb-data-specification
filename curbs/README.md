@@ -431,6 +431,7 @@ Purpose
 - `freight`
 - `parking`
 - `permit`
+- `disabled_parking_permit`
 - `rideshare`
 - `school`
 - `service_vehicles`
