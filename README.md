@@ -162,7 +162,6 @@ How cities use CDS depends on a variety of factors: their transportation goals, 
 
 A list of use cases is useful to show what's possible with CDS, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [CDS Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Use-Cases).
 
-
 [Top][toc]
 
 [toc]: #table-of-contents
