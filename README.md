@@ -6,7 +6,7 @@
 - [Curb Data Specification APIs](#curb-data-specification-apis)
   - [Structure](#structure)
   - [Modularity](#modularity)
-  - [CDS OpenAPI Schema](#cds-openapi-schema)
+  - [OpenAPI Schema](#openapi-schema)
   - [MDS Overlap](#mds-overlap)
 - [Work in Progress](#work-in-progress)
 - [Get Involved](#get-involved)
@@ -71,6 +71,7 @@ CDS is designed to be a modular and flexible specification. Regulatory agencies 
 
 ## CDS OpenAPI Schema
 For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
+
 ## MDS Overlap
 
 Like the [Mobility Data Specification](https://github.com/openmobilityfoundation/mobility-data-specification/) (MDS), the CDS will be consumed by both cities and transportation providers operating in the public right of way. In many cases, the same mobility providers using curbs with CDS may also be interacting with other OMF [MDS Policy](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy), [MDS Provider](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider), and [MDS Agency](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/agency) data objects within the same [MDS Jurisdiction](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/jurisdiction) or [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/geography), and using similar [MDS Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/metrics). Consistent with the Technology Design Principles codified in the [Technology Council's](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council) OMF [Architectural Landscape Document](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Architectural-Landscape.pdf), the members of this working group are making reasonable best efforts to ensure that work is both _modular_ and _inter operable_ with other technology managed by the OMF as to avoid duplication and downstream implementation complexity. The first version of CDS intentionally has no direct connetions to MDS which allowed it to be created based strictly on real-world curb use cases and needs, but may align directly in future versions.
@@ -95,7 +96,7 @@ For questions about CDS please contact by email at [info@openmobilityfoundation.
 
 # Versions
 
-CDS has a **current release** (version 1.0.0), and an **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
+CDS has a **current release** (version 1.0.1), and an **upcoming releases** in development. For a full list of releases, their status, recommended versions, and timelines, see the [Official CDS Releases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Releases) page.
 
 The OMF provides guidance on upgrading for cities, providers, and software companies, and sample permit language for cities. See our [CDS Version Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-CDS-Version-Guidance.md) for best practices on how and when to upgrade CDS as new versions become available. Our complimentary [CDS Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-CDS-Policy-Language-Guidance.md) document is for cities writing CDS into their operating policy and includes sample policy language.
 
@@ -161,7 +162,6 @@ The OMF’s [Privacy, Security, and Transparency Committee](https://github.com/o
 How cities use CDS depends on a variety of factors: their transportation goals, existing services and infrastructure, and the unique needs of their communities. Cities are using CDS to create policy, manage curbs, and ensure the safe operation of vehicles in the public right of way. 
 
 A list of use cases is useful to show what's possible with CDS, to see many use cases up front for privacy considerations, and to use for policy discussions and policy language. More details and examples can be seen on the [CDS Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Use-Cases).
-
 
 [Top][toc]
 

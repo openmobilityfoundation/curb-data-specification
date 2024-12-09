@@ -18,7 +18,7 @@ This document contains specifications and common concepts that are shared betwee
 - [Range Boundaries](#range-boundaries)
 - [Responses](#responses)
 - [REST Endpoints](#rest-endpoints)
-- [OpenAPI Schema](#openapi-schema)
+- [Schema](#schema)
 - [Timestamp](#timestamp)
 - [Unit of Time Enum](#unit-of-time-enum)
 - [UUID](#uuid)
@@ -265,8 +265,7 @@ header but does not include this value; it MUST respond with a status of `406 No
 
 [Top][toc]
 
-# OpenAPI Schema
-
+# Schema
 
 For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
 
