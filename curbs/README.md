@@ -419,20 +419,20 @@ Vehicle types
 
 Vehicle properties
 - `accessible`
-- `human`
-- `electric_assist`
-- `electric`
-- `combustion`
 - `autonomous`
+- `combustion`
+- `electric`
+- `electric_assist`
+- `human`
 
 Purpose
 - `construction`
 - `delivery`
+- `disabled_parking_permit`
 - `emergency_use`
 - `freight`
 - `parking`
 - `permit`
-- `disabled_parking_permit`
 - `rideshare`
 - `school`
 - `service_vehicles`
