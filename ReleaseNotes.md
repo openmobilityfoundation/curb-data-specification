@@ -1,3 +1,37 @@
+## 1.0.1
+
+> Released: 2024-12-09
+
+The 1.0.1 patch release cleans up and  clarifies some minor issues and typos to help make the specification clearer.
+
+### CHANGES
+
+See the closed [PRs](https://github.com/openmobilityfoundation/curb-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.0.1) tagged with [Milestone 1.0.1](https://github.com/openmobilityfoundation/curb-data-specification/milestone/6?closed=1) and [Issues](https://github.com/openmobilityfoundation/curb-data-specification/issues?q=is%3Aissue+milestone%3A1.0.1+is%3Aclosed) for a full list of changes.
+
+**Minor updates**
+
+- OpenAPI support
+- Reference to MDS
+- Internal Links
+- Event location description
+- Street name description
+- Accessibility user classes
+- Rate maximum fee clarification
+- New data source device name field
+- New operators
+
+### ACKNOWLEDGEMENTS
+
+Thank you to our current and past [steering committee members](https://github.com/openmobilityfoundation/curb-data-specification/wiki#steering-committee), GitHub pull request and issue creators (Passport, CurbIQ, INRIX, Umojo, Clevercity, @jamesdwilson) for this release, and for the organizations that participated on our weekly [working group calls](https://github.com/openmobilityfoundation/curb-data-specification/wiki#meeting-agendas).
+
+## What's Changed
+
+**Full Changelog**: https://github.com/openmobilityfoundation/curb-data-specification/compare/1.0.0...1.0.1
+
+### Additional Updates
+
+See the [final release page](https://github.com/openmobilityfoundation/curb-data-specification/releases/tag/1.0.1) for any additional updates to these notes
+
 ## 1.0.0
 
 > Released: 2022-04-29

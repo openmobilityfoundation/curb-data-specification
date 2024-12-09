@@ -6,6 +6,7 @@
 - [Curb Data Specification APIs](#curb-data-specification-apis)
   - [Structure](#structure)
   - [Modularity](#modularity)
+  - [CDS OpenAPI Schema](#cds-openapi-schema)
   - [MDS Overlap](#mds-overlap)
 - [Work in Progress](#work-in-progress)
 - [Get Involved](#get-involved)
@@ -68,6 +69,8 @@ CDS is designed to be a modular and flexible specification. Regulatory agencies 
 
 ![CDS APIs and Endpoints](https://i.imgur.com/wlSeEa0.png)
 
+## CDS OpenAPI Schema
+For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
 ## MDS Overlap
 
 Like the [Mobility Data Specification](https://github.com/openmobilityfoundation/mobility-data-specification/) (MDS), the CDS will be consumed by both cities and transportation providers operating in the public right of way. In many cases, the same mobility providers using curbs with CDS may also be interacting with other OMF [MDS Policy](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy), [MDS Provider](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider), and [MDS Agency](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/agency) data objects within the same [MDS Jurisdiction](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/jurisdiction) or [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/geography), and using similar [MDS Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/metrics). Consistent with the Technology Design Principles codified in the [Technology Council's](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council) OMF [Architectural Landscape Document](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Architectural-Landscape.pdf), the members of this working group are making reasonable best efforts to ensure that work is both _modular_ and _inter operable_ with other technology managed by the OMF as to avoid duplication and downstream implementation complexity. The first version of CDS intentionally has no direct connetions to MDS which allowed it to be created based strictly on real-world curb use cases and needs, but may align directly in future versions.

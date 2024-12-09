@@ -54,6 +54,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
 - [Examples](#examples)
+- [Schema](#schema)
 
 # REST Endpoints
 
@@ -249,7 +250,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
-| `street_name` | String | Optional | The name of the street that this Curb Zone is on. |
+| `street_name` | String | Optional | The name of the street that this Curb Zone is on, including directionals. SHOULD NOT contain address numbers. Examples: `Main Street NE` or `West Market St`. |
 | `cross_street_start_name` | String | Optional | The name of the cross street at or before the start of this Curb Zone (which cross street is at the start and end of the location is defined in the same direction as the linear reference for this curb; if no linear reference is provided, start and end SHOULD be oriented such that start comes before end when moving in the direction of travel for the roadway immediately adjacent to the curb.) |
 | `cross_street_end_name` | String | Optional | The name of the cross street at the end of this Curb Zone. |
 | `length` | Integer | Optional | The length, in centimeters, of the Curb Zone when projected along the street centerline. Note that this is the definitive length of the curb area, and not the edge length of the geographic polygon. |
@@ -395,7 +396,7 @@ These are not meant to be a mirror to similarly named items in the Events API, b
 unique purpose of describing locally defined regulations at a curb.
 
 This array of user classes serves as an 'AND' function. A vehicle must have all the properties listed
-in the array to use the curb. For example, an accessible EV bus will use `handicap-accessible` AND `electric` 
+in the array to use the curb. For example, an accessible EV bus will use `accessible` AND `electric` 
 AND `bus`. To create 'OR' values at the same curb, you must create a new rule 
 with the new array of values.
 
@@ -417,16 +418,17 @@ Vehicle types
 - `van`
 
 Vehicle properties
-- `handicap-accessible`
-- `human`
-- `electric_assist`
-- `electric`
-- `combustion`
+- `accessible`
 - `autonomous`
+- `combustion`
+- `electric`
+- `electric_assist`
+- `human`
 
 Purpose
 - `construction`
 - `delivery`
+- `disabled_parking_permit`
 - `emergency_use`
 - `freight`
 - `parking`
@@ -485,6 +487,7 @@ A Rate defines the amount a user of the curb needs to pay when a given rule appl
 | `increment_amount` | Integer | Optional | If specified, the rate for this space is rounded up to the nearest increment of this amount, specified in the same currency units as `rate`. |
 | `start_duration` | Integer | Optional | The number of `rate_unit`s the vehicle must have already been present in the Curb Zone before this rate starts applying (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate starts when the vehicle arrives. |
 | `end_duration` | Integer | Optional | The number of `rate_unit`s after which the rate stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not specified, this rate ends when the vehicle departs. |
+| `maximum_fee` | Integer | Optional | The maximum amount in cents a user of a curb can pay for a particular parking event. |
 
 [Top][toc]
 
@@ -521,6 +524,12 @@ A Previous Policy is a JSON object with the following fields:
 # Examples
 
 See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
+
+[Top][toc]
+
+# Schema
+
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
