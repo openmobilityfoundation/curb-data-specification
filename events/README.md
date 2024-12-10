@@ -127,7 +127,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
-| `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `actual_cost` | Integer | Conditionally Required | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `payment_type` | [Payment Type](#payment-type) | Conditionally Required | If available from the source, the method used to pay for this event. |
 
 [Top][toc]
 
@@ -248,6 +249,24 @@ Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle perf
 | `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
 | `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
 | `unspecified`  | Unspecified |
+
+[Top][toc]
+
+### Payment Type
+
+Strings used to indicate how a curb user paid for a curb event.
+
+| Name              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `cash`            | Bills or coins at a meter. |
+| `credit_card`     | Visa, Mastercard, etc at a meter. |
+| `membership_card` | A card used at a meter to pay via a corporate membership or loyalta program, etc. |
+| `mobile`          | Paid via a mobile app. |
+| `sms`             | Paid via text message. |
+| `billing`         | Curb user will be billed for usage at a later time. |
+| `permit`          | Curb user has a permit allowing them to use the curb without payment. |
+| `courtesy`        | At a curb that normally requires payment this event for some reason did not. |
+| `other`           | Some payment method not captured above (please submit a pull request!). |
 
 [Top][toc]
 
