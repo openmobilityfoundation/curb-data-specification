@@ -180,7 +180,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
-| `payment_type` | [Payment Type](#payment-type) | Conditionally Required | If available from the source, the method used to pay for this event. |
+| `payment_channel` | [Payment Channel](#payment-channel) | Conditionally Required | If available from the source, the medium by which a user submitted payment. |
+| `payment_method` | [Payment Method](#payment-method) | Conditionally Required | If available from the source, the method used to pay for this event. |
 | `custom_attributes`| JSON Object | Conditionally Required | A list of additional attributes, unique to the user creating Curb Event data, that may want to be captured in this data feed. Each value in the JSON name/value pair must be a string. At least one `custom_attributes` field is required if the Curbs [endpoint](../general-information.md#rest-endpoints) contains the `custom_attribute_dictionary` field. |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
@@ -310,7 +311,23 @@ Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle perf
 
 [Top][toc]
 
-### Payment Type
+
+### Payment Channel
+
+The payment channel describes the medium or platform used to pay for a curb
+event. This helps disambiguate a credit card payment made at a physical meter
+from a credit card payment made via a mobile app, for example.
+
+| Name              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `meter`           | User paid at a physical meter. |
+| `mobile_app`      | Paid via a mobile app. |
+| `mobile_app_clip` | Paid via a temporarily downloaded mobile app clip, not a full mobile app. |
+| `sms`             | Paid via text message. |
+| `website`         | User went to a standard website to pay, maybe directed by QR code. |
+| `other`           | Some payment channel not captured above (please submit a pull request!). |
+
+### Payment Method
 
 Strings used to indicate how a curb user paid for a curb event.
 
@@ -318,12 +335,13 @@ Strings used to indicate how a curb user paid for a curb event.
 | ----------------- | ------------------------------------------------------ |
 | `cash`            | Bills or coins at a meter. |
 | `credit_card`     | Visa, Mastercard, etc at a meter. |
-| `membership_card` | A card used at a meter to pay via a corporate membership or loyalta program, etc. |
-| `mobile`          | Paid via a mobile app. |
-| `sms`             | Paid via text message. |
+| `smart_card`      | A specialized smart card. |
+| `membership_card` | A card used at a meter to pay via a corporate membership or loyalty program, etc. |
 | `billing`         | Curb user will be billed for usage at a later time. |
 | `permit`          | Curb user has a permit allowing them to use the curb without payment. |
+| `voucher`         | Curb user paid with a pre-issued voucher. |
 | `courtesy`        | At a curb that normally requires payment this event for some reason did not. |
+| `test`            | This was a test payment/event. |
 | `other`           | Some payment method not captured above (please submit a pull request!). |
 
 [Top][toc]
