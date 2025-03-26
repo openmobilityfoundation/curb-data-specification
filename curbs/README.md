@@ -465,6 +465,8 @@ A Policy is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_policy_id` | UUID | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
+| `name` | String | Optional | User friendly name of policy. |
+| `description` | String | Optional | Detailed description of policy. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this policy was first published in this data feed. |
 | `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and equivalent User Class enumerations MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
@@ -481,6 +483,8 @@ It is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
+| `name` | String | Optional | User friendly name of rule. |
+| `description` | String | Optional | Detailed description of rule. |
 | `activity` | [Activity](#activities) String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
 | `max_stay` | Integer | Optional | The length of time (in units of `max_stay_unit`) for which the curb may be used under this regulation. If not specified, the curb may be used under this regulation indefinitely. May not be applicable for all [activities](#activities). |
 | `max_stay_unit` | Enum | Optional | The [Unit of Time](/general-information.md#unit-of-time-enum) associated with the `max_stay` value. Defaults to "minute". |
