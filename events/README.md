@@ -21,7 +21,7 @@ There are two different endpoints that are part of the Events API:
   - [Authorization](#authorization)
   * [Query Event](#query-event)
   * [Query Status](#query-status)
-  * [Post Event](#post-event)
+  * [Push Event](#push-event)
   * [Responses and Error Messages](#responses-and-error-messages)
 - [Data Objects](#data-objects)
   * [Curb Event](#curb-event)
