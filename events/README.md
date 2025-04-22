@@ -52,7 +52,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 Endpoint: `/events/events`  
 Method: `GET`  
-Authorization: recommended
+Authorization: recommended  
 `data` Payload: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
@@ -75,7 +75,7 @@ All query parameters are optional.
 
 Endpoint: `/events/status`  
 Method: `GET`  
-Authorization: recommended
+Authorization: recommended  
 `data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
@@ -97,7 +97,7 @@ All query parameters are optional.
 
 Endpoint: `/events/event`  
 Method: `POST`  
-Authorization: required
+Authorization: required  
 `data` Payload: an array of [Curb Event](#curb-event) `events` objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
