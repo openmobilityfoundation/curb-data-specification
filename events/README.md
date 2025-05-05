@@ -142,9 +142,9 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 | `scheduled_report` | event source reported status at a scheduled interval |
 | `enter_area`       | vehicle enters the relevant geographic area |
 | `exit_area`        | vehicle exits the relevant geographic area |
+| `vehicle_detected` | The event of detecting or locating a vehicle at the curb. For example, from a manual surveying or license plate recognition machine |
+| `vehicle_violation`  | The event of detecting a vehicle that is doing something illegal or not allowed at the curb. For example, a non permitted vehicle is parked or someone overstayed the time limit. This does not reflect the actual ticket given. |
 | `citation_given`   | the event of providing a ticket or citation to a vehicle |
-| `vehicle_read`     | often used in LPR, the event of detecting a vehicle at the curb |
-| `vehicle_flagged`  | often used in LPR, the event of detecting a vehicle that is illegally parked at the curb |
 
 [Top][toc]
 
