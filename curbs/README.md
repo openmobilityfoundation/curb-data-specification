@@ -264,6 +264,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
+| `custom_attributes`| Array of string pairs | Optional | A list of additional attributes, unique to the user creating Curb Zone data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. |
 
 [Top][toc]
 
