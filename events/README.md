@@ -32,6 +32,7 @@ There are two different endpoints that are part of the Events API:
     * [Curb Occupant](#curb-occupants)
   * [Status](#status)
 - [Examples](#examples)
+- [Schema](#schema)
 
 # REST Endpoints
 
@@ -99,7 +100,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
-| `event_location` | GeoJSON | Required | The geographic point location where the event occurred. |
+| `event_location` | [GeoJSON](/general-information.md#geographic-telemetry-data) | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
@@ -110,6 +111,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. IDs can identify the fleet operator sending a data feed, or the organization (company or city) operating the sensor. IDs for fleet operators are required and global and come from the [data_source_operators.csv](/data_source_operators.csv) file, and optional for others. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `data_source_operator_name` string instead of this field, otherwise this field is required. |
 | `data_source_operator_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. May be sent along with `data_source_operator_id` or on its own for small operators at the discretion of the city. |
 | `data_source_device_id` | [UUID][uuid] | Required | Unique identifier of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded by the same source. If coming from a provider, this is a generated UUID they use and not the same as the external `vehicle_id`. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
+| `data_source_device_name` | String | Conditionally Required | Unique name of this event source, whether sensor, vehicle, camera, etc. Allows agencies to connect related Events as they are recorded by the same source. If coming from a provider, this is usually the internal ID they use for the device. Must be provided if the device has a visible or shared identifier. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
 | `data_source_manufacturer` | String | Optional | Manufacturer of the data source hardware or vehicle reporting event data. |
 | `data_source_model` | String | Optional | Model of the data source hardware or vehicle reporting event data. |
 | `sensor_status_is_commissioned` | Boolean | Optional | If a sensor was used to capture this event, the commissioned status at the time that the event was reported. Indicates whether the sensor is currently in a state where it should be reporting data. |
@@ -277,6 +279,12 @@ A Curb Status is represented as a JSON object array of all deployed sensors, who
 # Examples
 
 See a series of [CDS Events endpoint examples](examples.md) to use as templates. 
+
+[Top][toc]
+
+# Schema
+
+For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
