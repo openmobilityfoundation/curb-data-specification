@@ -28,7 +28,6 @@ There are two different endpoints that are part of the Metrics API:
   * [Aggregate](#aggregate)
     * [Methodology](#methodology)
 - [Examples](#examples)
-- [Schema](#schema)
 
 # Representative Sample Data
 
@@ -221,12 +220,6 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 # Examples
 
 See a series of [CDS Metrics endpoint examples](examples.md) to use as templates. 
-
-[Top][toc]
-
-# Schema
-
-For details on the CDS schema in OpenAPI format and on Stoplight, please reference the [CDS OpenAPI](https://github.com/openmobilityfoundation/cds-openapi) repository.
 
 [Top][toc]
 
