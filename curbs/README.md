@@ -309,7 +309,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
-| `custom_attributes`| Array of string pairs | Optional | A list of additional attributes, unique to the user creating Curb Zone data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Zone data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
 | `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone. |
 
 [Top][toc]
@@ -344,6 +344,7 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Area data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
 
 [Top][toc]
 
@@ -371,6 +372,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Space data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
 
 [Top][toc]
 
@@ -408,6 +410,7 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
 | `external_object_id` | String | Optional | A unique identifier for this object from an external source, like `external_object_url`. |
 | `external_object_url` | URL | Optional | A URL link to a data feed that contains the `external_object_id`. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Object data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
 
 [Top][toc]
 
