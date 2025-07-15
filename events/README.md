@@ -336,6 +336,7 @@ Strings used to indicate how a curb user paid for a curb event.
 | ----------------- | ------------------------------------------------------ |
 | `cash`            | Bills or coins at a meter. |
 | `credit_card`     | Visa, Mastercard, etc at a meter. |
+| `digital_wallet`  | Payment disbursed from a digital wallet such as Apple Pay, Google Pay, Cash App, PayPal, or Venmo, etc. `credit_card` is preferred if the payment is made from a credit card via a digital wallet. |
 | `smart_card`      | A specialized smart card. |
 | `membership_card` | A card used at a meter to pay via a corporate membership or loyalty program, etc. |
 | `billing`         | Curb user will be billed for usage at a later time. |
