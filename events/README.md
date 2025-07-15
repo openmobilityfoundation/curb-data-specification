@@ -102,6 +102,8 @@ Authorization: required
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
 
+Servers implementing a `POST /events/event` API should be able to deduplicate events from a publisher based upon the `event_id` field. It should be expected that some events can be resent as a result of restoring connections between systems interrupted by network or system errors. 
+
 ### Responses
 
 _Possible HTTP Status Codes_: 
