@@ -61,6 +61,7 @@ All query parameters are optional.
 
 | Name         | Type      | Description                                    |
 | ------------ | --------- | ---------------------------------------------- |
+| `event_time`    | String | An ISO 8601 extended datetime representing an UTC hour between 00 and 23 in format `YYYY-MM-DDTHH`. Specifies the hour for which data should be returned. If omitted the API should return all events in the last 60 minutes. For example, requesting `event_time=2019-10-01T07` returns all events where `2019-10-01T07:00:00 <= event.event_time < 2019-10-01T08:00:00` UTC. |
 | `curb_area_id`  | [UUID][uuid] | The ID of a [Curb Area](#curb-area). If specified, only return events occurring within this area. |
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return events occurring within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return events occurring within this space. |
@@ -128,6 +129,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
 [Top][toc]
 

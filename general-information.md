@@ -166,11 +166,11 @@ A linestring is a GeoJSON geometry of type `"LineString"` (polyline) as defined 
 ```
 {
   "type": "LineString",
-  "coordinates": [[
+  "coordinates": [
     [-73.982105, 40.767932],
     [-73.973694, 40.764551],
     [-73.970913, 40.763627]
-  ]]
+  ]
 }
 ```
 
