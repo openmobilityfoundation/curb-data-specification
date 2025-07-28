@@ -69,7 +69,8 @@ CDS is designed to be a modular and flexible specification. Regulatory agencies 
 
 ![CDS APIs and Endpoints](https://i.imgur.com/wlSeEa0.png)
 
-## CDS OpenAPI Schema
+## OpenAPI Schema
+
 For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
 
 ## MDS Overlap
