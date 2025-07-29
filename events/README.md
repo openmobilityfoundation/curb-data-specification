@@ -191,12 +191,16 @@ Type of vehicle `vehicle_type` similar to vehicle_type in MDS. For this CDS rele
 
 Propulsion type `vehicle_propulsion_types` of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
-| Name              | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+| Name                 | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `vehicle_propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `vehicle_propulsion_types` represented by the array `["human", "electric"]`. A bicycle with pedal-assist would have the `vehicle_propulsion_types` represented by the array `["human", "electric_assist"]` if it can also be operated as a traditional bicycle. A hybrid vehicle may use `["combustion", "electric"]`.
 
