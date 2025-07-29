@@ -467,6 +467,8 @@ A Policy object is a rule that allows or prohibits a particular set of users fro
 
 The `policy` field within the FeatureCollection returned by [Query Curb Zones](#query-curb-zones) contains a list of the Policy objects referenced by the returned zones. In addition, the [Query Curb Policies](#query-curb-policies) endpoint return the complete list of policies.
 
+Policies must be unique. A Policy may not have the exact same Policy object field values with a different `curb_policy_id`. For example, if the required or optional fields in two policies have the same values (either exactly identical or functionally identical), it is considered the same Policy, and must not be presented as two different policies in the data payload.
+
 A Policy is represented as a JSON object whose fields are as follows:
 
 | Name   | Type   | Required/Optional   | Description   |
