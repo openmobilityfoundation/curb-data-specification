@@ -22,6 +22,8 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
+  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space
+    that is grouped under a certain type and contains a unique set of attributes. Curb objects are *optional*.
   - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional* 
     but recommended with Curb Zones.
@@ -38,14 +40,19 @@ There are four different endpoints that are part of the Curbs API:
   - [Query Curb Areas](#query-curb-areas)
   - [Query Curb Spaces](#query-curb-spaces)
   - [Query Curb Policies](#query-curb-policies)
+  - [Query Curb Objects](#query-curb-objects)
   - [Fetch a Curb Zone](#fetch-a-curb-zone)
   - [Fetch a Curb Area](#fetch-a-curb-area)
   - [Fetch a Curb Space](#fetch-a-curb-space)
   - [Fetch a Curb Policy](#fetch-a-curb-policy)
+  - [Fetch a Curb Object](#fetch-a-curb-object)
 - [Data Objects](#data-objects)
   - [Curb Zone](#curb-zone)
   - [Curb Area](#curb-area)
   - [Curb Space](#curb-space)
+  - [Curb Object](#curb-object)
+    - [Object Types](#object-types)
+    - [Object Type Attributes](#object-type-attributes) 
   - [Policy](#policy)
     - [Rule](#rule)
       - [Activities](#activities)
@@ -53,6 +60,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Time Span](#time-span)
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
+  - [Previous Policy](#previous-policy)
 - [Examples](#examples)
 - [Schema](#schema)
 
@@ -148,6 +156,26 @@ All query parameters are optional.
 
 [Top][toc]
 
+## Query Curb Objects
+
+Endpoint: `/curbs/objects`  
+Method: `GET`  
+`data` Payload: a JSON object with a `objects` field containing an array of [Curb Object](#curb-object) objects.
+
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
+
+### Query Parameters
+
+All query parameters are optional.
+
+| Name         | Type      | Description                                    |
+| ------------ | --------- | ---------------------------------------------- |
+| `time` | [Timestamp][ts] | Only the most recently updated objects as of this time will be returned. |
+| `zone` | [UUID][uuid]    | The ID of a [Curb Zone](#curb-zone). If specified, only return Curb Objects associated within this zone. |
+| `space`| [UUID][uuid]    | The ID of a [Curb Space](#curb-space). If specified, only return Curb Objects associated within this space. |
+
+[Top][toc]
+
 ##  Fetch a Curb Zone
 
 Endpoint: `/curbs/zones/<id>`  
@@ -211,6 +239,24 @@ This endpoint takes no query parameters.
 
 [Top][toc]
 
+## Fetch a Curb Object
+
+Endpoint: `/curbs/objects/<id>`  
+Method: `GET`  
+`data` Payload: the [Curb Object](#curb-object) object with the ID provided in the path.
+
+_Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
+
+### Query Parameters
+
+All query parameters are optional.
+
+| Name         | Type            | Description                                    |
+| ------------ | --------------- | ---------------------------------------------- |
+| `time`       | [Timestamp][ts] | Availability data (if supplied) will be returned as of this time. |
+
+[Top][toc]
+
 # Data Objects 
 
 ## Curb Zone
@@ -264,6 +310,9 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `entire_roadway`| Boolean | Optional | If "true", this curb location takes up the entire width of the roadway (which may be impassible for through traffic when the Curb Zone is being used for parking or loading). This is a common condition for alleyways. If `entire_roadway` is `true`, `street_side` MUST NOT be present. |
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Zone data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
+| `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. References external data that is relevant to this Zone now. If the external reference is temporary, it should be added, then removed when no longer relevant.  This field can be changed without requiring a new `curb_zone_id`, as it does not impact the Zone's geographic definition. |
 
 [Top][toc]
 
@@ -297,6 +346,8 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_ids` | Array of [UUIDs][uuid] | Required | The IDs of all the Curb Zones included within this Curb Area at the requested time.	|
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Area data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Area. References external data that is relevant to this Area now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
 
 [Top][toc]
 
@@ -313,16 +364,100 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_space_id` | [UUID][uuid] | Required | The ID of the curb space. |
-| `geometry` | [Polygon][polygon] | Required |The spatial extent of this curb location. |
+| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb location. |
 | `name` | String | Optional | The name of this curb space for reference. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of the Curb Zone this space is within. The geometry of the specified Curb Zone MUST contain the geometry of this space. |
+| `curb_object_ids` | Array of [UUID][uuid] | Conditionally Required | The ID(s) of the [Curb Objects](#curb-object) that this Curb Space is related to, in particular what Objects are in the Space's areas of influence. For example, a meter being used for two paid parking spcaes, a locker for a commercial loading space, or a camera monitoring several spaces. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone.|
 | `space_number` | Integer | Optional | The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1. |
 | `length` | Integer | Required | Length in centimeters of this Space. If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `available` | Boolean | Optional | Whether this space is available for vehicles to park in at the specified time  (‘True’ means the Space is available). |
 | `availability_time` | [Timestamp][ts] | Optional | If availability information is present, the most recent time that availability was computed for this space. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Space data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Space. References external data that is relevant to this Space now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
+
+[Top][toc]
+
+## Curb Object
+
+Defines individual assets located adjacent to, overlapping, within, or associated with a Curb Space or Curb Zone. Important notes about Curb Objects:
+
+  - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
+  - Curb Objects must be related to either a Curb Space or Curb Zone
+  - Curb Objects do not typically have Curb Policies linked directly to them (unless the object is directly aligned with a single Policy, using the optional `curb_policy_id` field). Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space).
+  - Unlike Zones and similar to Spaces, Objects may be updated as needed, with a new `curb_object_id` being optionally assigned by the city
+
+A Curb Object is represented as a JSON object whose fields are as follows:
+
+| Name   | Type   | Required/Optional   | Description   |
+| ------ | ------ | ------------------- | ------------- |
+| `curb_object_id` | [UUID][uuid] | Required | The ID of the curb object. |
+| `geometry` | [Point][point] | Required |The spatial location of this curb object location. This can represent the approximate center of the object, or the centroid location of the object, depending on its size and shape. |
+| `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is physically in or closest to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
+| `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is physically in or closest to. The geometry of the specified Curb Space does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
+| `curb_policy_id` | [UUID][uuid] | Optional | ID of [Policy object](#policy) that is directly associcated with this curb object. For example, `signage` or `paint` that relates to a single policy. |
+| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `name` | String | Required | A short name of this curb object for reference. |
+| `description` | String | Optional | A more detailed description of the object if needed. |
+| `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
+| `operator` | String | Optional | The name of the agency, department, etc responsibile for operating this object. |
+| `object_shape` | [Polygon][polygon] | Optional | A simplified geometric outline of this object. Recommended for objects that are an unusual shape and may affect curb activities. |
+| `object_line` | [LineString][linestring] | Optional | A simplified geometric line defining this object. Recommended for objects that may affect or help define curb activities, like `paint`. |
+| `linear_distance` | Integer | Optional | Parallel distance from the side of the object to the linear referencing start point of the curb, in centimeters. |
+| `perpendicular_distance` | Integer | Optional | Perpendicular distance from the front of the object to the curb edge start/end, in centimeters. This distance can be negative or positive, with the positive direction being from the curb towards the sidewalk. |
+| `max_length` | Integer | Optional | Maximum, bounding box length of the object parallel to the curb, in centimeters. |
+| `max_depth` | Integer | Optional | Maximum, bounding box depth of the object perpendicular to the curb, in centimeters. |
+| `max_height` | Integer | Optional | Maximum, bounding box height of the object from the sidewalk/street surface, in centimeters. |
+| `published_date` | [Timestamp][ts] | Required | The date/time that this curb object was first published in this data feed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb object were last updated. This helps consumers know that some fields may have changed. |
+| `custom_attributes`| Array of string pairs | Conditionally Required | A list of additional attributes, unique to the user creating Curb Object data, that may want to be captured in the CDS data feed. Each string pair should have the attribute name and the attribute value. Required if custom attributes are specified in meta data `custom_attribute_dictionary` field. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Object. References external data that is relevant to this Object now. If the external reference is temporary, it should be added, then removed when no longer relevant. |
+
+[Top][toc]
+
+### Object Types
+
+The following object types may be specified for Curb Objects. This list is NOT meant to be exhaustive as users have the ability to add objects to this list that may be unique to their city. Descriptions have been provided with each object type where warranted. New object types may be generated to reflect local curb uses, but when possible the following well-known recommended values should be used. If multiple similar values apply, then use the more descriptive/specific value when possible. Unique object type attributes for each object type are not included in this version of the specification. As use of Curb Objects grows or specific use cases become more involved, common object type attributes can be added.
+
+**Well-known values:**
+
+Mobility Related
+- `signage` - street sign or any regulation signs related to the curb
+- `bus_stop` - either a sign, shelter, or zone
+- `bike_rack` - somewhere to lock or store a bike
+- `scooter_parking` - dedicated location to lock or store scooters
+- `ev_charging` - charging station for electric devices
+- `ramp` - a curb drop down for accessibility needs
+- `meter` - a device to pay for parking, either single or multi space
+- `pay_station` - a device to pay for parking, applicable for an entire zone
+- `paint` - curb paint, defining a policy or rule
+
+Curbside Infrastructure 
+- `lighting`
+- `signal_cabinet`
+- `utility_box` 
+- `fire_hydrant` 
+- `surveillance_camera`
+
+Curbside Obstacles
+- `barrier`
+- `bollard`
+- `street_trees`
+- `planter`
+- `drinking_fountain`
+- `toilet`
+- `bench`
+- `sculpture`
+- `art`
+- `fountain`
+- `solid_waste_bins`
+- `post_box`
+- `locker`
+
+Other
+- `food_vendor`
 
 [Top][toc]
 
@@ -337,11 +472,15 @@ A Policy is represented as a JSON object whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_policy_id` | UUID | Required | An ID that uniquely identifies this exact regulation across Curb Zones. Two Policy objects containing the same `curb_policy_id` MUST be completely identical. A `curb_policy_id` MUST NOT be reused -- once created, it must continue to refer to the identical policy forever. |
+| `name` | String | Optional | User friendly name of policy. |
+| `description` | String | Optional | Detailed description of policy. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this policy was first published in this data feed. |
 | `priority` | Integer | Required | Specifies which other policies this one takes precedence over. If two Policies on the same Curb Zone have overlapping [Time Spans](#time-span) and apply to the same user class, the one that applies at a given time is the one with the **lowest** priority. E.g., a priority of `1` takes precedence over a priority of `3`. Two Policies that apply to the same Curb Zone with overlapping Time Spans and equivalent User Class enumerations MUST NOT have the same priority. |
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 | `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Policy. References external data that is relevant to this Policy at the time of its creation. More specific and timely external references can be made in related Zones, Spaces, and Areas. |
+
 
 [Top][toc]
 
@@ -353,12 +492,15 @@ It is a JSON object with the following fields:
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
+| `name` | String | Optional | User friendly name of rule. |
+| `description` | String | Optional | Detailed description of rule. |
 | `activity` | [Activity](#activities) String | Required | The activity that is forbidden or permitted by this regulation. Value MUST be one of the [activities](#activities). |
 | `max_stay` | Integer | Optional | The length of time (in units of `max_stay_unit`) for which the curb may be used under this regulation. If not specified, the curb may be used under this regulation indefinitely. May not be applicable for all [activities](#activities). |
 | `max_stay_unit` | Enum | Optional | The [Unit of Time](/general-information.md#unit-of-time-enum) associated with the `max_stay` value. Defaults to "minute". |
 | `no_return` | Integer | Optional | The length of time (in units of `no_return_unit`) that a user must vacate a Curb Zone before being allowed to return for another stay. Defaults to 0. May not be applicable for all [activities](#activities). |
 | `no_return_unit` | Enum | Optional | The [Unit of Time](/general-information.md#unit-of-time-enum) associated with the `no_return` value. Defaults to "minute". |
 | `user_classes` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. The order of `user_classes` is not relevant, but a vehicle using a curb with this rule must match all `user_classes` contained in the array. |
+| `user_classes_except` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation applies only to users who **do not** match any of the [user classes](#user-classes) contained within. The order of `user_classes` is not relevant, but a vehicle using a curb with this rule must match all `user_classes` contained in the array. This field takes precidence over `user_classes` when present. |
 | `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. May not be applicable for all [activity](#activities). |
 
 [Top][toc]
@@ -468,8 +610,7 @@ A Time Span is represented as a JSON object whose fields are as follows:
 | `time_of_day_start` | "HH:MM" string | Optional | The 24-hour local time that this Time Span starts to apply (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)), in the local timezone. If unspecified, this Time Span starts at midnight. |
 | `time_of_day_end` | "HH:MM" string | Optional | The 24-hour local time that this Time Span stops applying (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)), in the local timezone. This is not inclusive, so for instance if `time_of_day_end` is `"17:00"`, this Time Span goes up to 5PM but does not include it.  If unspecified, this Time Span ends at midnight. |
 | `designated_period` | String | Optional | A string representing an arbitrarily-named, externally-defined period of time. Any values MAY be specified but the following known values SHOULD be used when possible: <ul><li>`snow emergency`</li><li>`holidays`</li><li>`school days`</li><li>`game days`</li></ul> |
-| `designated_period_except` | `Boolean` | `Optional` | If specified and `true`, this Time Span applies at all times not matching the named designated period. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, this Time Span does not apply on snow days). |
-
+| `designated_period_except` | Boolean | Optional | If specified and `true`, all fields in this Time Span are describing a period in which the assocated rule does not apply. (e.g., if `designated_period` is `snow emergency` and `designated_period_except` is `true`, the rule does not apply on snow days. If `days_of_week` is `['sun']`, the rule does not apply on Sundays.) This field takes precidence over `designated_period` when present. |
 **Note about `start_date` and `end_date` in _Time Span_:** these fields are optional but useful for defining policies that will be used once and won't be reused later, like around a specific, temporary event. If used, they are only applicable in any connected Curb Zone during their overlapping time frames.
 
 [Top][toc]
@@ -506,7 +647,7 @@ A Location Reference is a JSON object with the following fields:
 | `side` | String | Optional | If the referenced linear feature is a roadway, the side of the roadway on which the Curb Zone may be found, when heading from the start to the end of the feature in its native orientation. Values are `left` and `right`. MUST be absent for features where `entire_roadway` is true. |
 
 [Top][toc]
-  
+
 ## Previous Policy
 
 An array of information about what previous policies applied to a [curb zone](#curb-zone) and when. This allows cities to historically track what policies applied to a curb zone.
@@ -520,7 +661,7 @@ A Previous Policy is a JSON object with the following fields:
 | `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 
 [Top][toc]
- 
+
 # Examples
 
 See a series of [CDS Curbs endpoint examples](examples.md) to use as templates. 
@@ -533,7 +674,10 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [Top][toc]
 
+[external-reference]: ../data-types.md#external-reference
 [toc]: #table-of-contents
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
 [polygon]: /general-information.md#polygon
+[linestring]: /general-information.md#linestring
+[point]: /general-information.md#point

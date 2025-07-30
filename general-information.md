@@ -13,6 +13,8 @@ This document contains specifications and common concepts that are shared betwee
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
+  - [LineString](#linestring)
+  - [Point](#Point)
   - [Intersection Operation](#intersection-operation)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
@@ -101,7 +103,7 @@ Because of unreliability of some device clocks and other factors, sensors and op
 
 # Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
+References to geographic datatypes (Point, MultiPolygon, LineString, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
 
 ## Geographic Telemetry Data
 
@@ -153,6 +155,36 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
     [-73.958416, 40.800686],
     [-73.982105, 40.767932]
   ]]
+}
+```
+
+## LineString
+
+A linestring is a GeoJSON geometry of type `"LineString"` (polyline) as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example linestring is:
+
+```
+{
+  "type": "LineString",
+  "coordinates": [
+    [-73.982105, 40.767932],
+    [-73.973694, 40.764551],
+    [-73.970913, 40.763627]
+  ]
+}
+```
+
+## Point
+
+A point is a GeoJSON geometry of type `"Point"` as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example point is:
+
+```
+{
+  "type": "Point",
+  "coordinates": [
+    -73.982105, 40.767932
+   ]
 }
 ```
 
@@ -255,6 +287,7 @@ All dynamic REST endpoints will return a JSON object containing the following fi
 | `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
 | `last_updated` | [timestamp][ts] | Required | The last time the data in this API was updated. |
 | `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `custom_attribute_dictionary` | URL | Optional | The data dictionary containing information on the elements and values added into the `custom_attributes` for Curb Zones, Spaces, Areas, and Objects. This should include the attribute name, type, associated curb element, and description of what the attribute represents. |
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
 
