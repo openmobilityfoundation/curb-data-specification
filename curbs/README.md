@@ -485,7 +485,7 @@ A Policy is represented as a JSON object whose fields are as follows:
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 | `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Policy. References external data that is relevant to this Policy at the time of its creation. More specific and timely external references can be made in related Zones, Spaces, and Areas. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Policy. References external sources that are relevant to this Policy at the time of its creation. More specific and timely external references can be made in related Zones, Spaces, and Areas. |
 
 
 [Top][toc]
