@@ -278,6 +278,40 @@ List of acceptable endpoint responses.
 
 [Top][toc]
 
+### Bulk Responses
+
+For multi-record POST and PUT calls, e.g. sending Events using the post method, the bulk-response structure describes a list of failures is as follows:
+
+```jsonc
+{
+    "success": "...",
+    "total": "...",
+    "failures": [ {      // list of failure details
+        "item": { ... }, // copy of the item with the problem
+        "error": "...",
+        "error_description": "...",
+        "error_details": [ "...", "..." ]
+    }, {
+      // additional failure records
+    } ]
+}
+```
+
+| Field      | Type                                  | Field Description                                               |
+| ---------- | ------------------------------------- | --------------------------------------------------------------- |
+| `success`  | Integer                               | Number of successfully written records                          |
+| `total`    | Integer                               | Total number of provided records                                |
+| `failures` | [Failure Details](#failure-details)[] | Array of details about failed records (empty if all successful) |
+
+### Failure Details
+
+| Field               | Type                 | Field Description                                   |
+| ------------------- | -------------------- | --------------------------------------------------- |
+| `item`              | Event, etc.          | Invalid submitted item                              |
+| `error`             | Enum                 | Error code                                          |
+| `error_description` | String               | Human readable error description (can be localized) |
+| `error_details`     | String[]             | Array of fields with errors, if applicable          |
+
 # REST Endpoints
 
 All dynamic REST endpoints will return a JSON object containing the following fields:
