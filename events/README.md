@@ -21,6 +21,8 @@ There are two different endpoints that are part of the Events API:
   - [Authorization](#authorization)
   * [Query Event](#query-event)
   * [Query Status](#query-status)
+  * [Push Event](#push-event)
+  * [Responses and Error Messages](#responses-and-error-messages)
 - [Data Objects](#data-objects)
   * [Curb Event](#curb-event)
     * [Event Type](#event-type)
@@ -42,7 +44,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **required** for all of the Events endpoints, since depending on implementation, use cases, and fields required it may contain information only city transporation agencies should have access to.
+[Authorization](/general-information.md#authorization) is **recommended** for Events endpoints, since (depending on implementation, use cases, and fields required) it may contain information only city transporation agencies should have access to.
 
 [Top][toc]
 
@@ -50,6 +52,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 Endpoint: `/events/events`  
 Method: `GET`  
+Authorization: recommended  
 `data` Payload: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
@@ -73,9 +76,10 @@ All query parameters are optional.
 
 Endpoint: `/events/status`  
 Method: `GET`  
+Authorization: recommended  
 `data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
 ### Query Parameters
 
@@ -87,6 +91,53 @@ All query parameters are optional.
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return sensor statuses within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return sensor statuses within this space. |
 | `curb_object_id` | [UUID][uuid] | The ID of a [Curb Object](#curb-object). If specified, only return sensor statuses at this object. |
+
+[Top][toc]
+
+##  Push Event
+
+Endpoint: `/events/event`  
+Method: `POST`  
+Authorization: required  
+`data` Payload: an array of [Curb Event](#curb-event) `events` objects.
+
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
+
+Servers implementing a `POST /events/event` API should be able to deduplicate events from a publisher based upon the `event_id` field. It should be expected that some events can be resent as a result of restoring connections between systems interrupted by network or system errors. 
+
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+201,
+400,
+401,
+404,
+406,
+409,
+500,
+501
+
+See [Responses](#responses-and-error-messages) for details.
+
+### Event Errors:
+
+| `error`         | `error_description`              | `error_details`[]               |
+| -------         | -------------------              | -----------------               |
+| `bad_param`     | A validation error occurred      | Array of parameters with errors |
+| `missing_param` | A required parameter is missing  | Array of missing parameters     |
+
+[Top][toc]
+
+### Responses and Error Messages
+
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
+
+The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
+
+Response bodies must be a `UTF-8` encoded JSON object.
+
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
 
 [Top][toc]
 
@@ -293,7 +344,13 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [Top][toc]
 
-[toc]: #table-of-contents
-[uuid]: /general-information.md#uuid
-[ts]: /general-information.md#timestamp
+[bulk-responses]: /general-information.md#bulk-responses
+[error-messages]: /general-information.md#error-messages
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [polygon]: /general-information.md#polygon
+[responses]: /general-information.md#responses
+[schema]: /general-information.md#schema/
+[toc]: #table-of-contents
+[ts]: /general-information.md#timestamp
+[uuid]: /general-information.md#uuid
+[versioning]: /general-information.md#versioning
