@@ -285,7 +285,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
-| `geometry` | [Polygon][polygon] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. |
+| `geometry` | [Polygon][polygon] OR [Linestring][linestring] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. Note that a two dimensional _polygon_ is the preferred `geometry`, but a _linestring_ is acceptable. Include the `width` field if known. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
 | `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. They are listed in order with the most recent ones first. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
