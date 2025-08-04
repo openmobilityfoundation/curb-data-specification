@@ -78,7 +78,7 @@ Method: `GET`
 Authorization: recommended  
 `data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
-_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
 ### Query Parameters
 
