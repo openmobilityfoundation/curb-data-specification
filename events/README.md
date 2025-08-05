@@ -154,7 +154,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
-| `event_location` | [GeoJSON](/general-information.md#geographic-telemetry-data) | Required | The geographic point location where the event occurred. |
+| `event_location` | [GeoJSON Point](/general-information.md#point) | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
@@ -180,7 +180,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
 [Top][toc]
 
@@ -242,12 +242,16 @@ Type of vehicle `vehicle_type` similar to vehicle_type in MDS. For this CDS rele
 
 Propulsion type `vehicle_propulsion_types` of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
-| Name              | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+| Name                 | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `vehicle_propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `vehicle_propulsion_types` represented by the array `["human", "electric"]`. A bicycle with pedal-assist would have the `vehicle_propulsion_types` represented by the array `["human", "electric_assist"]` if it can also be operated as a traditional bicycle. A hybrid vehicle may use `["combustion", "electric"]`.
 
@@ -346,6 +350,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [bulk-responses]: /general-information.md#bulk-responses
 [error-messages]: /general-information.md#error-messages
+[external-reference]: ../data-types.md#external-reference
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [polygon]: /general-information.md#polygon
 [responses]: /general-information.md#responses

@@ -228,6 +228,8 @@ At a minimum, payloads that use pagination must include a `next` key, which must
 }
 ```
 
+In general, a 'page-based strategy' is preferred to allow for page counts, but a 'cursor-based strategy' is acceptable, per [JSON API](http://jsonapi.org/format/#fetching-pagination).
+
 [Top][toc]
 
 # Range Boundaries
