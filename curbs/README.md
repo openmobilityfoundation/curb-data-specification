@@ -2,11 +2,13 @@
 
 <a href="/curbs/"><img src="https://i.imgur.com/aBqI6yr.png" width="100" align="right" alt="CDS Curbs Icon" border="0"></a>
 
-The Curbs API is a REST API allowing cities to specify areas of interest along the curb along with
-the rules for using them: who is allowed to park, load, unload, pick up, drop off, etc.,
-for how long, for what price (if any), at what times, and on which days. Locations defined in the
-Curbs API can be connected to event and metrics data, and can be shared with companies and the public, for
-purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, or analyzing
+The Curbs API is a REST API allowing cities to specify areas of interest along and around the curb, objects in and 
+near the curb or on sidewalks or travel lanes, and off street parking areas. Included are
+the rules and policies for using these area: who is allowed to park, load, unload, pick up, drop off, etc.,
+for how long, for what price (if any), at what times, and on which days. 
+
+Locations defined in the Curbs API can be connected to [Event](/events) and [Metrics](/metrics) data, and can be shared with companies and the public, for
+purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, enforcement, compliance, and analyzing
 curb utilization over time.
 
 **See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
@@ -73,6 +75,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 ## Authorization
 
 [Authorization](/general-information.md#authorization) is not required for any of the Curbs endpoints, as this information should be made public and easily accessible.
+Free to acquire API keys or authorization may be utilized by the public agency to track usage, prevent abuse, or for certain mobility programs or pilots.
 
 [Top][toc]
 
@@ -562,6 +565,7 @@ Vehicle types
 - `moped`
 - `motorcycle`
 - `scooter`
+- `shuttle`
 - `truck`
 - `van`
 
@@ -582,6 +586,7 @@ Purpose
 - `parking`
 - `permit`
 - `rideshare`
+- `carshare`
 - `school`
 - `service_vehicles`
 - `special_events`
