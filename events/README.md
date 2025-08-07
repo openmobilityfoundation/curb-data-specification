@@ -21,6 +21,8 @@ There are two different endpoints that are part of the Events API:
   - [Authorization](#authorization)
   * [Query Event](#query-event)
   * [Query Status](#query-status)
+  * [Push Event](#push-event)
+  * [Responses and Error Messages](#responses-and-error-messages)
 - [Data Objects](#data-objects)
   * [Curb Event](#curb-event)
     * [Event Type](#event-type)
@@ -42,7 +44,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **required** for all of the Events endpoints, since depending on implementation, use cases, and fields required it may contain information only city transporation agencies should have access to.
+[Authorization](/general-information.md#authorization) is **recommended** for Events endpoints, since (depending on implementation, use cases, and fields required) it may contain information only city transporation agencies should have access to.
 
 [Top][toc]
 
@@ -50,6 +52,7 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 Endpoint: `/events/events`  
 Method: `GET`  
+Authorization: recommended  
 `data` Payload: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
@@ -73,9 +76,10 @@ All query parameters are optional.
 
 Endpoint: `/events/status`  
 Method: `GET`  
+Authorization: recommended  
 `data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
-_Optional endpoint; if not implemented, the server should reply with `501 Not Implemented`._
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
 ### Query Parameters
 
@@ -87,6 +91,53 @@ All query parameters are optional.
 | `curb_zone_id`  | [UUID][uuid] | The ID of a [Curb Zone](#curb-zone). If specified, only return sensor statuses within this zone. |
 | `curb_space_id` | [UUID][uuid] | The ID of a [Curb Space](#curb-space). If specified, only return sensor statuses within this space. |
 | `curb_object_id` | [UUID][uuid] | The ID of a [Curb Object](#curb-object). If specified, only return sensor statuses at this object. |
+
+[Top][toc]
+
+##  Push Event
+
+Endpoint: `/events/event`  
+Method: `POST`  
+Authorization: required  
+`data` Payload: an array of [Curb Event](#curb-event) `events` objects.
+
+_Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
+
+Servers implementing a `POST /events/event` API should be able to deduplicate events from a publisher based upon the `event_id` field. It should be expected that some events can be resent as a result of restoring connections between systems interrupted by network or system errors. 
+
+### Responses
+
+_Possible HTTP Status Codes_: 
+200,
+201,
+400,
+401,
+404,
+406,
+409,
+500,
+501
+
+See [Responses](#responses-and-error-messages) for details.
+
+### Event Errors:
+
+| `error`         | `error_description`              | `error_details`[]               |
+| -------         | -------------------              | -----------------               |
+| `bad_param`     | A validation error occurred      | Array of parameters with errors |
+| `missing_param` | A required parameter is missing  | Array of missing parameters     |
+
+[Top][toc]
+
+### Responses and Error Messages
+
+The response to a client request must include a valid HTTP status code defined in the [IANA HTTP Status Code Registry][iana].
+
+The response must set the `Content-Type` header as specified in the [Versioning section][versioning].
+
+Response bodies must be a `UTF-8` encoded JSON object.
+
+See the [Responses][responses], [Error Messages][error-messages], and [Bulk Responses][bulk-responses] sections, and the [schema][schema] for more details.
 
 [Top][toc]
 
@@ -103,7 +154,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
-| `event_location` | [GeoJSON](/general-information.md#geographic-telemetry-data) | Required | The geographic point location where the event occurred. |
+| `event_location` | [GeoJSON Point](/general-information.md#point) | Required | The geographic point location where the event occurred. |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
@@ -129,8 +180,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
-| `enforcement_references` | Array of [Enforcement Reference][enforcement-reference] objects | Optional | A reference to the external data feed containing more detailed enforcement information related to this Curb Event. The external reference is relevant to the moment in time the event happens. Only used for enforecement related events such as `vehicle_detected`, `vehicle_violation`, and `citation_given`. |
-| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
+| `enforcement` | Array of [Enforcement][enforcement] objects | Optional | Enforcement information related to this Curb Event, relevant to the moment in time the event happens. Only used for enforecement related events such as `vehicle_detected`, `vehicle_violation`, and `citation_given`. |
+| `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
 [Top][toc]
 
@@ -149,7 +200,7 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 | `enter_area`       | vehicle enters the relevant geographic area |
 | `exit_area`        | vehicle exits the relevant geographic area |
 | `vehicle_detected` | the event of detecting or locating a vehicle at the curb. For example, from a manual surveying or license plate recognition machine |
-| `vehicle_violation`  | the event of detecting a vehicle that is doing something illegal or not allowed at the curb. For example, a non permitted vehicle is parked or someone overstayed the time limit. This does not reflect the actual ticket given. Typically requires a `vehicle_detected` event first  |
+| `vehicle_violation` | the event of detecting a vehicle that is doing something illegal or not allowed at the curb. For example, a non permitted vehicle is parked or someone overstayed the time limit. This does not reflect the actual ticket given. Typically requires a `vehicle_detected` event first  |
 | `citation_given`   | the event of providing a ticket or citation to a vehicle. Typically requires a `vehicle_violation` event first |
 
 [Top][toc]
@@ -195,12 +246,16 @@ Type of vehicle `vehicle_type` similar to vehicle_type in MDS. For this CDS rele
 
 Propulsion type `vehicle_propulsion_types` of the vehicle, similar to propulsion_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS propulsion types can occur. 
 
-| Name              | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| `human`           | Pedal or foot propulsion                               |
-| `electric_assist` | Provides power only alongside human propulsion         |
-| `electric`        | Contains throttle mode with a battery-powered motor    |
-| `combustion`      | Contains throttle mode with a gas engine-powered motor |
+| Name                 | Description                                            |
+| -------------------- | ------------------------------------------------------ |
+| `human`              | Pedal or foot propulsion |
+| `electric_assist`    | Provides electric motor assist only in combination with human propulsion - no throttle mode |
+| `electric`           | Powered by battery-powered electric motor with throttle mode |
+| `combustion`         | Powered by gasoline combustion engine |
+| `combustion_diesel`  | Powered by diesel combustion engine |
+| `hybrid`             | Powered by combined combustion engine and battery-powered motor |
+| `hydrogen_fuel_cell` | Powered by hydrogen fuel cell powered electric motor |
+| `plug_in_hybrid`     | Powered by combined combustion engine and battery-powered motor with plug-in charging |
 
 A vehicle may have one or more values from the `vehicle_propulsion_types`, depending on the number of modes of operation. For example, a scooter that can be powered by foot or by electric motor would have the `vehicle_propulsion_types` represented by the array `["human", "electric"]`. A bicycle with pedal-assist would have the `vehicle_propulsion_types` represented by the array `["human", "electric_assist"]` if it can also be operated as a traditional bicycle. A hybrid vehicle may use `["combustion", "electric"]`.
 
@@ -297,7 +352,15 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [Top][toc]
 
-[toc]: #table-of-contents
-[uuid]: /general-information.md#uuid
-[ts]: /general-information.md#timestamp
+[bulk-responses]: /general-information.md#bulk-responses
+[enforcement]: ../data-types.md#enforcement
+[error-messages]: /general-information.md#error-messages
+[external-reference]: ../data-types.md#external-reference
+[iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
 [polygon]: /general-information.md#polygon
+[responses]: /general-information.md#responses
+[schema]: /general-information.md#schema/
+[toc]: #table-of-contents
+[ts]: /general-information.md#timestamp
+[uuid]: /general-information.md#uuid
+[versioning]: /general-information.md#versioning
