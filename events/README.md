@@ -202,6 +202,7 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 | `vehicle_detected` | the event of detecting or locating a vehicle at the curb. For example, from a manual surveying or license plate recognition machine |
 | `vehicle_violation` | the event of detecting a vehicle that is doing something illegal or not allowed at the curb. For example, a non permitted vehicle is parked or someone overstayed the time limit. This does not reflect the actual ticket given. Typically requires a `vehicle_detected` event first  |
 | `citation_given`   | the event of providing a ticket or citation to a vehicle. Typically requires a `vehicle_violation` event first |
+| `violation_end`    | the end of a violation, when it is no longer an issue | 
 
 [Top][toc]
 
