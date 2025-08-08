@@ -173,9 +173,19 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
 | `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
 | `vehicle_license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
+| `vehicle_license_plate_jurisdiction` | String | Optional | Jurisdiction or state in which the `vehicle_license_plate` is registered. |
+| `vehicle_license_plate_detection_confidence` | Integer | Optional | Value from 1 to 100 specifying the detection confidence level for `vehicle_license_plate`. |
+| `vehicle_license_plate_recognition_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_license_plate`. |
 | `vehicle_permit_number` | String | Optional | If applicable, the assigned permit number for this vehicle from the city agency. |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
+| `vehicle_type_confidence` | Integer | Optional | Value from 1 to 100 specifying the confidence level for `vehicle_type`. |
+| `vehicle_color` | String | Optional | Color of the vehicle that performed the event. |
+| `vehicle_color_confidence` | Integer | Optional | Value from 1 to 100 specifying the confidence level for `vehicle_color`. |
+| `vehicle_company_name` | String | Optional | Company or courier name of the vehicle that performed the event. |
+| `vehicle_company_name_confidence` | Integer | Optional | Value from 1 to 100 specifying the confidence level for `vehicle_company_name`. |
+| `vehicle_run_id` | String | Optional | Run ID from an external runs table containing information about models and model, or year, of the vehicle that performed the event. |
+| `vehicle_run_id_confidence` | Integer | Optional | Value from 1 to 100 specifying the confidence level for `vehicle_run_id`. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
