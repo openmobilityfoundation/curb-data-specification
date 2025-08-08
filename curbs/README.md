@@ -299,6 +299,8 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `location_references` | Array of [Location Reference](#location-reference) objects | Optional | One or more linear references for this Curb Zone. |
 | `name` | String | Optional | A human-readable name for this Curb Zone that identifies it to end users. This could be an agency or vendor naming convention or schema (e.g. "350 S 1st St - PP", convention like "blockface-userzone-spaceid-ratetype", etc.) or unique or non-unique identifer. |
 | `description` | String | Optional | A more detailed description of the zone if needed. |
+| `jurisdiction_type` | String | Optional | Describes the type of entity that has jurisdiction of this curb zone. Values can be "public" for a street and curb zone maintained by a public sector agency (city, county, state), "private" for a street and curb zone maintained by a private entity (e.g. developer, home owner's association, university campus), or "other" for other options. |
+| `owner` | String | Optional | Identifies the name of the owner of the curb zone. E.g. "SFMTA", "CCSF", "Presidio Trust", etc. |
 | `user_zone_id` | String | Optional | An identifier that can be used to refer to this Curb Zone on physical signage as well as within mobile applications, typically for payment purposes. |
 | `street_name` | String | Optional | The name of the street that this Curb Zone is on, including directionals. SHOULD NOT contain address numbers. Examples: `Main Street NE` or `West Market St`. |
 | `address_number` | String | Optional | The address number (street number, civic number, etc) or number range of the street that this Curb Zone is on. Examples: `123` or `221b` or `112-116`. |
