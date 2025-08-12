@@ -31,6 +31,8 @@ There are two different endpoints that are part of the Events API:
     * [Propulsion Type](#propulsion-type)
     * [Event Purpose](#event-purpose)
     * [Lane Type](#lane-type)
+    * [Payment Channel](#payment-channel)
+    * [Payment Method](#payment-method)
     * [Curb Occupant](#curb-occupants)
   * [Status](#status)
 - [Examples](#examples)
