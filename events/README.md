@@ -326,6 +326,7 @@ from a credit card payment made via a mobile app, for example.
 | `meter`           | User paid at a physical meter. |
 | `mobile_app`      | Paid via a mobile app, including iOS App Clips, and Android Instant App. |
 | `sms`             | Paid via text message. |
+| `telephone`       | Paid via a telephone call. |
 | `website`         | User went to a standard website to pay, maybe directed by QR code. |
 | `other`           | Some payment channel not captured above (please submit a pull request!). |
 
