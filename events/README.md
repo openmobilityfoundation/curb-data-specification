@@ -200,10 +200,10 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 | `scheduled_report` | event source reported status at a scheduled interval |
 | `enter_area`       | vehicle enters the relevant geographic area |
 | `exit_area`        | vehicle exits the relevant geographic area |
-| `vehicle_detected` | detection or observation of a vehicle within a curb area. Can originate from manual surveying, automated license plate recognition (LPR) systems, or other detection methods. |
+| `vehicle_detected` | detection or observation of a vehicle within or near a curb zone. Can originate from manual surveying, automated license plate recognition (LPR) systems, or other detection methods. |
 | `vehicle_violation_start` | start of a compliance violation at a curb location, triggered when a vehicle is not permitted or has exceeded allowed time limits. This event may be published after detecting a vehicle but does not require a `vehicle_detected` event. |
-| `vehicle_violation_end` | resolution of a compliance violation, when the vehicle is no longer in violation of regulations. Used for time-based violations where the end of the violation can be detected. Requires a preceding vehicle_violation_start event for the same vehicle. | 
-| `citation_issued` | issuance of a ticket or citation to a vehicle. May be published in addition to a related vehicle_violation_start event. |
+| `vehicle_violation_end` | resolution of a compliance violation, when the vehicle is no longer in violation of regulations. Used for time-based violations where the end of the violation can be detected. Requires a preceding `vehicle_violation_start` event for the same vehicle. | 
+| `citation_issued`  | issuance of a ticket or citation to a vehicle. May be published in addition to a related `vehicle_violation_start` event. |
 
 [Top][toc]
 
