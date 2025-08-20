@@ -491,7 +491,7 @@ A Policy is represented as a JSON object whose fields are as follows:
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 | `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
-| `policy_color` | [Policy Color](#policy-color) | Optional | A JSON object that defines the official colors used to represent this specific policy, used in physical curb paint, digitial and print maps, etc. |
+| `policy_color` | [Policy Color](#policy-color) | Optional | A JSON object that defines the official colors used to represent this specific policy, used in physical curb paint, digital and print maps, etc. |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Policy. References external sources that are relevant to this Policy at the time of its creation. More specific and timely external references can be made in related Zones, Spaces, and Areas. This field can be changed without requiring a new `curb_policy_id`, as it does not impact the policy definitions.  |
 
 [Top][toc]
@@ -688,7 +688,7 @@ A Policy Color is a JSON object with the following fields:
 | `primary_color`          | Hex  | Required            | The **6 digit hexidecimal triplet value** of the primary curb color, in standard capitalized RRGGBB format, without a leading hash symbol ("#"). E.g. "839D8F", "FF00FF". |
 | `primary_pattern_type`   | Enum | Optional            | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_color`. |
 | `primary_border_color`   | Hex  | Optional            | The 6 digit hex value of the `primary_color` border color. |
-| `primary_border_pattern_type` | Enum | Optional       | One of `solid`, `long_dash`, `short_dash`, `dot` to define the type of pattern on the `primary_color`. |
+| `primary_border_pattern_type` | Enum | Optional       | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_border_color`. |
 | `secondary_color`        | Hex  | Optional            | The 6 digit hex value of the secondary curb color. |
 | `secondary_border_color` | Hex  | Optional            | The 6 digit hex value of the `secondary_color` border color. |
 
