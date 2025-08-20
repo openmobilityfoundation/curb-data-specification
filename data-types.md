@@ -20,7 +20,7 @@ The `enforcement` object is a JSON *array* with the following fields:
 | `ticket_id`      | String | Optional            | The unique id that represents the ticket being given. |
 | `name`           | String | Optional            | Name of the rule being enforced or citation being given. |
 | `action_taken`   | String | Optional            | What action was taken to enforce the rule being violated. Typical well-known values are `ticket_served`, `ticket_posted`, `ticket_registered`, or `ticket_emailed`. |
-| `ticket_cost`    | String | Optional            | The cost associated with the given violation/ticket issued. |
+| `ticket_cost`    | String | Optional            | The original cost associated with the given violation/ticket issued. |
 
 [Top][toc]
 
