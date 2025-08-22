@@ -63,6 +63,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
   - [Previous Policy](#previous-policy)
+  - [Policy Color](#policy-color)
 - [Examples](#examples)
 - [Schema](#schema)
 
@@ -490,8 +491,8 @@ A Policy is represented as a JSON object whose fields are as follows:
 | `rules` | Array of [Rules](#rule) | Required | The rule(s) that this policy applies. If a Policy specifies multiple rules, each rule MUST specify disjoint lists of user classes. |
 | `time_spans` | Array of [Time Spans](#time-span) | Optional | If specified, this regulation only applies at the times defined within. |
 | `data_source_operator_id` | Array of [UUIDs][uuid] | Optional | An array of Data Source Operator IDs that this policy only applies to. IDs come from [data_source_operators.csv](/data_source_operators.csv) file here in the CDS repo. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. |
+| `policy_color` | [Policy Color](#policy-color) | Optional | A JSON object that defines the official colors used to represent this specific policy, used in physical curb paint, digital and print maps, etc. |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Policy. References external sources that are relevant to this Policy at the time of its creation. More specific and timely external references can be made in related Zones, Spaces, and Areas. This field can be changed without requiring a new `curb_policy_id`, as it does not impact the policy definitions.  |
-
 
 [Top][toc]
 
@@ -673,6 +674,23 @@ A Previous Policy is a JSON object with the following fields:
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the previous regulations of this Curb Zone. |
 | `start_date` | [Timestamp][ts] | Required | The date/time that this policy started being active for this curb location (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
 | `end_date` | [Timestamp][ts] | Required | The date/time that this policy ended being active for this curb location (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). |
+
+[Top][toc]
+
+## Policy Color
+
+Information about colors that apply to a specific [Policy](#policy), which in turn connects to a physical or digital [curb zone](#curb-zone). Colors reflect the physical paint color at the curb zone. Displaying visually on a map or other location may or may not align with the physical colors, per the needs of the agency. Colors are defined with RGB hex values, and should approximate real-world paint or print as closely as possible, but may not capture the entire color gamut. 
+
+A Policy Color is a JSON object with the following fields:
+
+| Name                     | Type | Required/Optional   | Description   |
+| ------------------------ | ---- | ------------------- | ------------- |
+| `primary_color`          | Hex  | Required            | The **6 digit hexidecimal triplet value** of the primary curb color, in standard capitalized RRGGBB format, without a leading hash symbol ("#"). E.g. "839D8F", "FF00FF". |
+| `primary_pattern_type`   | Enum | Optional            | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_color`. |
+| `primary_border_color`   | Hex  | Optional            | The 6 digit hex value of the `primary_color` border color. |
+| `primary_border_pattern_type` | Enum | Optional       | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_border_color`. |
+| `secondary_color`        | Hex  | Optional            | The 6 digit hex value of the secondary curb color. |
+| `secondary_border_color` | Hex  | Optional            | The 6 digit hex value of the `secondary_color` border color. |
 
 [Top][toc]
 
