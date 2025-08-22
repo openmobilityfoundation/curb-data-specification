@@ -175,9 +175,18 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
 | `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
 | `vehicle_license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
+| `vehicle_license_plate_jurisdiction` | String | Optional | Jurisdiction or state in which the `vehicle_license_plate` is registered. |
+| `vehicle_license_plate_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_license_plate`. |
 | `vehicle_permit_number` | String | Optional | If applicable, the assigned permit number for this vehicle from the city agency. |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
+| `vehicle_type_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_type`. |
+| `vehicle_color` | String | Optional | Color of the vehicle that performed the event. |
+| `vehicle_color_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_color`. |
+| `vehicle_company_name` | String | Optional | Company or courier name of the vehicle that performed the event. |
+| `vehicle_company_name_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_company_name`. |
+| `vehicle_run_id` | String | Optional | Run ID from an external runs table containing information about models and model, or year, of the vehicle that performed the event. |
+| `vehicle_run_id_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_run_id`. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
@@ -226,17 +235,21 @@ Curb Data Source Type `data_source_type` enumerates the set of possible categori
 
 ### Vehicle Type
 
-Type of vehicle `vehicle_type` similar to vehicle_type in MDS. For this CDS release the list will be developed independently here to accommodate CDS and MDS use cases, while still aligning to the MDS design principles.  In the next major MDS 2.0 release and next CDS release, alignment between CDS and MDS vehicle types can occur.
+Type of vehicle `vehicle_type` similar to [vehicle_type](https://github.com/openmobilityfoundation/mobility-data-specification/blob/main/data-types.md#vehicle-types) in MDS. In the next major MDS and CDS releases, alignment between vehicle types can occur.
 
 | Name             | Description |
 |----------------- | ----------- |
 | `bicycle`        | A two-wheeled mobility device intended for personal transportation that can be operated via pedals, with or without a motorized assist (includes e-bikes, recumbents, and tandems) |
+| `bus`            | A vehicle larger than a car or small truck capable of transporting multiple passengers at once |
 | `cargo_bicycle`  | A two- or three-wheeled bicycle intended for transporting larger, heavier cargo than a standard bicycle (such as goods or passengers), with or without motorized assist (includes bakfiets/front-loaders, cargo trikes, and long-tails) |
 | `car`            | A passenger car or similar light-duty vehicle |
-| `scooter`        | A standing or seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `delivery_robot` | A robot or remote-operated device intended for transporting goods |
+| `scooter`        | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated' | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`     | A seated mobility device capable of travel at high speeds and suited for operation in general urban traffic or expressways |
-| `truck`          | A light or heavy duty 4 wheeled truck |
+| `truck`          | A box truck or large delivery truck with attached cab |
 | `van`            | A van with significant interior cargo space |
 | `freight`        | A large delivery truck with attached cab |
 | `other`          | A device that does not fit in the other categories |
@@ -287,7 +300,7 @@ General event purpose `event_purpose` that the vehicle performed during its even
 | `ride_hail`           | Includes privately run ride hailing services |
 | `road_maintenance`    | Includes pothole patching, striping, snow plowing, street sweeping |
 | `service_vehicles`    | Includes private sector activity like some utilities |
-| `taxi`                | Traditionaly licensed taxi services |
+| `taxi`                | Traditionally licensed taxi services |
 | `utility_work`        | Includes public sector activity like sewer, water, telecoms |
 | `vehicle_charging`    | Parking for electric vehicles to charge |
 | `vehicle_parking`     | Includes private or commercial vehicle free or paid/metered parking |
@@ -304,6 +317,7 @@ Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle perf
 | -------------- | ------------------------------------------------------ |
 | `travel_lane`  | A standard vehicle travel lane. |
 | `turn_lane`    | A dedicated turn lane. |
+| `center_turn_lane` | A center lane available for turns in both directions. Sometimes used for courier parking for loading activity. |
 | `bike_lane`    | A lane dedicated for usage by cyclists. |
 | `bus_lane`     | A lane dedicated for usage by buses. |
 | `parking`      | A lane used for parking, not allowed for travel. |
