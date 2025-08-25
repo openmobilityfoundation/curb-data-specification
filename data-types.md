@@ -9,18 +9,18 @@ This CDS data types page catalogs the data objects (fields, types, requirements,
 
 ## Enforcement
 
-The Enforcement object describes a specific set of features from a data feed or API that is relevant to an enforcement Curb Event. This allows CDS users to reference detailed enforcement data separate from the main Event endpoint.
+The Enforcement object describes a specific set of features from a data feed or API that is relevant to an enforcement Curb Event. This allows CDS users to reference detailed enforcement data separate from the main API endpoints.
 
 The `enforcement` object is a JSON *array* with the following fields:
 
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
-| `enforcement_id` | UUID   | Optional          | An optional unique identifer of an enforcement incident, generated the first time an enforcement event is recorded, and referenced in future enforcement events. | 
+| `enforcement_id` | UUID   | Required          | A unique identifer of an enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. | 
 | `municipal_code` | string | Optional          | The unique code created by the municipality or enforcement agency to identify the type of rule being enforced. |
-| `ticket_id`      | String | Optional          | The unique id that represents the ticket being given. |
-| `violation_name` | String | Optional          | Name of the rule being enforced or citation being given. |
-| `action_taken`   | String | Optional          | What action was taken to enforce the rule being violated. Typical well-known values are `ticket_served`, `ticket_posted`, `ticket_registered`, or `ticket_emailed`. |
-| `ticket_cost`    | String | Optional          | The original cost associated with the given violation/ticket issued. |
+| `citation_id`    | String | Optional          | The unique id that represents a single instance of a recorded violation. |
+| `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
+| `action_taken`   | String | Optional          | What action was taken to enforce the rule being violated. Typical well-known values are `citation_served`, `citation_posted`, `citation_registered`, or `citation_emailed`. |
+| `citation_cost`  | String | Optional          | The original cost associated with the given citation issued. |
 
 [Top][toc]
 
