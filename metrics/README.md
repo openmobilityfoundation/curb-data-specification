@@ -193,7 +193,7 @@ Name: `total_events`
 
 _Use Case_
 
-Similar to `total_sessions`, cities use this to determine ‘demand’ for curb space and understand how many users have arrived for a given area for a period of time. Some examples for this include: seeing how many vehicles arrived and parked in a neighborhood (counting `park_start` event types), estimating occupancy with LPR (counting `vehicle_read` event types), or tracking enforcement by seeing how many tickets were handed out for a specific zone (counting `citation_given` event types). 
+Similar to `total_sessions`, cities use this to determine ‘demand’ for curb space and understand how many users have arrived for a given area for a period of time. Some examples for this include: seeing how many vehicles arrived and parked in a neighborhood (counting `park_start` event types), estimating occupancy with LPR (counting `vehicle_read` event types), or tracking enforcement by seeing how many tickets were handed out for a specific zone (counting `citation_issued` event types). 
 
 #### Turnover
  
