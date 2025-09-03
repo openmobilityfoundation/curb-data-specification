@@ -206,18 +206,18 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 
 | Name               | Description |
 |--------------------|-------------|
-| `comms_lost`       | communications with the event source were lost |
-| `comms_restored`   | communications with the event source were restored |
-| `decommissioned`   | event source was decommissioned |
-| `park_start`       | a vehicle stopped, parked, or double parked |
-| `park_end`         | a parked vehicle leaving a parked or stopped state and resuming movement |
-| `scheduled_report` | event source reported status at a scheduled interval |
-| `enter_area`       | vehicle enters the relevant geographic area |
-| `exit_area`        | vehicle exits the relevant geographic area |
-| `vehicle_detected` | detection or observation of a vehicle within or near a curb zone. Can originate from manual surveying, automated license plate recognition (LPR) systems, or other detection methods. |
-| `vehicle_violation_start` | start of a compliance violation at a curb location, triggered when a vehicle is not permitted or has exceeded allowed time limits. This event may be published after detecting a vehicle but does not require a `vehicle_detected` event. |
-| `vehicle_violation_end` | resolution of a compliance violation, when the vehicle is no longer in violation of regulations. Used for time-based violations where the end of the violation can be detected. Requires a preceding `vehicle_violation_start` event for the same vehicle. | 
-| `citation_issued`  | issuance of a ticket or citation to a vehicle. May be published in addition to a related `vehicle_violation_start` event. |
+| `comms_lost`       | Communications with the event source were lost |
+| `comms_restored`   | Communications with the event source were restored |
+| `decommissioned`   | Event source was decommissioned |
+| `park_start`       | A vehicle stopped, parked, or double parked |
+| `park_end`         | A parked vehicle leaving a parked or stopped state and resuming movement |
+| `scheduled_report` | Event source reported status at a scheduled interval |
+| `enter_area`       | Vehicle enters the relevant geographic area. This differs from `vehicle_detected` since `enter_area` represents the tracking of a vehicle crossing the geo-boundary of an area/location.  |
+| `exit_area`        | Vehicle exits the relevant geographic area |
+| `vehicle_detected` | Detection or observation of a vehicle within or near a curb zone. Can originate from manual surveying, automated license plate recognition (LPR) systems, or other detection methods. This differs from the `enter_area` and `exit_area` events where a `vehicle_detected` event does not require the vehicle to be crossing the geo-boundary of an area/location.  |
+| `vehicle_violation_start` | Start of a compliance violation at a curb location, triggered when a vehicle is not permitted or has exceeded allowed time limits. This event may be published after detecting a vehicle but does not require a `vehicle_detected` event. |
+| `vehicle_violation_end` | Resolution of a compliance violation, when the vehicle is no longer in violation of regulations. Used for time-based violations where the end of the violation can be detected. Requires a preceding `vehicle_violation_start` event for the same vehicle. | 
+| `citation_issued`  | Issuance of a ticket or citation to a vehicle. May be published in addition to a related `vehicle_violation_start` event. |
 
 [Top][toc]
 
@@ -227,14 +227,14 @@ Curb Data Source Type `data_source_type` enumerates the set of possible categori
 
 | Name           | Description |
 |----------------| ----------- |
-| `data_feed`    | directly from a provider data feed sent to the agency |
-| `camera`       | video or static image processing source |
-| `above_ground` | sensor deployed above ground |
-| `in_ground`    | sensor deployed in the ground |
-| `meter`        | a smart parking meter |
-| `payment`      | from payment system or app |
-| `in_person`    | an individual on site recording the event digitally or otherwise |
-| `other`        | sources not enumerated above |
+| `data_feed`    | Directly from a provider data feed sent to the agency |
+| `camera`       | Video or static image processing source |
+| `above_ground` | Sensor deployed above ground |
+| `in_ground`    | Sensor deployed in the ground |
+| `meter`        | A smart parking meter |
+| `payment`      | From payment system or app |
+| `in_person`    | An individual on site recording the event digitally or otherwise |
+| `other`        | Sources not enumerated above |
 
 [Top][toc]
 
