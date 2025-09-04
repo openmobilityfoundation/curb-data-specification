@@ -1,8 +1,20 @@
+## 1.1.0
+
+> Release Draft 2025-09-03
+
+The 1.1 release is the first minor release for CDS.
+
+### CHANGES
+
+See the [Milestone 1.1.0](https://github.com/openmobilityfoundation/curb-data-specification/milestone/4) and tagged [PRs](https://github.com/openmobilityfoundation/curb-data-specification/pulls?q=is%3Apr+is%3Aclosed+milestone%3A1.1) and [Issues](https://github.com/openmobilityfoundation/curb-data-specification/issues?q=is%3Aissue%20state%3Aclosed%20milestone%3A1.1) for a full list of changes.
+
+**Full [Release Notes](https://github.com/openmobilityfoundation/curb-data-specification/releases/tag/1.1.0)** for details.
+
 ## 1.0.1
 
 > Released: 2024-12-09
 
-The 1.0.1 patch release cleans up and  clarifies some minor issues and typos to help make the specification clearer.
+The 1.0.1 patch release cleans up and clarifies some minor issues and typos to help make the specification clearer.
 
 ### CHANGES
 
