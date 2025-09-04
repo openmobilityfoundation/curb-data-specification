@@ -35,8 +35,6 @@ There are two different endpoints that are part of the Events API:
     * [Payment Method](#payment-method)
     * [Curb Occupant](#curb-occupants)
   * [Status](#status)
-  * [Enforcement][enforcement]
-  * [Violations][violations]
 - [Examples](#examples)
 - [Schema](#schema)
 
