@@ -18,7 +18,7 @@ The `enforcement` object is a JSON *object* with the following fields:
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
 | `enforcement_id` | UUID   | Required          | An identifer unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
-| `citation_id`    | UUID   | Optional          | The unique id represents a single citation . |
+| `citation_id`    | String   | Optional        | A unique id which represents a single citation. |
 | `is_warning`     | Boolean | Optional         | A boolean value to indicate if the enforcment action is being processed as a warning.  |
 | `action_taken`   | String | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_served`, `citation_posted`, `citation_registered`, or `citation_emailed`. |
 | `citation_cost`  | String | Optional          | The total cost of all violations associated to this enforcement action. |
