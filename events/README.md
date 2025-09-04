@@ -35,6 +35,8 @@ There are two different endpoints that are part of the Events API:
     * [Payment Method](#payment-method)
     * [Curb Occupant](#curb-occupants)
   * [Status](#status)
+  * [Enforcement][enforcement]
+  * [Violations][violations]
 - [Examples](#examples)
 - [Schema](#schema)
 
@@ -411,6 +413,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [bulk-responses]: /general-information.md#bulk-responses
 [enforcement]: ../data-types.md#enforcement
+[violations]: ../data-types.md#violations
 [error-messages]: /general-information.md#error-messages
 [external-reference]: ../data-types.md#external-reference
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
