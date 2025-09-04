@@ -5,22 +5,39 @@ This CDS data types page catalogs the data objects (fields, types, requirements,
 ## Table of Contents
 
 - [Enforcement](#enforcement)
+   - [Violations](#violations)
 - [External Reference](#external-reference)
 
 ## Enforcement
 
 The Enforcement object describes a specific set of features from a data feed or API that is relevant to an enforcement Curb Event. This allows CDS users to reference detailed enforcement data separate from the main API endpoints.
 
-The `enforcement` object is a JSON *array* with the following fields:
+Where a citation could represent multiple violations, an enforcement object contains an array that enumerates the violations for a single citation. Where a citation can only represent a single violation, multiple Curb Events may be published, each with a single violation in the array.
+
+The `enforcement` object is a JSON *object* with the following fields:
 
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
-| `enforcement_id` | UUID   | Required          | A unique identifer of an enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. | 
-| `municipal_code` | string | Optional          | The unique code created by the municipality or enforcement agency to identify the type of rule being enforced. |
-| `citation_id`    | String | Optional          | The unique id that represents a single instance of a recorded violation. |
+| `enforcement_id` | UUID   | Required          | An identifer unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
+| `citation_id`    | String   | Optional        | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | Optional         | A boolean value to indicate if the enforcment action is being processed as a warning.  |
+| `action_taken`   | String | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String | Optional          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of Violations | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+
+[Top][toc]
+
+### Violations
+
+The Violations object describes the violations associated to an enforcement action that can occur as a Curb Event. 
+
+The `violations` object is a JSON *object* with the following fields:
+
+| Name             | Type   | Required/Optional | Description   |
+| ---------------- | ------ | ----------------- | ------------- |
+| `municipal_code` | String | Optional          | The unique code created by the municipality or enforcement agency to identify the type of rule being enforced. |
 | `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
-| `action_taken`   | String | Optional          | What action was taken to enforce the rule being violated. Typical well-known values are `citation_served`, `citation_posted`, `citation_registered`, or `citation_emailed`. |
-| `citation_cost`  | String | Optional          | The original cost associated with the given citation issued. |
+| `violaton_cost`  | String | Optional          | The original cost associated with the violation. |
 
 [Top][toc]
 
