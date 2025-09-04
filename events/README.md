@@ -96,7 +96,7 @@ All query parameters are optional.
 
 [Top][toc]
 
-##  Push Event
+## Push Event
 
 Endpoint: `/events/event`  
 Method: `POST`  
@@ -348,6 +348,8 @@ from a credit card payment made via a mobile app, for example.
 | `telephone`       | Paid via a telephone call. |
 | `website`         | User went to a standard website to pay, maybe directed by QR code. |
 | `other`           | Some payment channel not captured above (please submit a pull request!). |
+
+[Top][toc]
 
 ### Payment Method
 
