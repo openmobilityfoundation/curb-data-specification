@@ -104,7 +104,7 @@ An agency may choose to make this endpoint static (and return all the available 
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
 | `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
-| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)).  |
@@ -168,7 +168,7 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 | ------ | ------ | ------------------- | ------------- |
 | `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
-| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
 | `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
 | `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means that the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
@@ -185,6 +185,15 @@ Name: `total_sessions`
 _Use Case_
 
 Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. A session is a parking event, defined by the `park_start` and `park_end` event types.
+
+#### Total Events
+
+`count[events]` for a specific time period  
+Name: `total_events`
+
+_Use Case_
+
+Similar to `total_sessions`, cities use this to determine ‘demand’ for curb space and understand how many users have arrived for a given area for a period of time. Some examples for this include: seeing how many vehicles arrived and parked in a neighborhood (counting `park_start` event types), estimating occupancy with LPR (counting `vehicle_read` event types), or tracking enforcement by seeing how many tickets were handed out for a specific zone (counting `citation_issued` event types). 
 
 #### Turnover
  

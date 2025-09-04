@@ -96,7 +96,7 @@ All query parameters are optional.
 
 [Top][toc]
 
-##  Push Event
+## Push Event
 
 Endpoint: `/events/event`  
 Method: `POST`  
@@ -160,10 +160,10 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
-| `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
-| `curb_area_ids` | Array of [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for these event_types: _enter_area, exit_area, park_start, park_end_ |
-| `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space, if known and used, for these event_types: _park_start, park_end, enter_area, exit_area_ |
-| `curb_object_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Object where the event occurred. Required for events that occurred at a known Curb Object, if known and used, for these event_types: _park_start, park_end, enter_area, exit_area_ |
+| `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred in a known Curb Zone, if known and used, for ALL _event_types_. |
+| `curb_area_ids` | Array of [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area, if known and used, for ALL _event_types_. |
+| `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space, if known and used, for ALL _event_types_. |
+| `curb_object_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Object where the event occurred. Required for events that occurred at a known Curb Object, if known and used, for ALL _event_types_. |
 | `data_source_type` | Enum [Source Type](#source-type) | Required | General category of the source creating the event. |
 | `data_source_operator_id` | [UUID][uuid] | Conditionally Required | Unique identifier of the entity responsible for operating the event data source. IDs can identify the fleet operator sending a data feed, or the organization (company or city) operating the sensor. IDs for fleet operators are required and global and come from the [data_source_operators.csv](/data_source_operators.csv) file, and optional for others. Read our [How to Get a Data Source Operator ID](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Adding-a-CDS-Data-Source-Operator-ID) guide. An agency at their discretion may allow a small, local company to simply provide a consistent `data_source_operator_name` string instead of this field, otherwise this field is required. |
 | `data_source_operator_name` | String | Optional | Name of the provider responsible for operating the vehicle, device, or sensor at the time of the event. May be sent along with `data_source_operator_id` or on its own for small operators at the discretion of the city. |
@@ -191,6 +191,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `enforcement` | [Enforcement][enforcement] | Optional | Enforcement information related to this Curb Event, relevant to the moment in time the event happens. Only used for enforcement related events such as `vehicle_detected`, `vehicle_violation_start`, `vehicle_violation_end`, and `citation_issued`. |
 | `payment_channel` | [Payment Channel](#payment-channel) | Conditionally Required | If available from the source, the medium by which a user submitted payment. |
 | `payment_method` | [Payment Method](#payment-method) | Conditionally Required | If available from the source, the method used to pay for this event. |
 | `payment_transaction_id` | String | Conditionally Required | The transaction ID of the payment if available from the source and different from the `event_id`. |
@@ -205,14 +206,18 @@ Curb Event Type `event_type` enumerates the set of possible types of Curb Event.
 
 | Name               | Description |
 |--------------------|-------------|
-| `comms_lost`       | communications with the event source were lost |
-| `comms_restored`   | communications with the event source were restored |
-| `decommissioned`   | event source was decommissioned |
-| `park_start`       | a vehicle stopped, parked, or double parked |
-| `park_end`         | a parked vehicle leaving a parked or stopped state and resuming movement |
-| `scheduled_report` | event source reported status at a scheduled interval |
-| `enter_area`       | vehicle enters the relevant geographic area |
-| `exit_area`        | vehicle exits the relevant geographic area |
+| `comms_lost`       | Communications with the event source were lost |
+| `comms_restored`   | Communications with the event source were restored |
+| `decommissioned`   | Event source was decommissioned |
+| `park_start`       | A vehicle stopped, parked, or double parked |
+| `park_end`         | A parked vehicle leaving a parked or stopped state and resuming movement |
+| `scheduled_report` | Event source reported status at a scheduled interval |
+| `enter_area`       | Vehicle enters the relevant geographic area. This differs from `vehicle_detected` since `enter_area` represents the tracking of a vehicle crossing the geo-boundary of an area/location.  |
+| `exit_area`        | Vehicle exits the relevant geographic area |
+| `vehicle_detected` | Detection or observation of a vehicle within or near a curb zone. Can originate from manual surveying, automated license plate recognition (LPR) systems, or other detection methods. This differs from the `enter_area` and `exit_area` events where a `vehicle_detected` event does not require the vehicle to be crossing the geo-boundary of an area/location.  |
+| `vehicle_violation_start` | Start of a compliance violation at a curb location, triggered when a vehicle is not permitted or has exceeded allowed time limits. This event may be published after detecting a vehicle but does not require a `vehicle_detected` event. |
+| `vehicle_violation_end` | Resolution of a compliance violation, when the vehicle is no longer in violation of regulations. Used for time-based violations where the end of the violation can be detected. Requires a preceding `vehicle_violation_start` event for the same vehicle. | 
+| `citation_issued`  | Issuance of a ticket or citation to a vehicle. May be published in addition to a related `vehicle_violation_start` event. |
 
 [Top][toc]
 
@@ -222,14 +227,14 @@ Curb Data Source Type `data_source_type` enumerates the set of possible categori
 
 | Name           | Description |
 |----------------| ----------- |
-| `data_feed`    | directly from a provider data feed sent to the agency |
-| `camera`       | video or static image processing source |
-| `above_ground` | sensor deployed above ground |
-| `in_ground`    | sensor deployed in the ground |
-| `meter`        | a smart parking meter |
-| `payment`      | from payment system or app |
-| `in_person`    | an individual on site recording the event digitally or otherwise |
-| `other`        | sources not enumerated above |
+| `data_feed`    | Directly from a provider data feed sent to the agency |
+| `camera`       | Video or static image processing source |
+| `above_ground` | Sensor deployed above ground |
+| `in_ground`    | Sensor deployed in the ground |
+| `meter`        | A smart parking meter |
+| `payment`      | From payment system or app |
+| `in_person`    | An individual on site recording the event digitally or otherwise |
+| `other`        | Sources not enumerated above |
 
 [Top][toc]
 
@@ -344,6 +349,8 @@ from a credit card payment made via a mobile app, for example.
 | `website`         | User went to a standard website to pay, maybe directed by QR code. |
 | `other`           | Some payment channel not captured above (please submit a pull request!). |
 
+[Top][toc]
+
 ### Payment Method
 
 Strings used to indicate how a curb user paid for a curb event.
@@ -405,6 +412,8 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 [Top][toc]
 
 [bulk-responses]: /general-information.md#bulk-responses
+[enforcement]: ../data-types.md#enforcement
+[violations]: ../data-types.md#violations
 [error-messages]: /general-information.md#error-messages
 [external-reference]: ../data-types.md#external-reference
 [iana]: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
