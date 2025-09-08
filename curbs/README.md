@@ -54,7 +54,6 @@ There are four different endpoints that are part of the Curbs API:
   - [Curb Space](#curb-space)
   - [Curb Object](#curb-object)
     - [Object Types](#object-types)
-    - [Object Type Attributes](#object-type-attributes) 
   - [Policy](#policy)
     - [Rule](#rule)
       - [Activities](#activities)
