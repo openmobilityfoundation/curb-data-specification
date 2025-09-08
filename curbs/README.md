@@ -26,7 +26,7 @@ There are four different endpoints that are part of the Curbs API:
     are *optional*.
   - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space
     that is grouped under a certain type and contains a unique set of attributes. Curb objects are *optional*.
-  - A [Curb Policy](#policy) A Policy object is a rule that allows or prohibits a particular set of 
+  - A [Curb Policy](#policy) A Policy is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional* 
     but recommended with Curb Zones.
 
@@ -97,7 +97,7 @@ All query parameters are optional.
 | `area`       | [UUID][uuid]      | The ID of a [Curb Area](#curb-area). If specified, only return Curb Zones contained within this area. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Specifies a bounding box; if one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
-| `include_geometry` | `true`/`false` |  If the value is `false`, do not include the `geometry` field within the [Curb Zone](#curb-zone) feature object. |
+| `include_geometry` | `true`/`false` |  If the value is `false`, do not include the `geometry` field within the [Curb Zone](#curb-zone) feature object. `true` by default. |
 | `time` | [Timestamp][ts] | Only Curb Zone objects whose validity period includes this time will be returned; availability data (if supplied) will be returned as of this time. |
 
 [Top][toc]
@@ -293,7 +293,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
 | `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. They are listed in order with the most recent ones first. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
-| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some curb objects fields may have changed. |
+| `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb zone were last updated. This helps consumers know that some  fields may have changed. |
 | `prev_curb_zone_ids` | Array of [UUIDs][uuid] | Optional | An array of IDs of previous curb zone objects. They are listed in order with the most recent ones first. |
 | `start_date` | [Timestamp][ts] | Required | The earliest time that the data for this curb location is known to be valid (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). This could be the date on which the data was collected, for instance. This MUST never change for a given id. |
 | `end_date` | [Timestamp][ts] | Optional | The time at which the data for this curb location ceases to be valid (_exclusive_, see [Range Boundaries](/general-information.md#range-boundaries)). If not present, the data will be presumed to be valid indefinitely. |
@@ -321,7 +321,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | `curb_area_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Areas](#curb-area) that this Curb Zone is a part of. If specified, the areas identified MUST be retrievable through the Curb API and its geographical area MUST contain that of the Curb Zone. |
 | `curb_space_ids`| Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Spaces](#curb-space) that this Curb Zone contains. If specified, the spaces identified MUST be retrievable through the Curb API and its geographical area MUST be contained in this Curb Zone. |
 | `custom_attributes`| JSON Object | Conditionally Required | A list of additional attributes, unique to the user creating Curb Zone data, that may want to be captured in this data feed. Each value in the JSON name/value pair must be a string. At least one `custom_attributes` field is required if the Curbs [endpoint](../general-information.md#rest-endpoints) contains the `custom_attribute_dictionary` field. |
-| `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone. |
+| `curb_object_ids` | Array of [UUID][uuid] | Optional | The ID(s) of the [Curb Objects](#curb-object) that this Curb Zone is related to, in particular what Objects are in the Zone's areas of influence. For example, a pay station being used for multiple paid parking zones, a locker for a commercial loading zone, or a camera monitoring several zones. If specified, the objects identified MUST be retrievable through a Curbs API Objects endpoint. |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data feeds impacting this Curb Zone. References external data that is relevant to this Zone now. If the external reference is temporary, it should be added, then removed when no longer relevant.  This field can be changed without requiring a new `curb_zone_id`, as it does not impact the Zone's geographic, policy, rules, or other definitions. |
 
 [Top][toc]
@@ -379,7 +379,7 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb area was first published in this data feed. |
 | `last_updated_date` | [Timestamp][ts] | Required | The date/time that the properties of ths curb area were last updated. This helps consumers know that some fields may have changed. |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of the Curb Zone this space is within. The geometry of the specified Curb Zone MUST contain the geometry of this space. |
-| `curb_object_ids` | Array of [UUID][uuid] | Conditionally Required | The ID(s) of the [Curb Objects](#curb-object) that this Curb Space is related to, in particular what Objects are in the Space's areas of influence. For example, a meter being used for two paid parking spcaes, a locker for a commercial loading space, or a camera monitoring several spaces. If specified, the objects identified MUST be retrievable through the Curb API. Curb Objects can be related to a Curb Space or a Curb Zone.|
+| `curb_object_ids` | Array of [UUID][uuid] | Conditionally Required | The ID(s) of the [Curb Objects](#curb-object) that this Curb Space is related to, in particular what Objects are in the Space's areas of influence. For example, a meter being used for two paid parking spcaes, a locker for a commercial loading space, or a camera monitoring several spaces. If specified, the objects identified MUST be retrievable through a Curbs API Objects endpoint. |
 | `space_number` | Integer | Optional | The sequence number of this space within its Zone. If specified, two spaces within the same Curb Zone MUST NOT share a space number, and space numbers SHOULD be consecutive positive integers starting at 1. |
 | `length` | Integer | Required | Length in centimeters of this Space. If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
 | `width` | Integer | Optional | Width in centimeters of this Space. | If comparing the length of a vehicle to that of a space, note that vehicles may have to account for a buffer for doors, mirrors, bumpers, ramps, etc. |
@@ -394,8 +394,8 @@ A Curb Space is represented as a JSON object whose fields are as follows:
 
 Defines individual assets located adjacent to, overlapping, within, or associated with a Curb Space or Curb Zone. Important notes about Curb Objects:
 
-  - Curb Objects can be located anywhere: within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
-  - Curb Objects must be related to either a Curb Space or Curb Zone
+  - Curb Objects can be located anywhere within, beside, or overlapping with Curb Zones, Spaces, or other Curb Objects
+  - Curb Objects must be associated with either a Curb Space or Curb Zone
   - Curb Objects do not typically have Curb Policies linked directly to them (unless the object is directly aligned with a single Policy, using the optional `curb_policy_id` field). Associated Curb Policies can be found by looking at the related Curb Zone (either directly or through the Curb Space).
   - Unlike Zones and similar to Spaces, Objects may be updated as needed, with a new `curb_object_id` being optionally assigned by the city
 
