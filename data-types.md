@@ -16,14 +16,14 @@ Where a citation could represent multiple violations, an enforcement object cont
 
 The `enforcement` object is a JSON *object* with the following fields:
 
-| Name             | Type   | Required/Optional | Description   |
-| ---------------- | ------ | ----------------- | ------------- |
-| `enforcement_id` | UUID   | Required          | An identifer unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
-| `citation_id`    | String   | Optional        | A unique id which represents a single citation. |
-| `is_warning`     | Boolean | Optional         | A boolean value to indicate if the enforcment action is being processed as a warning.  |
-| `action_taken`   | String | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
-| `citation_cost`  | String | Optional          | The total cost of all violations associated to this enforcement action. |
-| `violations`     | Array of Violations | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+| Name             | Type    | Required/Optional | Description   |
+| ---------------- | ------- | ----------------- | ------------- |
+| `enforcement_id` | UUID    | Required          | An identifer unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
+| `citation_id`    | String  | Optional          | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | Optional          | A boolean value to indicate if the enforcment action is being processed as a warning.  |
+| `action_taken`   | String  | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String  | Optional          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of [Violations](#violations) | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
 
 [Top][toc]
 
@@ -35,9 +35,9 @@ The `violations` object is a JSON *object* with the following fields:
 
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
-| `municipal_code` | String | Optional          | The unique code created by the municipality or enforcement agency to identify the type of rule being enforced. |
+| `violation_code` | String | Optional          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
 | `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
-| `violaton_cost`  | String | Optional          | The original cost associated with the violation. |
+| `violation_cost` | String | Optional          | The original cost associated with the violation. |
 
 [Top][toc]
 
