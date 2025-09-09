@@ -185,7 +185,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_color_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_color`. |
 | `vehicle_company_name` | String | Optional | Company or courier name of the vehicle that performed the event. |
 | `vehicle_company_name_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_company_name`. |
-| `vehicle_run_id` | String | Optional | Run ID from an external runs table containing information about models and model, or year, of the vehicle that performed the event. |
+| `vehicle_run_id` | String | Optional | Run identifier from an external runs table containing information about make, model, and/or year, of the vehicle that performed the event. |
 | `vehicle_run_id_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_run_id`. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
 | `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
