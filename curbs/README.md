@@ -686,11 +686,12 @@ A Policy Color is a JSON object with the following fields:
 | Name                     | Type | Required/Optional   | Description   |
 | ------------------------ | ---- | ------------------- | ------------- |
 | `primary_color`          | Hex  | Required            | The **6 digit hexidecimal triplet value** of the primary curb color, in standard capitalized RRGGBB format, without a leading hash symbol ("#"). E.g. "839D8F", "FF00FF". |
-| `primary_pattern_type`   | Enum | Optional            | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_color`. |
+| `primary_pattern_type`   | Enum | Optional            | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash`, `diagonal` to define the type of pattern on the `primary_color`. |
 | `primary_border_color`   | Hex  | Optional            | The 6 digit hex value of the `primary_color` border color. |
-| `primary_border_pattern_type` | Enum | Optional       | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash` to define the type of pattern on the `primary_border_color`. |
+| `primary_border_pattern_type` | Enum | Optional       | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash`, `diagonal` to define the type of pattern on the `primary_border_color`. |
 | `secondary_color`        | Hex  | Optional            | The 6 digit hex value of the secondary curb color. |
 | `secondary_border_color` | Hex  | Optional            | The 6 digit hex value of the `secondary_color` border color. |
+| `secondary_border_pattern_type` | Enum | Optional     | One of `solid`, `long_dash`, `short_dash`, `dot`, `dot_dash`, `diagonal` to define the type of pattern on the `secondary_border_color`. |
 
 [Top][toc]
 
