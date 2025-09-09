@@ -32,7 +32,7 @@ There are four different endpoints that are part of the Curbs API:
 
 **See [examples](examples.md) for these endpoints.**
 
-![Curb Places](https://i.imgur.com/ZbU0gW0.gif)
+![Curb Places](https://i.imgur.com/SxUlTHr.gif)
 
 # Table of Contents
 
