@@ -251,7 +251,7 @@ Type of vehicle `vehicle_type` similar to [vehicle_type](https://github.com/open
 | `delivery_robot` | A robot or remote-operated device intended for transporting goods |
 | `scooter`        | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| `scooter_seated' | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated` | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`     | A seated mobility device capable of travel at high speeds and suited for operation in general urban traffic or expressways |
 | `truck`          | A box truck or large delivery truck with attached cab |
