@@ -65,7 +65,7 @@ CDS contains a series of connected endpoints and fields beneath each interconnec
 
 ## Modularity
 
-CDS is designed to be a modular and flexible specification. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only Curbs, while others may use Curbs, Events, and Metrics. Even within each API many endpoints and fields are optional. This design allows agencies, software and hardware companies, and curb users to use what's appropriate for their use cases, work within their operational capabilities, and text CDS in their pilot projects.
+CDS is designed to be a modular and flexible specification. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only Curbs, while others may use Curbs, Events, and Metrics. Even within each API many endpoints and fields are optional. This design allows agencies, software and hardware companies, and curb users to use what's appropriate for their use cases, work within their operational capabilities, test CDS in their pilot projects, or use CDS for digitally managing parking operations.
 
 ![CDS APIs and Endpoints](https://i.imgur.com/wlSeEa0.png)
 
