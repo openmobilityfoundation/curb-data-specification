@@ -58,6 +58,7 @@ There are four different endpoints that are part of the Curbs API:
     - [Rule](#rule)
       - [Activities](#activities)
       - [User Classes](#user-classes)
+      - [Purposes](#purposes)
     - [Time Span](#time-span)
     - [Rate](#rate) 
   - [Location Reference](#location-reference)
