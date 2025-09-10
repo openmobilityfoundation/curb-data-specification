@@ -512,6 +512,7 @@ It is a JSON object with the following fields:
 | `no_return_unit` | Enum | Optional | The [Unit of Time](/general-information.md#unit-of-time-enum) associated with the `no_return` value. Defaults to "minute". |
 | `user_classes` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation only applies to users matching the [user classes](#user-classes) contained within. If not specified, this regulation applies to everyone. The order of `user_classes` is not relevant, but a vehicle using a curb with this rule must match all `user_classes` contained in the array. |
 | `user_classes_except` | Array of [user class](#user-classes) Strings | Optional | If specified, this regulation applies only to users who **do not** match any of the [user classes](#user-classes) contained within. The order of `user_classes` is not relevant, but a vehicle using a curb with this rule must match all `user_classes` contained in the array. This field takes precidence over `user_classes` when present. |
+| `purposes` | Array of [purposes](#purposes) Strings | Optional | If specified, this regulation only applies to users matching one of the [purposes](#purposes) contained within. If not specified, this regulation applies to everyone. The order of `purposes` is not relevant, but a vehicle using a curb with this rule must match any `purposes` contained in the array. |
 | `rate` | Array of [Rates](#rate) | Optional | The cost of using this Curb Zone when this regulation applies. Rates are repeated to allow for prices that change over time. For instance, a regulation may have a price of $1 for the first hour but $2 for every subsequent hour. The complete set of the [Rates](#rate) array must span **from** `start_minutes` = `0` or `null` **to** `end_minutes` = `max_stay` without overlap of effective minutes (i.e. the range created by rate `start_minutes` and `end_minutes`).  If a "negative" [activity](#activities) is used, this array should be empty. May not be applicable for all [activity](#activities). |
 
 [Top][toc]
@@ -548,7 +549,7 @@ intent or destination of the driver, for things like hotel or school unloading z
 These are not meant to be a mirror to similarly named items in the Events API, but instead serve a 
 unique purpose of describing locally defined regulations at a curb.
 
-This array of user classes serves as an 'AND' function. A vehicle must have all the properties listed
+This array of `user_class` serves as an 'AND' function. A vehicle must have all the properties listed
 in the array to use the curb. For example, an accessible EV bus will use `accessible` AND `electric` 
 AND `bus`. To create 'OR' values at the same curb, you must create a new rule 
 with the new array of values.
@@ -578,6 +579,22 @@ Vehicle properties
 - `electric`
 - `electric_assist`
 - `human`
+
+#### Purposes
+
+A purpose represents the kinds of activities taking place with respect to curb
+space or parking areas. 
+
+This array of `purpose` serves as an 'OR' function. A vehicle perform an event with any of the purposes listed
+in the array to use the curb. For example, a pickup and drop off zone for people and goods can use `delivery` OR `taxi` 
+OR `ridesahre`. To create 'AND' values at the same curb, you must create a new rule 
+with the new array of values.
+
+New purposes MAY be generated to reflect local regulations, but when possible,
+the following well-known recommended values should be used. If multiple similar values apply, then use the more 
+descriptive/specific value when possible.
+
+**Well-known values:**
 
 Purpose
 - `construction`
