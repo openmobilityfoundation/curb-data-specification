@@ -195,7 +195,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `payment_channel` | [Payment Channel](#payment-channel) | Conditionally Required | If available from the source, the medium by which a user submitted payment. |
 | `payment_method` | [Payment Method](#payment-method) | Conditionally Required | If available from the source, the method used to pay for this event. |
 | `payment_transaction_id` | String | Conditionally Required | The transaction ID of the payment if available from the source and different from the `event_id`. |
-| `custom_attributes`| JSON Object | Conditionally Required | A list of additional attributes, unique to the user creating Curb Event data, that may want to be captured in this data feed. Each value in the JSON name/value pair must be a string. At least one `custom_attributes` field is required if the Curbs [endpoint](../general-information.md#rest-endpoints) contains the `custom_attribute_dictionary` field. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | Optional | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
 [Top][toc]
