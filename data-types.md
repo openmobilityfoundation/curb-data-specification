@@ -4,9 +4,21 @@ This CDS data types page catalogs the data objects (fields, types, requirements,
 
 ## Table of Contents
 
+- [Custom Attributes](#custom-attributes)
 - [Enforcement](#enforcement)
    - [Violations](#violations)
 - [External Reference](#external-reference)
+
+## Custom Attributes
+
+Custom Attributes are optional additional attributes that do not fit in other fields and objects in CDS. They are unique for the organizations created and consuming the endpoint, that may not apply to other jurisdictions. Examples include custom identifiers, information required by ordinance, vendor attributes, supplemental data, etc. 
+
+The format is one or more JSON name/value pairs, and the values must be a string. If a `custom_attributes` field is provided in Curbs, Areas, Spaces, Objects, or Events endpoints, then the relevant [endpoint](general-information.md#rest-endpoints) must contain the `custom_attribute_dictionary` field, which describes details of the custom fields provided.
+
+Before creating any custom attributes, the preference is to use existing CDS fields and data objects first. If the fields and data you provide in custom attributes apply to multiple jurisdictions, vendors, and/or scenarios, please open an issue to include new fields in a future CDS release.
+
+
+[Top][toc]
 
 ## Enforcement
 
