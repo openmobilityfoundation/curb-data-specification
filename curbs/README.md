@@ -408,7 +408,8 @@ A Curb Object is represented as a JSON object whose fields are as follows:
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Zone this object is physically in or closest to. The geometry of the specified Curb Zone does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | The ID of the Curb Space this object is physically in or closest to. The geometry of the specified Curb Space does not need to directly relate to the geometry of this object. Either a Zone or Space ID is required for an Object. |
 | `curb_policy_id` | [UUID][uuid] | Optional | ID of [Policy object](#policy) that is directly associcated with this curb object. For example, `signage` or `paint` that relates to a single policy. |
-| `object_type` | [Object Types](#object-types) String | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
+| `lane_type` | [Lane Type][lane-type] | Optional | The type of lane the curb object is primarily located in. Value is one of [Lane Type][lane-type]. |
+| `object_type` | [Object Types](#object-types) | Required | The categrory of the curb object. Value is one of the [Object Types](#object-types). |
 | `name` | String | Required | A short name of this curb object for reference. |
 | `description` | String | Optional | A more detailed description of the object if needed. |
 | `owner` | String | Optional | The name of the agency, department, etc responsibile for maintaining this object. |
@@ -726,6 +727,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 [Top][toc]
 
 [external-reference]: ../data-types.md#external-reference
+[lane-type]: ../data-types.md#lane-type
 [toc]: #table-of-contents
 [uuid]: /general-information.md#uuid
 [ts]: /general-information.md#timestamp
