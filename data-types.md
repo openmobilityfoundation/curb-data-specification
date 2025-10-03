@@ -8,6 +8,7 @@ This CDS data types page catalogs the data objects (fields, types, requirements,
 - [Enforcement](#enforcement)
    - [Violations](#violations)
 - [External Reference](#external-reference)
+- [Lane Type](#lane-type)
 
 ## Custom Attributes
 
@@ -66,6 +67,25 @@ The `external_reference` object is a JSON *array* with the following fields:
 | `public`          | Boolean | Optional            | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the feed user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
 | `identifier_name` | String  | Optional            | The name of the data field or object that is referenced by the unique `ids`. E.g. "id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
 | `ids`             | Array of Strings | Optional   | An array of one or more **ids** from the `reference_url` that impacts the use of or relationship to part of CDS, e.g. a curb zone, curb space, curb area, curb event, etc. The **ids** and their details are be found in the referenced `reference_url`. |
+
+[Top][toc]
+
+### Lane Type
+
+Type(s) of lane referenced by the curb policy or event, in or outside of curb zones.
+
+| Name           | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `travel_lane`  | A standard vehicle travel lane. |
+| `turn_lane`    | A dedicated turn lane. |
+| `center_turn_lane` | A center lane available for turns in both directions. Sometimes used for courier parking for loading activity. |
+| `bike_lane`    | A lane dedicated for usage by cyclists. |
+| `bus_lane`     | A lane dedicated for usage by buses. |
+| `parking`      | A lane used for parking, not allowed for travel. |
+| `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
+| `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
+| `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
+| `unspecified`  | Unspecified |
 
 [Top][toc]
 
