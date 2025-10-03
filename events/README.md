@@ -30,7 +30,6 @@ There are two different endpoints that are part of the Events API:
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
     * [Event Purpose](#event-purpose)
-    * [Lane Type](#lane-type)
     * [Payment Channel](#payment-channel)
     * [Payment Method](#payment-method)
     * [Curb Occupant](#curb-occupants)
@@ -188,7 +187,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_run_id` | String | Optional | Run identifier from an external runs table containing information about make, model, and/or year, of the vehicle that performed the event. |
 | `vehicle_run_id_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_run_id`. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
-| `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
+| `vehicle_blocked_lane_types` | Array of [Lane Type][lane-type] | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
 | `enforcement` | [Enforcement][enforcement] | Optional | Enforcement information related to this Curb Event, relevant to the moment in time the event happens. Only used for enforcement related events such as `vehicle_detected`, `vehicle_violation_start`, `vehicle_violation_end`, and `citation_issued`. |
@@ -314,26 +313,6 @@ General event purpose `event_purpose` that the vehicle performed during its even
 
 [Top][toc]
 
-### Lane Type
-
-Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle performing the event, outside of curb zones. E.g., double parking.
-
-| Name           | Description                                            |
-| -------------- | ------------------------------------------------------ |
-| `travel_lane`  | A standard vehicle travel lane. |
-| `turn_lane`    | A dedicated turn lane. |
-| `center_turn_lane` | A center lane available for turns in both directions. Sometimes used for courier parking for loading activity. |
-| `bike_lane`    | A lane dedicated for usage by cyclists. |
-| `bus_lane`     | A lane dedicated for usage by buses. |
-| `parking`      | A lane used for parking, not allowed for travel. |
-| `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
-| `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
-| `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
-| `unspecified`  | Unspecified |
-
-[Top][toc]
-
-
 ### Payment Channel
 
 The payment channel describes the medium or platform used to pay for a curb
@@ -413,6 +392,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [bulk-responses]: /general-information.md#bulk-responses
 [enforcement]: ../data-types.md#enforcement
+[lane-type]: ../data-types.md#lane-type
 [violations]: ../data-types.md#violations
 [error-messages]: /general-information.md#error-messages
 [external-reference]: ../data-types.md#external-reference
