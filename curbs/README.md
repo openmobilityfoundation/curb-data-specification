@@ -613,6 +613,7 @@ Purpose
 - `special_events`
 - `taxi`
 - `utilities`
+- `valet`
 - `vending`
 - `waste_management`
 
