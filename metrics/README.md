@@ -230,7 +230,7 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 
 # Examples
 
-See a series of [CDS Metrics endpoint examples](examples.md) to use as templates. 
+See the [CDS Metrics Examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) wiki page for code examples of specific Metrics use cases, and ideas on how Metrics can be implemented.
 
 [Top][toc]
 
