@@ -2,22 +2,21 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Curb Data Specification APIs](#curb-data-specification-apis)
+- [About](#about)
+- [Endpoints](#endpoints)
   - [Structure](#structure)
   - [Modularity](#modularity)
-  - [OpenAPI Schema](#openapi-schema)
   - [MDS Overlap](#mds-overlap)
-- [Work in Progress](#work-in-progress)
 - [Versions](#versions)
   - [Technical Information](#technical-information)
+  - [Data Validation](#data-validation)
 - [Get Involved](#get-involved)
   - [Membership](#membership) 
 - [Organizations Using CDS](#organizations-using-cds) 
 - [Data Privacy](#data-privacy)
 - [Use Cases](#use-cases)
 
-# Overview
+# About
 
 The Curb Data Specification (**CDS**), a project of the [Open Mobility Foundation](http://www.openmobilityfoundation.org/) (**OMF**), is a data standard and set of Application Programming Interfaces (APIs) that helps cities manage all their curb and on and off street parking programs, and allow companies to use static and dynamic curb zones that optimize loading activities of people, goods, and services, and measure the impact of these programs.
 
@@ -29,7 +28,7 @@ Urban curb is a valuable, limited, and often under-managed part of the public ri
 
 [Top][toc]
 
-# Curb Data Specification APIs
+# Endpoints
 
 CDS is at its core a set of Application Programming Interfaces (APIs) and endpoints within those APIs, which allow information to flow between organizations managing and operators using various curb and parking places. It includes the following three APIs, with multiple endpoints under each API:
 
@@ -67,21 +66,13 @@ CDS contains a series of connected endpoints and fields beneath each interconnec
 
 CDS is designed to be a modular and flexible specification. Regulatory agencies can use the components of the API that are appropriate for their needs. An agency may choose to use only Curbs, while others may use Curbs, Events, and Metrics. Even within each API many endpoints and fields are optional. This design allows agencies, software and hardware companies, and curb users to use what's appropriate for their use cases, work within their operational capabilities, test CDS in their pilot projects, or use CDS for digitally managing parking operations.
 
-![CDS APIs and Endpoints](https://i.imgur.com/wlSeEa0.png)
-
-## OpenAPI Schema
-
-For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
+![CDS APIs and Endpoints](https://i.imgur.com/PejQC4R.png)
 
 ## MDS Overlap
 
-Like the [Mobility Data Specification](https://github.com/openmobilityfoundation/mobility-data-specification/) (MDS), the CDS is two-way and will be consumed by both cities and transportation providers operating in the public right of way. In many cases, the same mobility providers using curbs with CDS may also be interacting with other OMF [MDS Policy](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy), [MDS Provider](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider), and [MDS Agency](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/agency) data objects within the same [MDS Jurisdiction](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/jurisdiction) or [MDS Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/geography), and using similar [MDS Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/metrics). Consistent with the Technology Design Principles codified in the [Technology Council's](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council) OMF [Architectural Landscape Document](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Architectural-Landscape.pdf), the members of this working group are making reasonable best efforts to ensure that work is both _modular_ and _inter operable_ with other technology managed by the OMF as to avoid duplication and downstream implementation complexity. The latest version of CDS does allow connections by reference to MDS (and other specs), and vice versa, down to an overlapping field level.
+Like the [Mobility Data Specification](https://github.com/openmobilityfoundation/mobility-data-specification/) (MDS), CDS is two-way and will be produced and consumed by both cities, transportation providers, and vendors operating in the public right of way. CDS Curbs is analogous to MDS [Policy](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/policy) rules and geofencing (which uses MDS [Geography](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/geography) and [Jurisdiction](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/jurisdiction)), CDS Events to events data in MDS [Agency](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/agency)/[Provider](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/provider), and CDS Metrics to MDS [Metrics](https://github.com/openmobilityfoundation/mobility-data-specification/tree/main/metrics). In many existing jurisdictions , the same mobility providers using CDS are also using MDS to manage vehicles, services, and communicate right of way rules and policies. 
 
-[Top][toc]
-
-# Work in Progress
-
-The CDS is developed by the community under the guidance of the [Working Group Steering Committee](https://github.com/openmobilityfoundation/curb-data-specification/wiki) on specific [discussion topics](https://github.com/openmobilityfoundation/curb-data-specification/issues) and bi-weekly [public meetings](https://github.com/openmobilityfoundation/curb-data-specification/wiki#meeting-agendas). The Steering Committee has created supplementary resources like [Architectural Decisions](https://github.com/openmobilityfoundation/curb-data-specification/wiki/Curb-Architectural-Decisions), [Use Cases](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Use-Cases), [Privacy Guidance](https://docs.google.com/document/d/117kJhXp6ldv7KHq7k9wHONHVVHw00xweaHpORVu_c10/edit?usp=sharing), [Policy Language Guidance](https://github.com/openmobilityfoundation/governance/blob/main/technical/OMF-CDS-Policy-Language-Guidance.md), [Pilot Project Guide](https://docs.google.com/document/d/1Mb1wpy4AFJ1MLvDpSIJsii4_1j2JC16NxNUVPI5BMNM/edit?usp=sharing), and a [Getting Started Guide](https://www.openmobilityfoundation.org/wp-content/uploads/2024/10/Getting-Started-with-CDS.pdf). 
+Consistent with the Technology Design Principles codified in the [Technology Council's](https://github.com/openmobilityfoundation/governance/wiki/Technology-Council) OMF [Architectural Landscape Document](https://github.com/openmobilityfoundation/governance/blob/main/documents/OMF-MDS-Architectural-Landscape.pdf), the members of this working group are making reasonable best efforts to ensure that work is both _modular_ and _inter operable_ with other technology managed by the OMF as to avoid duplication and downstream implementation complexity. The latest version of CDS does allow connections by reference to MDS (and other specs), and vice versa, down to an overlapping field level. Future versions of MDS and CDS may lead to a more complete integration into a single, unified specification - [get involved](#get-involved) if interested.
 
 [Top][toc]
 
@@ -104,6 +95,10 @@ The CDS specification is versioned using Git tags and [semantic versioning](http
 * [Release Guidelines](https://github.com/openmobilityfoundation/governance/blob/main/technical/ReleaseGuidelines.md)
 
 [Top][toc]
+
+## Data Validation
+
+For CDS data and feed validation, please see the [OpenAPI schema description](https://github.com/openmobilityfoundation/cds-openapi). Interactive OpenAPI documentation for the CDS APIs, endpoints, fields, and data objects is also available on OMF's [Stoplight Interactive Documentation](https://openmobilityfnd.stoplight.io/docs/cds-openapi/83teyinnn1py6-curb-api) page.
 
 # Get Involved
 
