@@ -11,7 +11,7 @@ Locations defined in the Curbs API can be connected to [Event](/events) and [Met
 purposes such as routing, finding legal parking, loading, and pick-up/drop-off spots, enforcement, compliance, and analyzing
 curb utilization over time.
 
-**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
+**See [other CDS APIs](/README.md#endpoints) on the homepage.**
 
 # Endpoints
 
@@ -24,13 +24,13 @@ There are four different endpoints that are part of the Curbs API:
   - A [Curb Area](#curb-area) is a larger area of interest, such as a neighborhood or corridor, that
     could be used to show proximity, approaches, conflicts, circling, or other activity. Curb areas
     are *optional*.
-  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to or within a curb space
+  - A [Curb Object](#curb-object) is a physical item or asset located adjacent to, within, or associated with a curb space
     that is grouped under a certain type and contains a unique set of attributes. Curb objects are *optional*.
   - A [Curb Policy](#policy) A Policy is a rule that allows or prohibits a particular set of 
     users from using a particular curb at a particular time or times.  Curb policies are *optional* 
     but recommended with Curb Zones.
 
-**See [examples](examples.md) for these endpoints.**
+**See [examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) for these endpoints.**
 
 ![Curb Places](https://i.imgur.com/SxUlTHr.gif)
 
@@ -82,9 +82,9 @@ Free to acquire API keys or authorization may be utilized by the public agency t
 
 ##  Query Curb Zones
 
-Endpoint: `/curbs/zones`  
-Method: `GET`  
-`data` Payload: a JSON object with a `zones` field containing an array of [Curb Zone](#curb-zone) objects.
+**Endpoint**: `/curbs/zones`  
+**Method**: `GET`  
+`data` **Payload**: a JSON object with a `zones` field containing an array of [Curb Zone](#curb-zone) objects.
 
 _This required endpoint must be implemented by every Curbs API server. If attaching policies to curb zones, the [Query Curb Policies](#query-curb-policies) endpoint is also required._
 
@@ -104,9 +104,9 @@ All query parameters are optional.
 
 ##  Query Curb Areas
 
-Endpoint: `/curbs/areas`  
-Method: `GET`  
-`data` Payload: a JSON object with an `areas` field containing an array of [Curb Area](#curb-area) objects.
+**Endpoint**: `/curbs/areas`  
+**Method**: `GET`  
+`data` **Payload**: a JSON object with an `areas` field containing an array of [Curb Area](#curb-area) objects.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -123,9 +123,9 @@ All query parameters are optional.
 
 ## Query Curb Spaces
 
-Endpoint: `/curbs/spaces`  
-Method: `GET`  
-`data` Payload: a JSON object with a `spaces` field containing an array of [Curb Space](#curb-space) objects.
+**Endpoint**: `/curbs/spaces`  
+**Method**: `GET`  
+`data` **Payload**: a JSON object with a `spaces` field containing an array of [Curb Space](#curb-space) objects.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -144,9 +144,9 @@ All query parameters are optional.
 
 ## Query Curb Policies
 
-Endpoint: `/curbs/policies`  
-Method: `GET`  
-`data` Payload: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
+**Endpoint**: `/curbs/policies`  
+**Method**: `GET`  
+`data` **Payload**: a JSON object with a `policies` field containing an array of [Curb Policy](#policy) objects.
 
 _Optional endpoint, but required if Curb Zones contain policy_id references. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -162,9 +162,9 @@ All query parameters are optional.
 
 ## Query Curb Objects
 
-Endpoint: `/curbs/objects`  
-Method: `GET`  
-`data` Payload: a JSON object with a `objects` field containing an array of [Curb Object](#curb-object) objects.
+**Endpoint**: `/curbs/objects`  
+**Method**: `GET`  
+`data` **Payload**: a JSON object with a `objects` field containing an array of [Curb Object](#curb-object) objects.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -182,9 +182,9 @@ All query parameters are optional.
 
 ##  Fetch a Curb Zone
 
-Endpoint: `/curbs/zones/<id>`  
-Method: `GET`  
-`data` Payload: the [Curb Zone](#curb-zone) object with the ID provided in the path.
+**Endpoint**: `/curbs/zones/<id>`  
+**Method**: `GET`  
+`data` **Payload**: the [Curb Zone](#curb-zone) object with the ID provided in the path.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -201,9 +201,9 @@ All query parameters are optional.
 
 ##  Fetch a Curb Area
 
-Endpoint: `/curbs/areas/<id>`  
-Method: `GET`  
-`data` Payload: the [Curb Area](#curb-area) object with the ID provided in the path.
+**Endpoint**: `/curbs/areas/<id>`  
+**Method**: `GET`  
+`data` **Payload**: the [Curb Area](#curb-area) object with the ID provided in the path.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -215,9 +215,9 @@ This endpoint takes no query parameters.
 
 ## Fetch a Curb Space
 
-Endpoint: `/curbs/spaces/<id>`  
-Method: `GET`  
-`data` Payload: the [Curb Space](#curb-space) object with the ID provided in the path.
+**Endpoint**: `/curbs/spaces/<id>`  
+**Method**: `GET`  
+`data` **Payload**: the [Curb Space](#curb-space) object with the ID provided in the path.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -233,9 +233,9 @@ All query parameters are optional.
 
 ## Fetch a Curb Policy
 
-Endpoint: `/curbs/policies/<id>`  
-Method: `GET`  
-`data` Payload: the [Curb Policy](#policy) object with the ID provided in the path. 
+**Endpoint**: `/curbs/policies/<id>`  
+**Method**: `GET`  
+`data` **Payload**: the [Curb Policy](#policy) object with the ID provided in the path. 
 
 ### Query Parameters
 
@@ -245,9 +245,9 @@ This endpoint takes no query parameters.
 
 ## Fetch a Curb Object
 
-Endpoint: `/curbs/objects/<id>`  
-Method: `GET`  
-`data` Payload: the [Curb Object](#curb-object) object with the ID provided in the path.
+**Endpoint**: `/curbs/objects/<id>`  
+**Method**: `GET`  
+`data` **Payload**: the [Curb Object](#curb-object) object with the ID provided in the path.
 
 _Optional endpoint. If not implemented, the server should reply with `501 Not Implemented`._
 
@@ -280,7 +280,7 @@ criteria:
   1. Be assigned a unique ID, in the form of a [UUID][uuid]. This ID SHOULD remain consistent as long as
      the Curb Zone's geography remains substantially the same. Policies may be updated without changing
      the ID.
-  1. It SHOULD NOT be possible to legally park a single vehicle in two different Curb Zone at the 
+  1. It SHOULD NOT be possible to legally park a single vehicle in two different Curb Zones at the 
      same time (i.e., a given non-demarcated parking area or loading zone should be represented as
      a single curb location), unless this conflicts with the requirements above.
 
@@ -289,7 +289,7 @@ A Curb Zone is represented as a JSON object, whose fields are as follows:
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
 | `curb_zone_id` | [UUID][uuid] | Required | The ID of this Curb Zone. |
-| `geometry` | [Polygon][polygon] OR [Linestring][linestring] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. Note that a two dimensional _polygon_ is the preferred `geometry`, but a _linestring_ is acceptable. Include the `width` field if known. |
+| `geometry` | GeoJSON [Polygon][polygon] OR [Linestring][linestring] | Required | The spatial extent of this curb zone. A new `curb_zone_id` is required if this geometry changes. Note that a two dimensional _polygon_ is the preferred `geometry`, but a _linestring_ is acceptable. Include the `width` field if known. |
 | `curb_policy_ids` | Array of [UUIDs][uuid] | Required | An array of IDs of [Policy objects](#policy). Together, these define the regulations of this Curb Zone. |
 | `prev_policies` | Array of [Previous Policy](#previous-policy) objects | Optional | An array of information about previous policies that have applied to this curb zone. They are listed in order with the most recent ones first. |
 | `published_date` | [Timestamp][ts] | Required | The date/time that this curb zone was first published in this data feed. |
@@ -366,7 +366,7 @@ A Curb Area is represented as a JSON object, whose fields are as follows:
 Defines individual demarcated spaces within a Curb Zone. Important notes about Curb Spaces:
 
   - Curb Spaces may NOT overlap with other Curb Spaces
-  - Curb Spaces must be wholly contained within a single Curb Zone
+  - Curb Spaces must be wholly contained within or associated with a single Curb Zone
   - Unlike Zones, Spaces may be updated as needed, with a new `curb_space_id` being optionally assigned by the city
 
 A Curb Space is represented as a JSON object whose fields are as follows:
