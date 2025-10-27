@@ -1,6 +1,6 @@
 ## 1.1.0
 
-> Release Draft 2025-09-03
+> Released: 2025-10-27
 
 The 1.1 release is the first minor release for CDS.
 
