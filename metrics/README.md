@@ -4,7 +4,7 @@
 
 The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places. Defines common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. 
 
-**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
+**See [other CDS APIs](/README.md#endpoints) on the homepage.**
 
 # Endpoints
 
@@ -13,7 +13,7 @@ There are two different endpoints that are part of the Metrics API:
   - [Session](#session) is information about an activity that occurs near, at, or within a pre-defined curb area. Sessions is a subset of items from the Events API.  Sessions is *optional* within Metrics.
   - [Aggregate](#aggregate) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
 
-**See [examples](examples.md) for these endpoints.**
+**See [examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) for these endpoints.**
 
 # Table of Contents
 
@@ -40,20 +40,18 @@ All endpoints return a CSV file that can either be pre-computed or created on de
 
 If returning data from a static CSV file directly (e.g, from a web-based file system, service, or data portal), then adding header information is not required.
 
-If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.0` to support
+If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.1` to support
 versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+csv;version=1.0`. If the server receives a request that contains an `Accept`
+`application/vnd.cds+csv;version=1.1`. If the server receives a request that contains an `Accept`
 header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
 
 [Top][toc]
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
+[Authorization](/general-information.md#authorization) is **recommended** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
 
-Future versions of Metrics may contain publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. Authorization on Metrics is a [beta feature](/general-information.md#beta-features) and will be revisited in future releases. In the meantime, agencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
-
-
+Some jurisdictinos may allow publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. Agencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
 
 [Top][toc]
 
@@ -65,9 +63,9 @@ The agency serving the data may choose how frequently they want to update the da
 
 ##  Query Session
 
-Endpoint: `/metrics/sessions`  
-Method: `GET`  
-`data` Payload: a CSV object with the following fields:
+**Endpoint**: `/metrics/sessions`  
+**Method**: `GET`  
+`data` **Payload**: a CSV object with the following fields:
   - `session`: an array of [Session](#session) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
@@ -89,9 +87,9 @@ An agency may choose to make this endpoint static (and return all the available 
 
 ##  Query Aggregate
 
-Endpoint: `/metrics/aggregates`  
-Method: `GET`  
-`data` Payload: a CSV object with the following fields:
+**Endpoint**: `/metrics/aggregates`  
+**Method**: `GET`  
+`data` **Payload**: a CSV object with the following fields:
   - `aggregate`: an array of [Aggregate](#aggregate) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
@@ -230,7 +228,7 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 
 # Examples
 
-See a series of [CDS Metrics endpoint examples](examples.md) to use as templates. 
+See the [CDS Metrics Examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) wiki page for code examples of specific Metrics use cases, and ideas on how Metrics can be implemented.
 
 [Top][toc]
 

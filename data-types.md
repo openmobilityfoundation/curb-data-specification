@@ -4,9 +4,22 @@ This CDS data types page catalogs the data objects (fields, types, requirements,
 
 ## Table of Contents
 
+- [Custom Attributes](#custom-attributes)
 - [Enforcement](#enforcement)
    - [Violations](#violations)
 - [External Reference](#external-reference)
+- [Lane Type](#lane-type)
+
+## Custom Attributes
+
+Custom Attributes are optional additional attributes that do not fit in other fields and objects in CDS. They are unique for the organizations created and consuming the endpoint, that may not apply to other jurisdictions. Examples include custom identifiers, information required by ordinance, vendor attributes, supplemental data, etc. 
+
+The format is one or more JSON name/value pairs, and the values must be a string. If a `custom_attributes` field is provided in Curbs, Areas, Spaces, Objects, or Events endpoints, then the relevant [endpoint](general-information.md#rest-endpoints) must contain the `custom_attribute_dictionary` field, which describes details of the custom fields provided.
+
+Before creating any custom attributes, the preference is to use existing CDS fields and data objects first. If the fields and data you provide in custom attributes apply to multiple jurisdictions, vendors, and/or scenarios, please open an issue to include new fields in a future CDS release.
+
+
+[Top][toc]
 
 ## Enforcement
 
@@ -16,14 +29,14 @@ Where a citation could represent multiple violations, an enforcement object cont
 
 The `enforcement` object is a JSON *object* with the following fields:
 
-| Name             | Type   | Required/Optional | Description   |
-| ---------------- | ------ | ----------------- | ------------- |
-| `enforcement_id` | UUID   | Required          | An identifer unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
-| `citation_id`    | String   | Optional        | A unique id which represents a single citation. |
-| `is_warning`     | Boolean | Optional         | A boolean value to indicate if the enforcment action is being processed as a warning.  |
-| `action_taken`   | String | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
-| `citation_cost`  | String | Optional          | The total cost of all violations associated to this enforcement action. |
-| `violations`     | Array of Violations | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
+| Name             | Type    | Required/Optional | Description   |
+| ---------------- | ------- | ----------------- | ------------- |
+| `enforcement_id` | UUID    | Required          | An identifier unique to the enforcement incident, generated the first time an enforcement event is recorded, and referenced in future related enforcement events. Multiple Curb Events (ex: `vehicle_violation_start`, `vehicle_violation_end`, or `citation_issued`) that relate to the same enforcement activity can share the same `enforcement_id`. | 
+| `citation_id`    | String  | Optional          | A unique id which represents a single citation. |
+| `is_warning`     | Boolean | Optional          | A boolean value to indicate if the enforcement action is being processed as a warning.  |
+| `action_taken`   | String  | Optional          | Indicates how the violation was enforced. Typical well-known values are `citation_registered`, `citation_posted`, `citation_served`, or `citation_emailed`. |
+| `citation_cost`  | String  | Optional          | The total cost of all violations associated to this enforcement action. |
+| `violations`     | Array of [Violations](#violations) | Optional          | An array of Violation objects that indicate the one-to-many violations associated to this enforcement event. |
 
 [Top][toc]
 
@@ -35,9 +48,9 @@ The `violations` object is a JSON *object* with the following fields:
 
 | Name             | Type   | Required/Optional | Description   |
 | ---------------- | ------ | ----------------- | ------------- |
-| `municipal_code` | String | Optional          | The unique code created by the municipality or enforcement agency to identify the type of rule being enforced. |
+| `violation_code` | String | Optional          | The unique code created by the municipality, city, county, state, federal, or enforcement agency to identify the type of rule being enforced. |
 | `violation_name` | String | Optional          | The city/municipal, county, state, provincial, or federal code that was violated. |
-| `violaton_cost`  | String | Optional          | The original cost associated with the violation. |
+| `violation_cost` | String | Optional          | The original cost associated with the violation. |
 
 [Top][toc]
 
@@ -51,9 +64,28 @@ The `external_reference` object is a JSON *array* with the following fields:
 | ----------------- | ------- | ------------------- | ------------- |
 | `reference_url`   | URL     | Required            | A web-accessible identifier URL for the source of the publicly or privately accessible data feed, document, website, etc. This MUST be a full HTTPS URL pointing to a location which contains more information impacting or explaining the location, event, or policy, etc. |
 | `name`            | String  | Optional            | Name of the data source for reference. E.g. "WZDx", "CWZ", "MDS", "GBFS", "GTFS", "CDS". |
-| `public`          | Boolean | Optional            | Is this data source able to be viewed with out any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the feed user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
+| `public`          | Boolean | Optional            | Is this data source able to be viewed without any sort of authentication? If `true`, the `reference_url` is public. If `false`, the `reference_url` requires some sort of authentication, authorization, or API key to access. This is an informational field to set access expectations for the feed user, and does not provide any credentials directly unless explicitly contained in the `reference_url`. |
 | `identifier_name` | String  | Optional            | The name of the data field or object that is referenced by the unique `ids`. E.g. "id", "trip_id", "vehicle_id", "RoadEventFeature", etc, if relevant and available in `reference_url`. |
-| `ids`             | Array of Strings | Optional   | An array of one or more **ids** from the `reference_url` that impacts the use of or relationship to part of CDS, e.g. a curb zone, curb space, curb area, curb event, etc. The **ids** and their details are be found in the referenced `reference_url`. |
+| `ids`             | Array of Strings | Optional   | An array of one or more **ids** from the `reference_url` that impacts the use of or relationship to part of CDS, e.g. a curb zone, curb space, curb area, curb event, etc. The **ids** and their details can be found in the referenced `reference_url`. |
+
+[Top][toc]
+
+### Lane Type
+
+Type(s) of lane referenced by the curb policy or event, in or outside of curb zones.
+
+| Name           | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| `travel_lane`  | A standard vehicle travel lane. |
+| `turn_lane`    | A dedicated turn lane. |
+| `center_turn_lane` | A center lane available for turns in both directions. Sometimes used for courier parking for loading activity. |
+| `bike_lane`    | A lane dedicated for usage by cyclists. |
+| `bus_lane`     | A lane dedicated for usage by buses. |
+| `parking`      | A lane used for parking, not allowed for travel. |
+| `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
+| `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
+| `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
+| `unspecified`  | Unspecified |
 
 [Top][toc]
 

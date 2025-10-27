@@ -2,9 +2,9 @@
 
 <a href="/events/"><img src="https://i.imgur.com/hC8py0L.png" width="100" align="right" alt="CDS Events Icon" border="0"></a>
 
-The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
+The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, directly from operators, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
 
-**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
+**See [other CDS APIs](/README.md#endpoints) on the homepage.**
 
 # Endpoints
 
@@ -13,7 +13,7 @@ There are two different endpoints that are part of the Events API:
   - A [Curb Event](#curb-event) is an activity that occurs near, at, or within a pre-defined curb area. Defining events is *required* as part of the Events API.
   - A [Status](#status) is the current status of a curb monitoring source. Event status is *optional*.
 
-**See [examples](examples.md) for these endpoints.**
+**See [examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) for these endpoints.**
 
 # Table of Contents
 
@@ -30,7 +30,6 @@ There are two different endpoints that are part of the Events API:
     * [Vehicle Type](#vehicle-type)
     * [Propulsion Type](#propulsion-type)
     * [Event Purpose](#event-purpose)
-    * [Lane Type](#lane-type)
     * [Payment Channel](#payment-channel)
     * [Payment Method](#payment-method)
     * [Curb Occupant](#curb-occupants)
@@ -52,10 +51,10 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ##  Query Event
 
-Endpoint: `/events/events`  
-Method: `GET`  
-Authorization: recommended  
-`data` Payload: a JSON object with the following fields:
+**Endpoint**: `/events/events`  
+**Method**: `GET`  
+**Authorization**: recommended  
+`data` **Payload**: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
 _This endpoint must be implemented by every Events API server._
@@ -76,10 +75,10 @@ All query parameters are optional.
 
 ##  Query Status
 
-Endpoint: `/events/status`  
-Method: `GET`  
-Authorization: recommended  
-`data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
+**Endpoint**: `/events/status`  
+**Method**: `GET`  
+**Authorization**: recommended  
+`data` **Payload**: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
@@ -98,10 +97,10 @@ All query parameters are optional.
 
 ## Push Event
 
-Endpoint: `/events/event`  
-Method: `POST`  
-Authorization: required  
-`data` Payload: an array of [Curb Event](#curb-event) `events` objects.
+**Endpoint**: `/events/event`  
+**Method**: `POST`  
+**Authorization**: required  
+`data` **Payload**: an array of [Curb Event](#curb-event) `events` objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
 
@@ -156,7 +155,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `event_id` | [UUID][uuid] | Required | The globally unique identifier of the event that occurred. |
 | `event_type` | [Event Type](#event-type) | Required | The event_type that happened for this event. |
 | `event_purpose` | [Event Purpose](#event-purpose) | Conditionally Required | General curb usage purpose that the vehicle performed during the event. Required for sources capable of determining activity type for relevant event_types. |
-| `event_location` | [GeoJSON Point](/general-information.md#point) | Required | The geographic point location where the event occurred. |
+| `event_location` | [GeoJSON Point](/general-information.md#point) | Optional | The geographic point location where the event occurred. All efforts should be made to provide this field, even if slightly imprecise. But there may be times when a location is impossible or irrelevant.   |
 | `event_time` | [Timestamp][ts] | Required | Time at which the event occurred. |
 | `event_publication_time` | [Timestamp][ts] | Required | Time at which the event became available for consumption by this API. |
 | `event_session_id` | [UUID][uuid] | Optional | May be provided to tie known connected `park_start` and `park_end` event types together by a unique session ID. If _not_ confident of being able to determine a `park_end` event at some time after `park_start` is recorded (i.e., you cannot detect when a vehicle departs), then do _not_ use session_id. This field may be most useful to payment companies who provide their source data as sessions (typical for transaction data). _Note also_: the use of the term "session" across CDS means the start and end of curb usage of a vehicle, not necessarily a financial or payment session or transaction. |
@@ -173,8 +172,8 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `data_source_model` | String | Optional | Model of the data source hardware or vehicle reporting event data. |
 | `sensor_status_is_commissioned` | Boolean | Optional | If a sensor was used to capture this event, the commissioned status at the time that the event was reported. Indicates whether the sensor is currently in a state where it should be reporting data. |
 | `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
-| `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
-| `vehicle_license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
+| `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). _Note: in the next breaking CDS release, it is likely all of these "vehicle_" fields will be moved to a Vehicles data object._ |
+| `vehicle_license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). The detection of stealth, invisible, modified, ghost, or otherwise ANPR-evading plate violations may be recorded using the `enforcement` field and associated [Enforcement][enforcement] object. |
 | `vehicle_license_plate_jurisdiction` | String | Optional | Jurisdiction or state in which the `vehicle_license_plate` is registered. |
 | `vehicle_license_plate_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_license_plate`. |
 | `vehicle_permit_number` | String | Optional | If applicable, the assigned permit number for this vehicle from the city agency. |
@@ -185,17 +184,17 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `vehicle_color_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_color`. |
 | `vehicle_company_name` | String | Optional | Company or courier name of the vehicle that performed the event. |
 | `vehicle_company_name_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_company_name`. |
-| `vehicle_run_id` | String | Optional | Run ID from an external runs table containing information about models and model, or year, of the vehicle that performed the event. |
+| `vehicle_run_id` | String | Optional | Run identifier from an external runs table containing information about make, model, and/or year, of the vehicle that performed the event. |
 | `vehicle_run_id_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_run_id`. |
 | `vehicle_propulsion_types` | Array of [Propulsion Type](#propulsion-type) | Conditionally Required | List of propulsion types used by the vehicle that performed the event. Required for sources capable of determining vehicle propulsion type. |
-| `vehicle_blocked_lane_types` | Array of [Lane Type](#lane-type) | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
+| `vehicle_blocked_lane_types` | Array of [Lane Type][lane-type] | Conditionally Required | Type(s) of lane blocked by the vehicle performing the event. If no lanes are blocked by the vehicle performing the event, the array should be empty.  Required for sources capable of determining it for the following event_types: _park_start_ |
 | `curb_occupants` | Array of [Curb Occupant](#curb-occupants) | Conditionally Required | Current occupants of the Curb Zone. If the sensor is capable of identifying the linear location of the vehicle, then elements are sorted in ascending order according to the start property of the linear reference. Otherwise, elements appear in no particular order. Required for sources capable of determining it for the following event_types: _park_start, park_end, scheduled_report_ |
 | `actual_cost` | Integer | Optional | If available from the source, the actual cost, in the currency defined in currency, paid by the curb user for this event. The currency type is sent in with the [REST Endpoints](#rest-endpoints) JSON object. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
 | `enforcement` | [Enforcement][enforcement] | Optional | Enforcement information related to this Curb Event, relevant to the moment in time the event happens. Only used for enforcement related events such as `vehicle_detected`, `vehicle_violation_start`, `vehicle_violation_end`, and `citation_issued`. |
 | `payment_channel` | [Payment Channel](#payment-channel) | Conditionally Required | If available from the source, the medium by which a user submitted payment. |
 | `payment_method` | [Payment Method](#payment-method) | Conditionally Required | If available from the source, the method used to pay for this event. |
 | `payment_transaction_id` | String | Conditionally Required | The transaction ID of the payment if available from the source and different from the `event_id`. |
-| `custom_attributes`| JSON Object | Conditionally Required | A list of additional attributes, unique to the user creating Curb Event data, that may want to be captured in this data feed. Each value in the JSON name/value pair must be a string. At least one `custom_attributes` field is required if the Curbs [endpoint](../general-information.md#rest-endpoints) contains the `custom_attribute_dictionary` field. |
+| `custom_attributes`| [Custom Attributes](/data-types.md#custom-attributes) JSON Object | Optional | Additional attributes (fields and data) to include in this [endpoint](/general-information.md#rest-endpoints). |
 | `external_references` | Array of [External Reference][external-reference] objects | Optional | One or more references to external data sources impacting this Curb Event. The external reference is relevant to the moment in time the event happens. |
 
 [Top][toc]
@@ -251,7 +250,7 @@ Type of vehicle `vehicle_type` similar to [vehicle_type](https://github.com/open
 | `delivery_robot` | A robot or remote-operated device intended for transporting goods |
 | `scooter`        | A standing _or_ seated fully-motorized mobility device intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `scooter_standing` | A standing fully-motorized mobility device without a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
-| `scooter_seated' | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
+| `scooter_seated` | A fully-motorized mobility device with a seat intended for one rider, capable of travel at low or moderate speeds, and suited for operation in infrastructure shared with motorized bicycles |
 | `moped`          | A seated fully-motorized mobility device capable of travel at moderate or high speeds and suited for operation in general urban traffic |
 | `motorcycle`     | A seated mobility device capable of travel at high speeds and suited for operation in general urban traffic or expressways |
 | `truck`          | A box truck or large delivery truck with attached cab |
@@ -313,26 +312,6 @@ General event purpose `event_purpose` that the vehicle performed during its even
 | `unspecified`         | Unknown or unspecified activity type |
 
 [Top][toc]
-
-### Lane Type
-
-Type(s) of lane used or blocked `vehicle_blocked_lane_types` by the vehicle performing the event, outside of curb zones. E.g., double parking.
-
-| Name           | Description                                            |
-| -------------- | ------------------------------------------------------ |
-| `travel_lane`  | A standard vehicle travel lane. |
-| `turn_lane`    | A dedicated turn lane. |
-| `center_turn_lane` | A center lane available for turns in both directions. Sometimes used for courier parking for loading activity. |
-| `bike_lane`    | A lane dedicated for usage by cyclists. |
-| `bus_lane`     | A lane dedicated for usage by buses. |
-| `parking`      | A lane used for parking, not allowed for travel. |
-| `shoulder`     | A portion of the roadway that is outside (either right or left) of the main travel lanes. A shoulder can have many uses but is not intended for general traffic. |
-| `median`       | An often unpaved, non-drivable area that separates sections of the roadway. |
-| `sidewalk`     | A path for pedestrians, usually on the side of the roadway. |
-| `unspecified`  | Unspecified |
-
-[Top][toc]
-
 
 ### Payment Channel
 
@@ -401,7 +380,7 @@ A Curb Status is represented as a JSON object array of all deployed sensors, who
 
 # Examples
 
-See a series of [CDS Events endpoint examples](examples.md) to use as templates. 
+See the [CDS Events Examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Events-Examples) wiki page for code examples of specific Events use cases, and ideas on how Events can be implemented.
 
 [Top][toc]
 
@@ -413,6 +392,7 @@ For details on the CDS schema in OpenAPI format and on Stoplight, please referen
 
 [bulk-responses]: /general-information.md#bulk-responses
 [enforcement]: ../data-types.md#enforcement
+[lane-type]: ../data-types.md#lane-type
 [violations]: ../data-types.md#violations
 [error-messages]: /general-information.md#error-messages
 [external-reference]: ../data-types.md#external-reference
