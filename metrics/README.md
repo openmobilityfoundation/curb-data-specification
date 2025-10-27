@@ -4,7 +4,7 @@
 
 The Metrics API is a REST API allowing historic metrics calculations based on Event activity that happened at defined Curb places. Defines common calculation methodologies to measure historic dwell time, occupancy, usage and other aggregated statistics. 
 
-**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
+**See [other CDS APIs](/README.md#endpoints) on the homepage.**
 
 # Endpoints
 
@@ -13,7 +13,7 @@ There are two different endpoints that are part of the Metrics API:
   - [Session](#session) is information about an activity that occurs near, at, or within a pre-defined curb area. Sessions is a subset of items from the Events API.  Sessions is *optional* within Metrics.
   - [Aggregate](#aggregate) is aggregated counts and methodology of curb events. Aggregates is *optional* within Metrics.
 
-**See [examples](examples.md) for these endpoints.**
+**See [examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) for these endpoints.**
 
 # Table of Contents
 
@@ -40,20 +40,18 @@ All endpoints return a CSV file that can either be pre-computed or created on de
 
 If returning data from a static CSV file directly (e.g, from a web-based file system, service, or data portal), then adding header information is not required.
 
-If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.0` to support
+If returning data from a dynamic server, they MUST set the `Content-Type` header to `application/vnd.cds+csv;version=1.1` to support
 versioning in the future.  Clients SHOULD specify an `Accept` header containing 
-`application/vnd.cds+csv;version=1.0`. If the server receives a request that contains an `Accept`
+`application/vnd.cds+csv;version=1.1`. If the server receives a request that contains an `Accept`
 header but does not include this value; it MUST respond with a status of `406 Not Acceptable`.
 
 [Top][toc]
 
 ## Authorization
 
-[Authorization](/general-information.md#authorization) is **required** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
+[Authorization](/general-information.md#authorization) is **recommended** for all the Metrics endpoints, since depending on implementation, use cases, fields required, local laws, and audience it may contain information only city transportation agencies should have access to. 
 
-Future versions of Metrics may contain publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. Authorization on Metrics is a [beta feature](/general-information.md#beta-features) and will be revisited in future releases. In the meantime, agencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
-
-
+Some jurisdictinos may allow publicly available endpoints or reports to help enable cross-vendor collaboration, data analysis, and Open Data goals. Agencies wishing to publicly release Metrics data are encouraged to limit releases to static [Aggregate](#aggregate) data that has been reviewed for potential privacy risks. Consult our [Privacy Guidance](/README.md#data-privacy) for more details.
 
 [Top][toc]
 
@@ -65,9 +63,9 @@ The agency serving the data may choose how frequently they want to update the da
 
 ##  Query Session
 
-Endpoint: `/metrics/sessions`  
-Method: `GET`  
-`data` Payload: a CSV object with the following fields:
+**Endpoint**: `/metrics/sessions`  
+**Method**: `GET`  
+`data` **Payload**: a CSV object with the following fields:
   - `session`: an array of [Session](#session) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
@@ -78,7 +76,7 @@ An agency may choose to make this endpoint static (and return all the available 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
-| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
@@ -89,9 +87,9 @@ An agency may choose to make this endpoint static (and return all the available 
 
 ##  Query Aggregate
 
-Endpoint: `/metrics/aggregates`  
-Method: `GET`  
-`data` Payload: a CSV object with the following fields:
+**Endpoint**: `/metrics/aggregates`  
+**Method**: `GET`  
+`data` **Payload**: a CSV object with the following fields:
   - `aggregate`: an array of [Aggregate](#aggregate) objects
 
 _Optional endpoint; if not implemented, a server should reply with 501 Not Implemented._
@@ -102,9 +100,9 @@ An agency may choose to make this endpoint static (and return all the available 
 
 | Name         | Type      | Required/Optional | Description                                    |
 | ------------ | --------- | ----------------- | ---------------------------------------------- |
-| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. Required with `curb_place_id`. |
+| `curb_place_type` | Enum | Optional | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. Required with `curb_place_id`. |
 | `curb_place_id` | [UUID][uuid] | Optional | The ID of this single curb place. If specified, only return data contained within this area. Required with `curb_place_type`. |
-| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Optional | The single metric to return from the [Methodology](#methodology): `total_sessions`, `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `min_lat`<br/>`min_lng`<br/>`max_lat`<br/>`max_lng` | Numeric | Optional | Specifies a latitude and longitude bounding box. If one of these parameters is specified, all four MUST be. If specified only return Curb Zones that intersect the supplied bounding box. |
 | `lat`<br/>`lng`<br/>`radius` | Numeric | Optional | Specifies a latitude and longitude bounding point and a radius away from that point. If one of these parameters is specified, all three MUST be. Returns only Curb Zones that are within `radius` centimeters of the point identified by `lat`/`lng`. Curb Zones in the response MUST be ordered ascending by distance from the center point. |
 | `start_time` | [Timestamp][ts] | Optional | The start of the time period to return data (_inclusive_, see [Range Boundaries](/general-information.md#range-boundaries)).  |
@@ -136,6 +134,7 @@ A Session is represented as a CSV object, whose fields are as follows, pulled fr
 | `curb_zone_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Zone where the event occurred. Required for events that occurred at a known Curb Zone for ALL _event_types_. |
 | `curb_area_ids` | [UUID][uuid] | Conditionally Required | Unique IDs of the Curb Area where the event occurred. Since Curb Areas can overlap, an event may happen in more than one. Required for events that occurred in a known Curb Area for these event_types:  _enter_area, exit_area, park_start, park_end_ |
 | `curb_space_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Space where the event occurred. Required for events that occurred at a known Curb Space for these event_types: _park_start, park_end, enter_area, exit_area_ |
+| `curb_object_id` | [UUID][uuid] | Conditionally Required | Unique ID of the Curb Object where the event occurred. Required for events that occurred at a known Curb Object for these event_types: _park_start, park_end, enter_area, exit_area_ |
 | `vehicle_length` | Integer | Conditionally Required | Approximate length of the vehicle that performed the event, in centimeters. Required for sources capable of determining vehicle length. |
 | `vehicle_type` | [Vehicle Type](/events#vehicle-type) | Conditionally Required | Type of the vehicle that performed the event. Required for sources capable of determining vehicle type. |
 
@@ -165,9 +164,9 @@ An Aggregate is represented as a CSV object, whose fields are as follows, as cal
 
 | Name   | Type   | Required/Optional   | Description   |
 | ------ | ------ | ------------------- | ------------- |
-| `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`. |
+| `curb_place_type` | Enum | Required | The type of curb place this aggregate applies to from the Curbs API: `area`, `zone`, `space`, `object`. |
 | `curb_place_id` | [UUID][uuid] | Required | The ID of this curb place. |
-| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
+| `metric_type` | Enum | Required | The metric this aggregate applies to from the [Methodology](#methodology): `total_sessions`, `total_events`, `turnover`, `average_dwell_time`, `occupancy_percent`. |
 | `date` | date | Required | The date the event occured in ISO 8601 format, local timezone, in "YYYY-MM-DD" format. E.g. "2021-10-31" |
 | `hour` | integer | Required | The hour of the day the event occured in ISO 8601 format, local timezone, in "hh" format. E.g. "23" |
 | `value` | number | Required | The results of the calculations for this metric from the [Methodology](#methodology). Note that "-1" means that the sensor/source was offline for the majority of the time. E.g. "6", "2.9", "-1", or "0.05" |
@@ -184,6 +183,15 @@ Name: `total_sessions`
 _Use Case_
 
 Cities use this to determine ‘demand’ for curb space and understand how much activity is happening at the curb. A session is a parking event, defined by the `park_start` and `park_end` event types.
+
+#### Total Events
+
+`count[events]` for a specific time period  
+Name: `total_events`
+
+_Use Case_
+
+Similar to `total_sessions`, cities use this to determine ‘demand’ for curb space and understand how many users have arrived for a given area for a period of time. Some examples for this include: seeing how many vehicles arrived and parked in a neighborhood (counting `park_start` event types), estimating occupancy with LPR (counting `vehicle_read` event types), or tracking enforcement by seeing how many tickets were handed out for a specific zone (counting `citation_issued` event types). 
 
 #### Turnover
  
@@ -220,7 +228,7 @@ Occupancy is a metric from parking that cities would like to apply to curbs. Wit
 
 # Examples
 
-See a series of [CDS Metrics endpoint examples](examples.md) to use as templates. 
+See the [CDS Metrics Examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) wiki page for code examples of specific Metrics use cases, and ideas on how Metrics can be implemented.
 
 [Top][toc]
 

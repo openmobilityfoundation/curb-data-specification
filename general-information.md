@@ -13,6 +13,8 @@ This document contains specifications and common concepts that are shared betwee
 - [Geographic Data](#geographic-data)
   - [Geographic Telemetry Data](geographic-telemetry-data)
   - [Polygon](#polygon)
+  - [LineString](#linestring)
+  - [Point](#Point)
   - [Intersection Operation](#intersection-operation)
 - [Pagination](#pagination)
 - [Range Boundaries](#range-boundaries)
@@ -101,7 +103,7 @@ Because of unreliability of some device clocks and other factors, sensors and op
 
 # Geographic Data
 
-References to geographic datatypes (Point, MultiPolygon, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
+References to geographic datatypes (Point, MultiPolygon, LineString, etc.) imply coordinates encoded in the [WGS 84 (EPSG:4326)][wgs84] standard GPS or GNSS projection expressed as [Decimal Degrees][decimal-degrees]. 
 
 ## Geographic Telemetry Data
 
@@ -156,6 +158,36 @@ A polygon is a GeoJSON geometry of type `"Polygon"` as defined in
 }
 ```
 
+## LineString
+
+A linestring is a GeoJSON geometry of type `"LineString"` (polyline) as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example linestring is:
+
+```
+{
+  "type": "LineString",
+  "coordinates": [
+    [-73.982105, 40.767932],
+    [-73.973694, 40.764551],
+    [-73.970913, 40.763627]
+  ]
+}
+```
+
+## Point
+
+A point is a GeoJSON geometry of type `"Point"` as defined in
+[RFC 7946 3.1.6](https://www.ietf.org/rfc/rfc7946.txt). An example point is:
+
+```
+{
+  "type": "Point",
+  "coordinates": [
+    -73.982105, 40.767932
+   ]
+}
+```
+
 ## Intersection Operation
 
 For the purposes of this specification, the intersection of two geographic datatypes is defined according to the [`ST_Intersects` PostGIS operation][st-intersects]
@@ -195,6 +227,8 @@ At a minimum, payloads that use pagination must include a `next` key, which must
     }
 }
 ```
+
+In general, a 'page-based strategy' is preferred to allow for page counts, but a 'cursor-based strategy' is acceptable, per [JSON API](http://jsonapi.org/format/#fetching-pagination).
 
 [Top][toc]
 
@@ -244,6 +278,40 @@ List of acceptable endpoint responses.
 
 [Top][toc]
 
+### Bulk Responses
+
+For multi-record POST and PUT calls, e.g. sending Events using the post method, the bulk-response structure describes a list of failures is as follows:
+
+```jsonc
+{
+    "success": "...",
+    "total": "...",
+    "failures": [ {      // list of failure details
+        "item": { ... }, // copy of the item with the problem
+        "error": "...",
+        "error_description": "...",
+        "error_details": [ "...", "..." ]
+    }, {
+      // additional failure records
+    } ]
+}
+```
+
+| Field      | Type                                  | Field Description                                               |
+| ---------- | ------------------------------------- | --------------------------------------------------------------- |
+| `success`  | Integer                               | Number of successfully written records                          |
+| `total`    | Integer                               | Total number of provided records                                |
+| `failures` | [Failure Details](#failure-details)[] | Array of details about failed records (empty if all successful) |
+
+### Failure Details
+
+| Field               | Type                 | Field Description                                   |
+| ------------------- | -------------------- | --------------------------------------------------- |
+| `item`              | Event, etc.          | Invalid submitted item                              |
+| `error`             | Enum                 | Error code                                          |
+| `error_description` | String               | Human readable error description (can be localized) |
+| `error_details`     | String[]             | Array of fields with errors, if applicable          |
+
 # REST Endpoints
 
 All dynamic REST endpoints will return a JSON object containing the following fields:
@@ -255,6 +323,7 @@ All dynamic REST endpoints will return a JSON object containing the following fi
 | `time_zone` | String | Required | The time zone that applies to parking regulations in this dataset. MUST be a valid [TZ database](https://www.iana.org/time-zones) time zone name (e.g. `"US/Eastern"` or `"Europe/Paris"`). |
 | `last_updated` | [timestamp][ts] | Required | The last time the data in this API was updated. |
 | `currency` | String | Required | The ISO 4217 3-letter code for the currency in which rates for curb usage are denominated. All costs should be given as integers in the currency's smallest unit. As an example, to represent $1 USD, specify an amount of 100 (for 100 cents). |
+| `custom_attributes_dictionary` | URL | Conditionally Required | The data dictionary containing information on the fields and values in [Custom Attributes](/data-types.md#custom-attributes). This should include the attribute name, data type, associated CDS element if applicable, and description of what the attribute represents. Required if any Custom Attributes are provided in an Endpoint. |
 | `author` | String | Optional | The name of the organization that produces and maintains this data. |
 | `license_url` | URL | Optional | The licensing terms under which this data is provided. |
 
