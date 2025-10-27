@@ -2,9 +2,9 @@
 
 <a href="/events/"><img src="https://i.imgur.com/hC8py0L.png" width="100" align="right" alt="CDS Events Icon" border="0"></a>
 
-The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
+The Events API is a REST API allowing real-time and historic events at the curb to be sent to cities, and the ability to check on the status of any sensors. Events can come from company data feeds, on street sensors, session payments, company check-ins, in-person parking personnel, directly from operators, and/or other city data sources. Data sent in the Events API can be connected to the Curbs API over time and space, and events are used for calculations in the Metrics API. 
 
-**See [other CDS APIs](/README.md#curb-data-specification-apis) on the homepage.**
+**See [other CDS APIs](/README.md#endpoints) on the homepage.**
 
 # Endpoints
 
@@ -13,7 +13,7 @@ There are two different endpoints that are part of the Events API:
   - A [Curb Event](#curb-event) is an activity that occurs near, at, or within a pre-defined curb area. Defining events is *required* as part of the Events API.
   - A [Status](#status) is the current status of a curb monitoring source. Event status is *optional*.
 
-**See [examples](examples.md) for these endpoints.**
+**See [examples](https://github.com/openmobilityfoundation/curb-data-specification/wiki/CDS-Metrics-Examples) for these endpoints.**
 
 # Table of Contents
 
@@ -51,10 +51,10 @@ All endpoints return a JSON object containing the fields as specified in the [RE
 
 ##  Query Event
 
-Endpoint: `/events/events`  
-Method: `GET`  
-Authorization: recommended  
-`data` Payload: a JSON object with the following fields:
+**Endpoint**: `/events/events`  
+**Method**: `GET`  
+**Authorization**: recommended  
+`data` **Payload**: a JSON object with the following fields:
   - `events`: an array of [Curb Event](#curb-event) objects. See [Event Times](/general-information.md#event-times) guidance about the order of data returned.
 
 _This endpoint must be implemented by every Events API server._
@@ -75,10 +75,10 @@ All query parameters are optional.
 
 ##  Query Status
 
-Endpoint: `/events/status`  
-Method: `GET`  
-Authorization: recommended  
-`data` Payload: a JSON object with a `status` field containing an array of [Status](#status) objects.
+**Endpoint**: `/events/status`  
+**Method**: `GET`  
+**Authorization**: recommended  
+`data` **Payload**: a JSON object with a `status` field containing an array of [Status](#status) objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented` if possible._
 
@@ -97,10 +97,10 @@ All query parameters are optional.
 
 ## Push Event
 
-Endpoint: `/events/event`  
-Method: `POST`  
-Authorization: required  
-`data` Payload: an array of [Curb Event](#curb-event) `events` objects.
+**Endpoint**: `/events/event`  
+**Method**: `POST`  
+**Authorization**: required  
+`data` **Payload**: an array of [Curb Event](#curb-event) `events` objects.
 
 _Optional endpoint, as required by public agencies; if not implemented, the server should reply with `501 Not Implemented`._
 
@@ -172,7 +172,7 @@ A Curb Event is represented as a JSON object, whose fields are as follows:
 | `data_source_model` | String | Optional | Model of the data source hardware or vehicle reporting event data. |
 | `sensor_status_is_commissioned` | Boolean | Optional | If a sensor was used to capture this event, the commissioned status at the time that the event was reported. Indicates whether the sensor is currently in a state where it should be reporting data. |
 | `sensor_status_is_online` | Boolean | Optional | If a sensor was used to capture this event, the online status at the time that the event was reported. Indicates whether the sensor is currently online and reporting data. |
-| `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). |
+| `vehicle_id` | String | Optional | A vehicle identifier visible externally on the vehicle itself. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). _Note: in the next breaking CDS release, it is likely all of these "vehicle_" fields will be moved to a Vehicles data object._ |
 | `vehicle_license_plate` | String | Optional | The consistently placed vehicle license plate, usable by ALPR systems, when required for curb use. This field is potentially sensitive (depending on local, state, and national laws) and a data privacy framework is recommended for collecting, retention, deletion, obfuscation, and security. If this field is needed for your use cases, review our [Privacy Guidance](/README.md#data-privacy). The detection of stealth, invisible, modified, ghost, or otherwise ANPR-evading plate violations may be recorded using the `enforcement` field and associated [Enforcement][enforcement] object. |
 | `vehicle_license_plate_jurisdiction` | String | Optional | Jurisdiction or state in which the `vehicle_license_plate` is registered. |
 | `vehicle_license_plate_confidence` | Integer | Optional | Value from 1 to 100 specifying the recognition confidence level for `vehicle_license_plate`. |
